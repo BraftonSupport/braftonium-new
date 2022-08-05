@@ -109,6 +109,9 @@
             }
         }
 
+        //This makes sure that the field name is always unique to the block
+        //You must still add a unique value, see example block. brafton_field_name(basename(__DIR__)).'1'
+        //You can always choose to make you own unique value and not use this function
         function brafton_field_name($slug){
             return 'field_braftonium_'.str_replace("_", "-", $slug).'_';
         }
