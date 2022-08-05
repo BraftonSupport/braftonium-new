@@ -37,6 +37,10 @@
             $GLOBALS['braftonium_slug']=$slug;
             $slugWithoutDash=str_replace('_','',$slug);
 
+        //Don't include example block
+            if( $slug=='example' )
+		    return;
+
         //include settings file for block
             include($slug.'/block-settings.php');
 
