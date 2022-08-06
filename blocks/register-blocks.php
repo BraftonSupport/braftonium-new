@@ -42,7 +42,7 @@
 		    return;
 
         //include settings file for block
-            $GLOBALS['fieldListCounter']=1; //helps ensure the field key is always unique and starts at 1
+            $GLOBALS['fieldListCounter']=0; //helps ensure the field key is always unique and starts at 1
             include($slug.'/block-settings.php');
 
         //grab settings from block-settings.php
@@ -117,7 +117,7 @@
         //This makes sure that the field name is always unique to the block
         //You can always choose to make you own unique value and not use this function
         function brafton_field_name(){
-            $GLOBALS['fieldListCounter'].=1;
+            $GLOBALS['fieldListCounter']=$GLOBALS['fieldListCounter']+1;
             return 'field_braftonium_'.str_replace("_", "-", $GLOBALS['braftonium_slug']).'_'.$GLOBALS['fieldListCounter'];
         }
 ?>
