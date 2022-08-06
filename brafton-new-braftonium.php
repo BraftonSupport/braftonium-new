@@ -12,9 +12,3 @@ include ("blocks/register-blocks.php");
 
 //Include General Settings
 include ("general-settings/settings.php");
-
-//Include Template Swopper
-include ("general-settings/template-overider.php");
-
-//Include Custom Post Types
-include ("general-settings/custom-posts.php");

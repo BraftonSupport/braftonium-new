@@ -67,4 +67,7 @@
             ini_set( 'display_errors', 1 );
         }       
     }  
+
+    include('custom-posts.php');
+    include('template-overider.php');
 ?>
