@@ -38,11 +38,11 @@
             $slugWithoutDash=str_replace('_','',$slug);
 
         //Don't include example block
-            //if( $slug=='example' )
-		    //return;
+            if( $slug=='example' )
+		    return;
 
         //include settings file for block
-            $GLOBALS['fieldListCounter']=0;
+            $GLOBALS['fieldListCounter']=1; //helps ensure the field key is always unique and starts at 1
             include($slug.'/block-settings.php');
 
         //grab settings from block-settings.php
