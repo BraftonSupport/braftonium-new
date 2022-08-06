@@ -4,8 +4,8 @@
      * 
      * Sample Schema for block titled example
      * 1. Create a folder in /blocks/example
-     * 2. Create file /blocks/example/create-block.php (This will initialize the block
-     * 3. All dependancy files example.scss, example.js, example.php 
+     * 2. Create file /blocks/example/create-block.php (This will initialize the block)
+     * 3. Use npm install -> npm run sass-watch to compile sass files
     */
 
     /*Once acf is initialized the code will run through all blocks and look for the block-settings.php file, 
@@ -95,17 +95,21 @@
             }
     }
 
-    //Check the current block being setup and enqueue JS/CSS if they exist. Files must have the same name as the folder Ie. example.js/example.css
+    //Check the current block being setup and enqueue any JS/CSS files if they exist. Multiple assets can be included and 
+    //do not need a specific naming convention BUT for standardization please use the same filename as the block folder ie. example/example.css
+    //Any libraries such as slick slider will also be enqueued
         function braftonium_block_assets(){
             global $braftonium_slug;
-            $generalPath='blocks/'.$braftonium_slug.'/'.$braftonium_slug;
 
-            if(is_file(plugin_dir_path(__DIR__).$generalPath.'.css')){
-                wp_enqueue_style($braftonium_slug.'-styles', plugin_dir_url(__DIR__).$generalPath.'.css');
-            }
-
-            if(is_file(plugin_dir_path(__DIR__).$generalPath.'.js')){
-                wp_enqueue_script($braftonium_slug.'-scripts', plugin_dir_path(__DIR__).$generalPath.'.js');
+            //loop through all files for block
+            foreach (new DirectoryIterator(plugin_dir_path(__DIR__).'blocks/'.$braftonium_slug) as $fileInfo) {                
+                $generalPath='blocks/'.$braftonium_slug.'/';//general block path
+                $fileName=$fileInfo->getfileName();
+                if(strpos($fileName,'.css')!=false) {//css
+                    wp_enqueue_style($braftonium_slug.'-'.str_replace(".css","",$fileName).'-styles', plugin_dir_url(__DIR__).$generalPath.$fileName);
+                } elseif(strpos($fileName,'.js')!=false){//js
+                    wp_enqueue_script($braftonium_slug.'-'.str_replace(".js","",$fileName).'-styles', plugin_dir_url(__DIR__).$generalPath.$fileName);
+                }
             }
         }
 

@@ -1,7 +1,9 @@
 <?php
     /*  This file needs to be in every block folder and MUST aways have the same name
     *   Settings will be saved as a variable which uses the same name as the block folder, but all "-" becomes "_"
-    *   
+    *   All JS and CSS files in the block folder will automatically be enqueued.
+    *   Use "npm install" -> "npm run sass-watch" in /blocks which will compile all css files
+    *
     *   Required:
     *    1. Block Name
     *    2. Block Description
