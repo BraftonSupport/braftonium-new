@@ -38,10 +38,11 @@
             $slugWithoutDash=str_replace('_','',$slug);
 
         //Don't include example block
-            if( $slug=='example' )
-		    return;
+            //if( $slug=='example' )
+		    //return;
 
         //include settings file for block
+            $GLOBALS['fieldListCounter']=0;
             include($slug.'/block-settings.php');
 
         //grab settings from block-settings.php
@@ -116,7 +117,9 @@
         //This makes sure that the field name is always unique to the block
         //You must still add a unique value, see example block. brafton_field_name(basename(__DIR__)).'1'
         //You can always choose to make you own unique value and not use this function
-        function brafton_field_name($slug){
-            return 'field_braftonium_'.str_replace("_", "-", $slug).'_';
+        $fieldListCounter=0;
+        function brafton_field_name(){
+            $GLOBALS['fieldListCounter'].=1;
+            return 'field_braftonium_'.str_replace("_", "-", $GLOBALS['braftonium_slug']).'_'.$GLOBALS['fieldListCounter'];
         }
 ?>

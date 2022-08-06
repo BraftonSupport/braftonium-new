@@ -10,12 +10,12 @@
     *    3. Fields
     */
 
-    $GLOBALS[str_replace('_','-',basename(__DIR__)).'_settings']=array(
+    $GLOBALS[str_replace('_','-',$GLOBALS['braftonium_slug']).'_settings']=array(
         'name'          => 'Example New', //Change this to your name of choice
         'description'   => 'Description', //Change to a custom description
         'fields'        =>  array(  //Delete the demo field and add your own
-            array(//becomes field_braftonium_example_1. Always use brafton_field_name | function is in register-blocks.php
-                'key' => brafton_field_name(basename(__DIR__)).'1', 
+            array(//brafton_field_name() is register-blocks.php will use a counter to uniquely name the fields
+                'key' => brafton_field_name(), //Example outputs field_braftonium_example_1, field_braftonium_example_2 ...
                 'label' => 'Title',
                 'name' => 'title',
                 'type' => 'text',
