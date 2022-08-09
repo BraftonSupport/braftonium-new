@@ -1,61 +1,65 @@
 <?php 
     //Use ACF fields to create template overrides which can be audience, url and/or template sepecific
     //the class override is automatically added to the template to allow custom styling   
+    //NOTE
+    //A swopped template will have the same classes as the original template, with 'template-swopped' class added.
 
     function template_overider($template) {
-        //Setup base name for comparison
-        $templateFileName=basename($template,'.php');
+        //Original template
+        $defaultTemplate=basename($template,'.php'); //removing .php
+        $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
 
         //Get current post name, incase that is what was supplied
         global $post;
-        $postName=$post->post_name;
+        $currentPageName=$post->post_name;
 
         //Get current user to cross check if user should see an overidden template
         global $current_user;
-        $user=$current_user->user_login;
+        $currentUser=$current_user->user_login;
 
         //This fires before ACF so SQL was used to grab the values. The results will contain 4 rows per redirect, one for each field
         global $wpdb;
-        $results = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}options WHERE option_name LIKE 'braftonium_template_page_%'", OBJECT );
-        $newTemplate='';
+        $repeaterResults = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}options WHERE option_name LIKE 'options_braftonium_template_page_%'", OBJECT );
         
         //Set main directory wp-content
         $templateDir=WP_CONTENT_DIR;
+        $newTemplate='';
 
         //Counter +4 as there are 4 results per repeater row
-        for($itemBase=0;($itemBase+3)<count($results);$itemBase+=4){            
+        for($itemBase=0;($itemBase+3)<count($repeaterResults);$itemBase+=4){             
 
-            //Template value
-            $targetTxt=$results[$itemBase+1]->option_value; //url/filename type
-
-            //Type
-            $targetMethod=$results[$itemBase+2]->option_value; //url/filename choice
-
-            //template filename
-            $newTemplate=$results[$itemBase+3]->option_value; //new template relative to /wp-content/
+            $targetTemplate=$repeaterResults[$itemBase+3]->option_value; //target template
+            $disabled=$repeaterResults[$itemBase+1]->option_value; //url/filename
+            $newTemplate=$repeaterResults[$itemBase+2]->option_value; //new template relative to /wp-content/
 
             //Check is this is the required URL/template name
-            if(($targetMethod=='url' && ($postName==$newTemplate)) || $templateFileName==$targetTxt){
+            //1. Check using url/template name
+            //2. Check page name
+            //3. Check template name
 
-                //audience can either be a single user(eg. brafton_admin) or multiple CSV users without spaces (eg. brafton_admin,dev,another_user) or all
-                    $audience=$results[$itemBase]->option_value;                
-                    $audienceList=[$user];
+            if(($url==$targetTemplate || $currentPageName==$targetTemplate || $defaultTemplate==$targetTemplate) && !isset($disabled)){
+
+                //audience can either be a single user(eg. brafton_admin) or 
+                //multiple CSV users without spaces (eg. brafton_admin,dev,another_user) or all
+                    $audience=$repeaterResults[$itemBase+3]->option_value;                
+                    $audienceList=[$currentUser];
                     if(strpos($audience,',')!==false){
                         $audienceList=explode(',',$audience);
                     }
                 
                     //Check is the user should see the override template
-                    if($audience=='all' || in_array($user,$audienceList)){ 
+                    if($audience=='all' || in_array($currentUser,$audienceList)){ //correct audience
                         
                         //Check if new template exists & swop them
-                        $newTemplate=$templateDir.$targetTxt;
+                        $newTemplate=$templateDir.'/'.$newTemplate;
+
                         if(is_file($newTemplate)){
                             $template=$newTemplate;
 
                             //Add "override" class, allowing for custom styling
                             add_filter( 'body_class', 'custom_class' );
                             function custom_class( $classes ) {
-                                $classes[] = 'override';
+                                $classes[] = 'template-swopped';
                                 return $classes;
                             }
                         }
@@ -66,7 +70,7 @@
     }
     add_filter('template_include', 'template_overider',1000);
 
-    //ACF Fields
+    //Template Swopper Fields
     add_action('acf/init', 'braftonium_template_overide_init');
     function braftonium_template_overide_init(){
         acf_add_options_page(array(
@@ -123,7 +127,7 @@
             'parent'         => 'field_braftonium_template_override',
             'type'           => 'text',
             'placeholder'    => 'filename/url',
-            'instructions' => __( 'For archive.php example you can input either: archive.php or a specific url', 'braftonium' ),
+            'instructions' => __( 'You can add the target template as a filename(no need for .php) or a specific full url', 'braftonium' ),
             'required'       => 1,
             'wrapper' => array(
                 'width' => '80',
@@ -132,17 +136,15 @@
             ),
         ));
         acf_add_local_field( array (
-            'key'            => 'template_override_type_key',
-            'label'          => 'Override Type',
-            'name'           => 'template_override_type',
+            'key'            => 'template_override_disable_key',
+            'label'          => 'Disable Swop',
+            'name'           => 'template_override_disable',
             'parent'         => 'field_braftonium_template_override',
-            'type'           => 'radio',
+            'type'           => 'checkbox',
             'choices' => array(
-                'url'	=> 'Url',
-                'name'	=> 'Template Name',
+                'disable' => 'Disable',
             ),
-            'default_value' => 'name',
-            'required'       => 1,
+            'required'       => 0,
             'wrapper' => array(
                 'width' => '20',
                 'class' => '',
@@ -154,8 +156,8 @@
             'label'          => 'Template File Name',
             'name'           => 'template_override_template',
             'parent'         => 'field_braftonium_template_override',
-            'placeholder'    => '/wp-content/',
-            'instructions' => __( 'The path will be added onto /wp-content/. For a new template in themes: /themes/theme-name/yourfile.php OR /plugins/your-plugin/your-file.php', 'braftonium' ),
+            'placeholder'    => '/wp-content..',
+            'instructions' => __( 'The path will be added onto /wp-content. Use /themes OR /plugins to access your new template.', 'braftonium' ),
             'type'           => 'text',
             'required'       => 1,
             'wrapper' => array(
@@ -170,8 +172,8 @@
             'name'           => 'template_override_audience',
             'parent'         => 'field_braftonium_template_override',
             'type'           => 'text',
-            'instructions' => __( 'Prepopulated for YOU. You can set all(logged out users included) or for specific users. Use comma separated list without spaces. ('.esc_html(wp_get_current_user()->user_login ).'/all/dev,username1,username2)', 'braftonium' ),
-            'placeholder'   => esc_html(wp_get_current_user()->user_login ).'/all/dev,username1,username2',
+            'instructions' => __( 'You can set all(logged out users included) OR specific user/s.', 'braftonium' ),
+            'placeholder'   => esc_html(wp_get_current_user()->user_login ).'/all/'.esc_html(wp_get_current_user()->user_login ).',username1,username2',
             'default_value'   => esc_html(wp_get_current_user()->user_login ),
             'required'       => 1,
             'wrapper' => array(

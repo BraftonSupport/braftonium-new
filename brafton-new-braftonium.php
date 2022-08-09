@@ -10,5 +10,5 @@
  //Register all acf blocks
 include ("blocks/register-blocks.php");
 
-//Include General Settings
+//Include General Settings - (General, Custom Posts, Template Swopper, Style/Script Injection)
 include ("general-settings/settings.php");

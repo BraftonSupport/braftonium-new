@@ -1,5 +1,5 @@
 <?php
-    //Setup using ACF
+    //Setup fields for backend options
         add_action('acf/init', 'braftonium_custom_posts');
         function braftonium_custom_posts() {
             acf_add_options_page(array(
