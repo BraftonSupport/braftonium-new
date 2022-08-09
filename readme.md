@@ -1,11 +1,3 @@
-=== Baftonium ===
-Contributors: Jonathan Kowensky, Deryk King, James Allan, Fritz Bester
-Company: Brafton
-Website: https://www.brafton.com
-Requires: ACF Pro(https://www.advancedcustomfields.com/) & NPM if using Sass(optional)
-License: GPLv2 or later
-License URI: https://www.gnu.org/licenses/gpl-2.0.html
-
 # Brafonium Plugin
 
 This is a plugin we have wanted to make for a while, to make our lives easier and we thought we had to share it with everyone! (If you love ACF PRO that is).
