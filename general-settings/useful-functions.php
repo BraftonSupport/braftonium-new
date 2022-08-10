@@ -2,7 +2,7 @@
     //Functions which we find useful and reuse often
 
     //Output to JS console
-    function consoleJS($txt){
+    function consoleJS($txt='here!'){
         echo '<script>console.log("'.$txt.'");</script>';
     }
 
