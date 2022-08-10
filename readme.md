@@ -73,4 +73,8 @@ You can disable a swop without deleting the rule.
 
 This is just a general quick thing you can add to save some time.
 
+## Admin Email
+
+Change the admin email address without needing an email confirmation.
+
 ## More Coming soon!
