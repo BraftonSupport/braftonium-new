@@ -15,3 +15,6 @@ include ("blocks/register-blocks.php");
 
 //Include General Settings - (General, Custom Posts, Template Swopper, Style/Script Injection)
 include ("general-settings/settings.php");
+
+//Include useful functions
+include("general-settings/useful-functions.php");

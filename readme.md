@@ -77,4 +77,12 @@ This is just a general quick thing you can add to save some time.
 
 Change the admin email address without needing an email confirmation.
 
+## Useful Functions
+
+Some functions which we either need often or would just help minimize code:
+1. consoleJS - Output to Inspector console
+2. readingTime - Optional values: choose between min/minute and append text
+3. includeForAdmin - Only include a php file if the user is admin, avoid public errors
+4. templateAssets - Input active theme location for JS/CSS (/library/styles & /library/js are the presets). File must have same name as the template. 
+
 ## More Coming soon!
