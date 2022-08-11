@@ -10,8 +10,8 @@
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
- //Register all acf blocks
-include ("blocks/register-blocks.php");
+//Register all acf blocks
+include ("blocks/blocks.php");
 
 //Include General Settings - (General, Custom Posts, Template Swopper, Style/Script Injection)
 include ("general-settings/settings.php");

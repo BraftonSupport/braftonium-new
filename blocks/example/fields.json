@@ -1,0 +1,23 @@
+[
+    {
+        "key": "field_6a4e7db764361",
+        "label": "Example Text",
+        "name": "example_text",
+        "type": "text",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+            "width": "",
+            "class": "",
+            "id": ""
+        },
+        "default_value": [],
+        "allow_null": 0,
+        "multiple": 1,
+        "ui": 0,
+        "ajax": 0,
+        "return_format": "value",
+        "placeholder": "Enter text"
+    }
+]
