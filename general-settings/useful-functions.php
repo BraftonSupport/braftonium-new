@@ -28,16 +28,4 @@
             include $file;
         }
     }
-
-    //Include template assets
-    function templateAssets($jsLocation='/library/js',$cssLocation='/library/styles'){
-        //All files to be included MUST have the same name as the template
-        $templateName=str_replace('.php','',get_page_template_slug());
-        if(is_file(get_template_directory().$cssLocation.'/'.$templatName.'.css')){
-            wp_enqueue_style('style-'.$templatName, get_template_directory_uri().$cssLocation.'/'.$templatName.'.css');
-        }
-        if(is_file(get_template_directory().$jsLocation.'/'.$templatName.'.js')){
-            wp_enqueue_script('script-'.$templatName, get_template_directory_uri().$jsLocation.'/'.$templatName.'.js');
-        }
-    }
 ?>

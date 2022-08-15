@@ -20,28 +20,13 @@
             return $categories;
         } );
 
-    //Auto enqueue assets IF -auto is in the filename
-    //This is an optional function which can be used
-        function braftonium_enqueue_assets($file){
-            $dir=dirname($file);
-            $url=plugin_dir_url($file);
-            $assets = array_merge(glob("$dir/*-auto.js"),glob("$dir/*-auto.css"));
-            foreach($assets as $asset){
-                if(is_file($asset)){                        
-                    $fileName=basename($asset);
-                    if(strpos($fileName,'.css')!=false) {//css
-                        wp_enqueue_style(str_replace(".css","",$fileName).'-css', $url.$fileName);
-                    } elseif(strpos($fileName,'.js')!=false){//js
-                        wp_enqueue_script(str_replace(".js","",$fileName).'-js', $url.$fileName);
-                    }
-                }
-            }
-        }
-
     //Check for template in theme(if found override plugin template)
         add_filter('acf/register_braftonium_block_type_args', 'my_acf_register_block_type_args');
         function register_braftonium_block_type_args( $args ){
-            $args['render_template']=is_file(str_replace('acf/','/',get_template_directory().$args['name'].'.php')) ? get_template_directory().$args['name'].'.php' : $args['render_template'];
+            $file=str_replace('acf/','/',get_template_directory().$args['name'].'.php');
+            if(is_file($file)){
+                $args['render_template']=get_template_directory().$args['name'].'.php';
+            }
             return $args;
         }
 ?>

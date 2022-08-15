@@ -1,17 +1,10 @@
 <?php
-    $name='example';
-    $title='Example';
-
     acf_register_block_type(array(
-        'name'			    => $name,
-        'title'			    => __($title),   
+        'name'			    => 'example',//slug
+        'title'			    => __('Example'),//title
         'description'       => __('Custom example block'),
         'render_template'	=> dirname(__FILE__).'/'.basename(dirname(__FILE__)).".html.php",
         'enqueue_assets'    => function (){
-            //auto enqueue assets with -auto
-            braftonium_enqueue_assets(__file__);
-
-            //OR add them manually
             //wp_enqueue_style(basename(dirname(__FILE__)).'-css', plugin_dir_url(__FILE__).'/example.css');
             wp_enqueue_script(basename(dirname(__FILE__)).'-js', plugin_dir_url(__FILE__).'/example.js');
         },
@@ -40,16 +33,18 @@
         ],        
     ));  
     
+    //var_dump(file_get_contents(plugin_dir_url(__FILE__).'/fields.json'));
+
     acf_add_local_field_group(array (
-        'key' => 'group_braftonium_'.$name,
-        'title' => $title,
+        'key' => 'group_braftonium_example',//slug
+        'title' => 'Example',//title
         'fields' => json_decode(file_get_contents(plugin_dir_url(__FILE__).'/fields.json'), true),
         'location' => array (
             array (
                 array (
                     'param' => 'block',
                     'operator' => '==',
-                    'value' => 'acf/'.$name,
+                    'value' => 'acf/example',//slug
                 ),
             ),
         ),
