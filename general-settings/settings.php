@@ -29,7 +29,7 @@
                         'label' => 'Turn Debug On',
                         'name' => 'debug-on',
                         'type' => 'checkbox',
-                        'instructions' => 'Will only be turned for for admin users',
+                        'instructions' => 'Debug Mode will only be turned for for admin users. Anyone who is not administrator will not view debug feedback. ',
                         'required' => 0,
                         'conditional_logic' => 0,
                         'wrapper' => array(

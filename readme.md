@@ -17,7 +17,9 @@ It can be a tedious task creating blocks.. You need to rewrite ALOT of code: enq
 
 ### SASS in blocks
 
-We have added a sass compiler to our blocks. Follow the steps below to use it!
+We have added a sass compiler to our blocks. CSS will NOT be commited and will be compiled(SCSS->CSS) when you push to GitHub. You have to push to GitHub/compile it yourself using CLI/just use CSS. You can compile the SCSS file on your local machine for testing and it will compile to CSS when you push to GitHub.
+
+Follow the steps below to use SCSS!
 
 1. Create scss file in the block folder (it can have any name)
 2. Open your terminal to the blocks root folder: /wp-content/plugins/braftonium-new/blocks

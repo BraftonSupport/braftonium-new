@@ -18,7 +18,7 @@
            'fields' => array(
                array(
                    'key' => 'field_braftonium_manage_widgets',
-                   'label' => __( "Custom Widgets", "braftonium" ),
+                   'label' => __( "Widget Areas", "braftonium" ),
                    'name' => 'braftonium_manage_widgets',
                    'type' => 'repeater',
                    'required' => 0,
