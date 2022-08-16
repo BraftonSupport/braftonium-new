@@ -17,7 +17,9 @@ It can be a tedious task creating blocks.. You need to rewrite ALOT of code: enq
 
 ### SASS in blocks
 
-We have added a sass compiler to our blocks. CSS will NOT be commited and will be compiled(SCSS->CSS) when you push to GitHub. You have to push to GitHub/compile it yourself using CLI/just use CSS. You can compile the SCSS file on your local machine for testing and it will compile to CSS when you push to GitHub.
+We have added a sass compiler to our blocks. CSS will NOT be commited.
+
+There is is a Github workflow file (/.github/workflows/compile-scss.yml). When you push to Github the SASS/SCSS files will be compiled into CSS files, with the same name as the SCSS file. This workflow will only be done when you push to Github. If you want to compile SCSS files on your local build to preview before you push, you will need to run the commands using npm.
 
 Follow the steps below to use SCSS!
 

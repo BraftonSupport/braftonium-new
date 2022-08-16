@@ -58,7 +58,7 @@
             ));
             acf_add_local_field( array (
                 'key'            => 'post_type_options_key',
-                'label'          => 'Options',
+                'label'          => 'Taxonomies',
                 'name'           => 'post_type_options',
                 'parent'         => 'field_custom_post_type_new',
                 'type'           => 'checkbox',

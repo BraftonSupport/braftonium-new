@@ -47,16 +47,58 @@
            'instruction_placement' => 'label',
            'hide_on_screen' => '',
            'active' => 1,
-           'description' => '',
+           'description' => 'You can create new widgets here, which you can then work on in the default widget page.',
        ));
        acf_add_local_field( array (
             'key'            => 'widget_name',
-            'label'          => 'Widget Name',
+            'label'          => 'Name',
             'name'           => 'widget_name',
             'parent'         => 'field_braftonium_manage_widgets',
             'type'           => 'text',
             'placeholder'    => '',
             'required'       => 1,
+            'wrapper' => array(
+                'width' => '60',
+                'class' => '',
+                'id' => '',
+            ),
+        ));
+        acf_add_local_field( array (
+            'key'            => 'widget_class',
+            'label'          => 'Class',
+            'name'           => 'widget_class',
+            'parent'         => 'field_braftonium_manage_widgets',
+            'type'           => 'text',
+            'placeholder'    => '',
+            'required'       => 0,
+            'wrapper' => array(
+                'width' => '20',
+                'class' => '',
+                'id' => '',
+            ),
+        ));
+        acf_add_local_field( array (
+            'key'            => 'widget_id',
+            'label'          => 'ID',
+            'name'           => 'widget_id',
+            'parent'         => 'field_braftonium_manage_widgets',
+            'type'           => 'text',
+            'placeholder'    => '',
+            'required'       => 0,
+            'wrapper' => array(
+                'width' => '20',
+                'class' => '',
+                'id' => '',
+            ),
+        ));
+        acf_add_local_field( array (
+            'key'            => 'widget_description',
+            'label'          => 'Description',
+            'name'           => 'widget_description',
+            'parent'         => 'field_braftonium_manage_widgets',
+            'type'           => 'textarea',
+            'placeholder'    => '',
+            'required'       => 0,
             'wrapper' => array(
                 'width' => '',
                 'class' => '',
@@ -68,15 +110,18 @@
             $widgets=get_field('braftonium_manage_widgets', 'option');
             if(isset($widgets) && count($widgets)>0){
                 foreach($widgets as $widget){
+                    $name=$widget['widget_name'];
 
-                    //Sanitize Id be lowercase without spaces or _
-                    $id=str_replace('_','-',str_replace(' ','-',strtolower($widget['widget_name']))); 
+                    //get/create id, class and description
+                    $id=$widget['widget_id'] ? $widget['widget_id'] : 'braftonium-widget-'.str_replace('_','-',str_replace(' ','-',strtolower($name)));
+                    $class=$widget['widget_class'] ? $widget['widget_class'] : 'braftonium-widget-'.$id;                    
+                    $description=$widget['widget_description'] ? $widget['widget_description'] : 'Braftonium widget';
 
                     register_sidebar(array(
-                        'name'		  => __( ucfirst($widget['widget_name']), 'braftonium' ),//make first letter capital
+                        'name'		  => __( ucfirst($name), 'braftonium' ),//make first letter capital
                         'id'			=> $id,
-                        'description'   => __( 'Braftonium widget', 'braftonium' ),
-                        'before_widget' => '<div class="braftonium-widget-'.$id.'">',//custom class
+                        'description'   => __( $description, 'braftonium' ),
+                        'before_widget' => '<div class="'.$class.'">',
                         'after_widget'  => '</div>',
                     ));
                 }
