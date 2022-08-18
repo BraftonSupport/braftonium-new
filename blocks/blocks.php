@@ -2,12 +2,21 @@
     //Include all blocks - .acf.php
         add_action('acf/init', 'start_blocks');
         function start_blocks(){
-            $files = glob(dirname(__FILE__)."/**/*.acf.php");
+            $files = glob(dirname(__FILE__)."/**/acf.php");
+            //loop through all block setup files
             foreach($files as $file){
                 if(is_file($file)){
-                    require_once $file;
+                    require_once $file;//include block setup file
+
+                    //include ACF fields
+                    $json=dirname($file).'/fields.json';
+                    if(is_file($json)){               
+                        foreach(json_decode(file_get_contents($json)) as $group){
+                            acf_add_local_field_group(json_decode(json_encode($group), true));
+                        }                        
+                    }                    
                 }
-            }
+            }            
         }
 
     //Create category for blocks
@@ -15,8 +24,7 @@
             $categories[] = array(
                 'slug'  => 'braftonium',
                 'title' => 'Braftonium'
-            );
-        
+            );        
             return $categories;
         } );
 

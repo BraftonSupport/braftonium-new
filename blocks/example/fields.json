@@ -1,23 +1,45 @@
 [
     {
-        "key": "field_6a4e7db764361",
-        "label": "Example Text",
-        "name": "example_text",
-        "type": "text",
-        "instructions": "",
-        "required": 0,
-        "conditional_logic": 0,
-        "wrapper": {
-            "width": "",
-            "class": "",
-            "id": ""
-        },
-        "default_value": [],
-        "allow_null": 0,
-        "multiple": 1,
-        "ui": 0,
-        "ajax": 0,
-        "return_format": "value",
-        "placeholder": "Enter text"
+        "key": "group_62fe25bdb1eb1",
+        "title": "JSONER",
+        "fields": [
+            {
+                "key": "field_62fe25c37f158",
+                "label": "New Text",
+                "name": "new_text",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "block",
+                    "operator": "==",
+                    "value": "acf\/example"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 1
     }
 ]
