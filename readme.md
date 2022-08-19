@@ -1,53 +1,80 @@
 # Brafonium Plugin
 
-This is a plugin we have wanted to make for a while, to make our lives easier and we thought we had to share it with everyone! (If you love ACF PRO that is).
-- Create: widgets, custom blocks(with sass), custom post types(unlimited taxonomies)
-- Enable debug for administrators only
-- Add JS/CSS to all/specific pages with options to defer/async 
-- Swop a template for a specific audience so you can work on template B while the public see template A
+This is a plugin we have wanted to make for a while, to make our(and clients') lives easier and we thought we had to share it with everyone! (If you love ACF PRO that is). This plugin will only work if you have ACF PRO Plugin.
 
-## ACF BLOCKS
+## General User Options
 
-It can be a tedious task creating blocks.. You need to rewrite ALOT of code: enqueue assets, create groups and fields(with unique ids). We have developed a system which speeds things up(ALOT).. We even added a SASS compiler.. All you have to do now is follow a few simple steps:
-1. Create a new block(block-name) in the blocks folder
-2. Copy the 'block-settings.php' file from /blocks/example.php
-3. Set: Block Name, Description & Fields
-4. Create your block.php file to output your block (As per ACF guidelines it should match the folder name)
-5. Add JS/CSS files(their names don't matter) to the block folder (They will automatically be enqueued thanks to register-blocks.php)
+1. Blocks - We have created blocks which will work with Gutenberg, just like any other block. They will all be in the category braftonium.
+2. Manage Widgets - You can easily create multiple widgets with optional settins like (class, id, description). They will appear in the general Wordpress Widgets page.
+3. Custom Posts & Taxonomies - Create re-usable taxonomies and multiple custom posts without any coding.
+4. Debug - Debug mode will only turn on debug for administrators, so the public doesn't see funny stuff.
+5. Inject custom CSS/CSS stylesheet/JS/JS file with async/defer into the header or footer.
+6. Change the Wordpress Administrator without requiring an email confirmation.
 
-### SASS in blocks
+## Developer Options
 
-We have added a sass compiler to our blocks. CSS will NOT be commited.
+1. Blocks - You can override our blocks templates in your child theme (See Readme in /blocks)
+2. Custom Posts & Taxonomies - Create re-usable taxonomies and multiple custom posts without any coding. You will need to create your own templates, as usual.
+3. Debug - Debug mode will only turn on debug for administrators, so the public doesn't see funny stuff.
+4. Inject custom CSS/CSS stylesheet/JS/JS file with async/defer into the header or footer.
+5. Swop a template for a specific audience so you can work on template B while the public see template A, helping you avoid live problems. This is like a mini staging area.
+6. Include Fonts Awesome - We all tend to use this pretty often.
+7. Change the Wordpress Administrator without requiring an email confirmation.
 
-There is is a Github workflow file (/.github/workflows/compile-scss.yml). When you push to Github the SASS/SCSS files will be compiled into CSS files, with the same name as the SCSS file. This workflow will only be done when you push to Github. If you want to compile SCSS files on your local build to preview before you push, you will need to run the commands using npm.
+## Blocks
 
-Follow the steps below to use SCSS!
+### Overview
 
-1. Create scss file in the block folder (it can have any name)
-2. Open your terminal to the blocks root folder: /wp-content/plugins/braftonium-new/blocks
+It can be a tedious task creating blocks.. You need to rewrite ALOT of code. We have developed a system which speeds things up(ALOT).. and requires minimal code. We have included a SCSS compiler, given you the ability to override templates in your child theme and JSON fields (no database work required to setup fields/groups).
+
+### Example
+
+There is an example block in folder /example. Use this, and it's comments to guide you. This guide will be based on the Example Block.
+
+### Creating a block
+
+1. Create a new folder in /blocks/example
+2. Add acf.php, copy the example.acf.php file and make your changes
+3. Add html.php (this will be where your block outputs)
+4. Create your field group using ACF on the backend and export it to a file with the name fields.json
+5. Add JS/CSS files to the folder and enqueue them (example.acf.php)
+
+### Create & Export Fields
+
+1. Go to the Wordpress admin panel -> Custom Fields -> Add New
+2. Create your field group(make sure to set the Location to your new block) and click publish
+3. Click Tools (next to field groups on the top of the page)
+4. Select your new field group and click Export File
+5. Copy the new JSON file to your new folder and rename it fields.json
+
+### SASS
+
+We have added a sass compiler to our blocks. You can work with SCSS and your CSS file will be created/updated. CSS will NOT be commited to Github, but will be compiled using a Github Workflow (.github/workflows/compile-scss.yml).
+
+Follow the steps below to use SCSS on your local machine!
+
+1. Create example.scss(can have anyname) file in the block folder (remember to enqueue example.css in acf.php)
+2. Open your terminal to the /blocks root folder: /wp-content/plugins/braftonium-new/blocks
 3. Run "install npm" (First time)
-4. Run "npm sass-watch"
+4. Run "npm sass-watch" (Everytime)
 
-You have to run "npm sass-watch" before saving an scss file, then it will either create/update the css file automatically.
+### Override Template
 
-## Custom Posts
+You may want to override the default template (blocks/example/html.php) in your child theme. If you have example.php in /themes/current-theme/templates/blocks/example.php it will be used instead of the default temple (blocks/example/html.php).
 
-No dev work should be needed here. There is a repeater which let's you create multiple post types and add multiple taxonomies including: 
-Categories, Tags & anything else you want.
+## Custom Posts & Taxonomies
+
+No dev work should be needed here. 
+
+There is a repeater which let's you create multiple post types and add multiple taxonomies. You will have to create your own templates. (https://wphierarchy.com/)
 
 ## Add Scripts or Styles
 
-This will give you a few different ways to inject/enqueue JS, Scripts, CSS or Stylesheets. You can add global rules for all pages or you can add rules for specific posts/pages.
-
-### You can enqueue(Requires url):
-1. Scripts (Normal, Defer, Async)
-2. Stylesheets
-
-### And you can inject (Needs to be wrapped in <script> or <style> tags):
-1. Header
-2. Before content
-3. After content
-4. Footer
+This will give you a few different ways to inject/enqueue JS, Scripts, CSS or Stylesheets. Add global rules for all pages or you can add rules for specific posts/pages. Options include:
+1. Location: Header/Footer
+2. Method: CSS/CSS stylesheet/JS/JS Async/JS Defer
+3. Disable: Disable any rule, without having to delete it.
+4. Content: This will either be your JS/CSS/URL
 
 ## Debug
 
@@ -55,10 +82,11 @@ You can enable/disable the debug mode. Debug can only be enabled for the adminis
 
 ## Manage Widgets
 
-No dev work should be needed here. All you need to do is go into the Braftonium settings and enter your widget name into the repeater.
-The text you enter will become sentence case as the widget title and will get a unique class assigned.
-
-All widget classes will start with "braftonium-widget-" and the rest will be your title with all characters being lowercase and spaces/"_" converted to "-". So for "Example 1" the output will be "braftonium-widget-example-1"
+No dev work should be needed here. All you need to do is go into the Braftonium settings and enter your widget name and it will appear in the general Wordpress Widgets page. Optional settings include:
+1. Name (required)
+2. Class
+3. ID
+4. Description
 
 ## Template Swopper
 
@@ -75,11 +103,11 @@ You can disable a swop without deleting the rule.
 
 ## Fonts Awesome
 
-This is just a general quick thing you can add to save some time.
+This is just a general quick thing you can add to save some time. We all love this :)
 
 ## Admin Email
 
-Change the admin email address without needing an email confirmation.
+Change the admin email address without needing an email confirmation. Saving confirmation and email not sending issues.
 
 ## Useful Functions
 
@@ -87,6 +115,5 @@ Some functions which we either need often or would just help minimize code:
 1. consoleJS - Output to Inspector console
 2. readingTime - Optional values: choose between min/minute and append text
 3. includeForAdmin - Only include a php file if the user is admin, avoid public errors
-4. templateAssets - Input active theme location for JS/CSS (/library/styles & /library/js are the presets). File must have same name as the template. 
 
 ## More Coming soon!

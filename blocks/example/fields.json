@@ -1,12 +1,55 @@
 [
     {
-        "key": "group_62fe25bdb1eb1",
-        "title": "JSONER",
+        "key": "group_62ff5092aca33",
+        "title": "Banner",
         "fields": [
             {
-                "key": "field_62fe25c37f158",
-                "label": "New Text",
-                "name": "new_text",
+                "key": "field_62ff50a63c291",
+                "label": "Banner Image",
+                "name": "banner_image",
+                "type": "image",
+                "instructions": "",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "array",
+                "preview_size": "medium",
+                "library": "all",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": ""
+            },
+            {
+                "key": "field_62ff55b7a6bd2",
+                "label": "Banner Title",
+                "name": "banner_title",
+                "type": "text",
+                "instructions": "",
+                "required": 1,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_62ff55c3a6bd3",
+                "label": "Banner Subtitle",
+                "name": "banner_subtitle",
                 "type": "text",
                 "instructions": "",
                 "required": 0,
@@ -33,13 +76,13 @@
             ]
         ],
         "menu_order": 0,
-        "position": "normal",
+        "position": "side",
         "style": "default",
         "label_placement": "top",
         "instruction_placement": "label",
         "hide_on_screen": "",
         "active": true,
         "description": "",
-        "show_in_rest": 1
+        "show_in_rest": 0
     }
 ]

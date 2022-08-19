@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: New Brafton Plugin
- * Description: Custom Plugin for blocks and helper functions
+ * Description: Custom Plugin for blocks, custom posts, taxonomies, helper functions, widget areas, debug, inject scripts/stylesheets/JS/CSS & swop templates for specific users.
  * Version: 1.0
  * Developers: Jonathan Kowensky, Deryk King, James Allan, Fritz Bester
  * Website: https://www.brafton.com

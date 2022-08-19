@@ -1,3 +1,26 @@
-/*Test */
+/*
+USING SCSS
+
+CSS files will be created/edited automatically as you save.
+
+1. Create scss file in the block folder
+2. Open /blocks folder in your terminal
+3. Run "npm install" (first time only)
+4. Run "npm sass-watch" (every time)
+*/
+.example-class {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  background-position: center;
+  background-size: cover;
+  color: black;
+}
+
+.example-class .wrap {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 50px 100px;
+}
 
 /*# sourceMappingURL=../maps/example/example.css.map */

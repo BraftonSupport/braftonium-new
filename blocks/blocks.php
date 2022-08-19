@@ -1,9 +1,10 @@
 <?php 
+    //Please review example files(all have comments) & Readme file
+
     //Include all blocks - .acf.php
         add_action('acf/init', 'start_blocks');
         function start_blocks(){
-            $files = glob(dirname(__FILE__)."/**/acf.php");
-            //loop through all block setup files
+            $files = glob(dirname(__FILE__)."/**/acf.php");            
             foreach($files as $file){
                 if(is_file($file)){
                     require_once $file;//include block setup file
@@ -11,8 +12,10 @@
                     //include ACF fields
                     $json=dirname($file).'/fields.json';
                     if(is_file($json)){               
-                        foreach(json_decode(file_get_contents($json)) as $group){
-                            acf_add_local_field_group(json_decode(json_encode($group), true));
+                        $jsonObject=json_decode(file_get_contents($json));
+                        foreach($jsonObject as $group){
+                            $jsonArray=json_decode(json_encode($group), true);
+                            acf_add_local_field_group($jsonArray);
                         }                        
                     }                    
                 }
@@ -28,13 +31,12 @@
             return $categories;
         } );
 
-    //Check for template in theme(if found override plugin template)
-        add_filter('acf/register_braftonium_block_type_args', 'my_acf_register_block_type_args');
-        function register_braftonium_block_type_args( $args ){
-            $file=str_replace('acf/','/',get_template_directory().$args['name'].'.php');
-            if(is_file($file)){
-                $args['render_template']=get_template_directory().$args['name'].'.php';
-            }
-            return $args;
+    //Check for a override template in /themes/active-theme/templates/blocks/example.html.php
+    //OR use default /blocks/example/html.php
+        function braftonium_blocks_template($block, $content = '', $is_preview = false, $post_id = 0){
+            $baseName=str_replace('acf/','',$block['name']);             
+            $themeOverride=get_template_directory().'/templates/blocks/'.$baseName.'.html.php';            
+            $defaultTemplate=dirname(__FILE__).'/'.$baseName.'/html.php';
+            include(is_file($themeOverride) ? $themeOverride : $defaultTemplate);
         }
 ?>

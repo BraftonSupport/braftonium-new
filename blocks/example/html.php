@@ -1,9 +1,12 @@
-<!-- Main block layout - Must be same name as the parent foler: ie. example/example.php -->
+<!-- Main block layout - Must be have the name html.php -->
 <?php 
-    //$block = $block ?? [];
-    //$supports=$block['supports'];
-    $text = !empty(get_field('new_text')) ? get_field('new_text') : 'No text';
+    $bannerImage = get_field('banner_image');
+    $bannerTitle = get_field('banner_title') ? '<p>'.get_field('banner_title').'</p>' : 'No Title';
+    $bannerSubTitle = get_field('banner_subtitle') ? '<p>'.get_field('banner_subtitle').'</p>' : '';
 ?>
-<div class="example-class">
-    <?php echo $text; ?>
+<div class="example-class" style="background-image:url('<?php echo $bannerImage['url']; ?>')">
+    <div class="wrap">
+        <h1><?php echo $bannerTitle; ?></h1>
+        <?php echo $bannerSubTitle; ?>
+    </div>
 </div>
