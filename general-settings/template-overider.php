@@ -28,14 +28,15 @@
                 $targetTemplate='';
                 $newTemplate='';
 
+                var_dump($allFields[0]);
+
                 foreach($allFields as $field){                    
                     //remove unnecessary text from option_name
                     $field->option_name=explode('template_override_',$field->option_name)[1];                    
                     if($field->option_name == 'audience'){
                         $audience=[$field->option_value];
                         if(strpos($audience[0],',')!==false){
-                            $audience=explode(',',$audience[0]);
-                        }
+                            $audience=explode(',',$audience[0]);                        }
                     } elseif($field->option_name == 'val'){
                         $targetTemplate=$field->option_value;
                     } elseif($field->option_name == 'template'){

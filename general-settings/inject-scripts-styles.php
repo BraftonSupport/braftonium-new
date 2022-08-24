@@ -107,7 +107,7 @@
             'placeholder'    => 'Make sure to wrap your content with either: <style> OR <script>',            
             'required'       => 1,
             'wrapper' => array(
-                'width' => '60',
+                'width' => '40',
                 'class' => '',
                 'id' => '',
             ),
@@ -171,6 +171,52 @@
             'description' => '',
         ));
         acf_add_local_field( array (
+            'key'            => 'braftonium_injector_id',
+            'label'          => 'ID',
+            'name'           => 'script_id',
+            'parent'         => 'field_braftonium_injectors',
+            'type'           => 'text',
+            'required'       => 0,
+            'wrapper' => array(
+                'width' => '20',
+                'class' => '',
+                'id' => '',
+            ),
+            'location' => array(
+                array(
+                    array(
+                        'param' => 'options_page',
+                        'operator' => '==',
+                        'value' => 'braftonium-injector',
+                    ),
+                ),
+            ),
+            'menu_order' => 0,
+            'position' => 'normal',
+            'style' => 'default',
+            'label_placement' => 'top',
+            'instruction_placement' => 'label',
+            'hide_on_screen' => '',
+            'active' => 1,
+            'description' => '',
+            'conditional_logic' => array(
+				array(
+					array(
+						'field' => 'field_6306472f9ea20',
+						'operator' => '!=',
+						'value' => 'css',
+					),
+				),
+				array(
+					array(
+						'field' => 'field_6306472f9ea20',
+						'operator' => '!=',
+						'value' => 'js',
+					),
+				),
+			),
+        ));
+        acf_add_local_field( array (
             'key'            => 'braftonium_injector_text',
             'label'          => 'Inject this',
             'name'           => 'html_value',
@@ -222,15 +268,17 @@
                     if($method=='css'){
                         echo '<style>'.$content.'</style>';
                     } elseif($method=='stylesheet'){
-                        wp_enqueue_style( 'brafton-injection-style-'.$counter, $content);
+                        wp_enqueue_style( $rule['script_id'] , $content, NULL, NULL, $rule['location'] && $rule['location']=='footer');
                     } elseif($method=='js'){
                         echo '<script>'.$content.'</script>';
                     } elseif($method=='js_script'){
-                        wp_enqueue_script( 'brafton-injection-script-'.scriptCounter, $content);
-                    } elseif($method=='js_defer'){
-                        echo '<script src="' . $content . '" defer="defer" type="text/javascript"></script>';
-                    } elseif($method=='js_async'){
-                        echo '<script src="' . $content . '" type="text/javascript" async></script>';
+                        wp_enqueue_script( $rule['script_id'] , $content, NULL, NULL, $rule['location'] && $rule['location']=='footer');
+                    } elseif($method=='js_script_defer'){
+                        wp_enqueue_script( $rule['script_id'], $content, NULL, NULL, $rule['location'] && $rule['location']=='footer');
+                        wp_script_add_data( $rule['script_id'] , 'defer', true );
+                    } elseif($method=='js_script_async'){
+                        wp_enqueue_script( $rule['script_id'], $content, NULL, NULL, $rule['location'] && $rule['location']=='footer');
+                        wp_script_add_data( $rule['script_id'] , 'async', true );
                     }
                 }            
             }        

@@ -4,8 +4,8 @@
    add_action('acf/init', 'braftonium_manage_widgets_init');
    function braftonium_manage_widgets_init(){
        acf_add_options_page(array(
-           'page_title' 	=> 'Manage Widgets',
-           'menu_title'	=> 'Manage Widgets',
+           'page_title' 	=> 'Widgets Areas',
+           'menu_title'	=> 'Widgets Areas',
            'menu_slug' 	=> 'braftonium-manage-widgets',
            'capability'	=> 'edit_posts',
            'redirect'		=> false,
@@ -14,7 +14,7 @@
        );
        acf_add_local_field_group(array(
            'key' => 'group_braftonium_manage_widgets',
-           'title' => 'Manage Widgets',
+           'title' => 'Widgets Areas',
            'fields' => array(
                array(
                    'key' => 'field_braftonium_manage_widgets',
