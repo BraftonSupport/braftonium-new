@@ -4,7 +4,56 @@
     //NOTE
     //A swopped template will have the same classes as the original template, with 'template-swopped' class added.
 
-    function template_overider($template) {
+    // Outputs an array of all plugins.
+        
+    //getOverrideOptions();
+    function getOverrideOptions($template){
+            $allSwopsOptions=array();
+        
+        //Get all Title Values they have _0_/_1_ values with their fields corresponding
+            global $wpdb;
+            /*USE COUNT*/
+            $swops = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}options WHERE option_name LIKE 'options_braftonium_template_page_%_template_override_val'", OBJECT );
+        
+        foreach($swops as $swop){
+            //Clean result to get integer value
+                $key=str_replace('_template_override_val','',str_replace('options_braftonium_template_page_','',$swop->option_name));
+            
+            //Get all values for this (0,1 etc)
+                $allFields = $wpdb->get_results( "SELECT option_name,option_value FROM {$wpdb->prefix}options WHERE option_name LIKE 'options_braftonium_template_page_".$key."%'", OBJECT );            
+            
+            //Loop through fields and clean their keys
+                $disable=false;
+                $audience=array();
+                $targetTemplate='';
+                $newTemplate='';
+
+                foreach($allFields as $field){                    
+                    //remove unnecessary text from option_name
+                    $field->option_name=explode('template_override_',$field->option_name)[1];                    
+                    if($field->option_name == 'audience'){
+                        $audience=[$field->option_value];
+                        if(strpos($audience[0],',')!==false){
+                            $audience=explode(',',$audience[0]);
+                        }
+                    } elseif($field->option_name == 'val'){
+                        $targetTemplate=$field->option_value;
+                    } elseif($field->option_name == 'template'){
+                        $newTemplate=$field->option_value;
+                    } elseif($field->option_name == 'disable'){
+                        $disable=$field->option_value!='';
+                    }
+                }
+
+                if(!$disable){
+                    $defaultTemplate=checkOverride($targetTemplate, $audience, $newTemplate, $template);
+                }
+        }
+        return $template;
+    }
+    add_filter('template_include', 'getOverrideOptions',1001);
+
+    function checkOverride($targetTemplate, $audience, $newTemplate, $template){
         //Original template
         $defaultTemplate=basename($template,'.php'); //removing .php
         $url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
@@ -17,58 +66,25 @@
         global $current_user;
         $currentUser=$current_user->user_login;
 
-        //This fires before ACF so SQL was used to grab the values. The results will contain 4 rows per redirect, one for each field
-        global $wpdb;
-        $repeaterResults = $wpdb->get_results( "SELECT * FROM {$wpdb->prefix}options WHERE option_name LIKE 'options_braftonium_template_page_%'", OBJECT );
-        
         //Set main directory wp-content
         $templateDir=WP_CONTENT_DIR;
-        $newTemplate='';
 
-        //Counter +4 as there are 4 results per repeater row
-        for($itemBase=0;($itemBase+3)<count($repeaterResults);$itemBase+=4){             
-
-            $targetTemplate=$repeaterResults[$itemBase+3]->option_value; //target template
-            $disabled=$repeaterResults[$itemBase+1]->option_value; //url/filename
-            $newTemplate=$repeaterResults[$itemBase+2]->option_value; //new template relative to /wp-content/
-
-            //Check is this is the required URL/template name
-            //1. Check using url/template name
-            //2. Check page name
-            //3. Check template name
-
-            if(($url==$targetTemplate || $currentPageName==$targetTemplate || $defaultTemplate==$targetTemplate) && !isset($disabled)){
-
-                //audience can either be a single user(eg. brafton_admin) or 
-                //multiple CSV users without spaces (eg. brafton_admin,dev,another_user) or all
-                    $audience=$repeaterResults[$itemBase+3]->option_value;                
-                    $audienceList=[$currentUser];
-                    if(strpos($audience,',')!==false){
-                        $audienceList=explode(',',$audience);
-                    }
+        if(($url==$targetTemplate || $currentPageName==$targetTemplate || $defaultTemplate==$targetTemplate)){
+            if($audience=='all' || in_array($currentUser,$audienceList)){
+                $newTemplate=$templateDir.'/'.$newTemplate;
                 
-                    //Check is the user should see the override template
-                    if($audience=='all' || in_array($currentUser,$audienceList)){ //correct audience
-                        
-                        //Check if new template exists & swop them
-                        $newTemplate=$templateDir.'/'.$newTemplate;
-
-                        if(is_file($newTemplate)){
-                            $template=$newTemplate;
-
-                            //Add "override" class, allowing for custom styling
-                            add_filter( 'body_class', 'custom_class' );
-                            function custom_class( $classes ) {
-                                $classes[] = 'template-swopped';
-                                return $classes;
-                            }
-                        }
+                if(is_file($newTemplate)){
+                    $template=$newTemplate;
+                    add_filter( 'body_class', 'custom_class' );
+                    function custom_class( $classes ) {
+                        $classes[] = 'template-swopped';
+                        return $classes;
                     }
+                }
             }
         }
         return $template;
     }
-    add_filter('template_include', 'template_overider',1000);
 
     //Template Swopper Fields
     add_action('acf/init', 'braftonium_template_overide_init');

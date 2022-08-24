@@ -13,6 +13,7 @@ CSS files will be created/edited automatically as you save.
   margin-left: calc(50% - 50vw);
   background-position: center;
   background-size: cover;
+  background-repeat: none;
   color: black;
 }
 
