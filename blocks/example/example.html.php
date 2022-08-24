@@ -39,7 +39,6 @@
                 $img.='linear-gradient(0deg, '.$overLayColor.' ,'.$overLayColor.'), ';
             }
             $img.='url('.get_field('example_image')['url'].');';
-            var_dump($img);
             array_push($inlineStyles,$img);
         }
 
