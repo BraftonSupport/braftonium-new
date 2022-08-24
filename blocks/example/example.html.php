@@ -1,5 +1,7 @@
 <!-- Main block layout - Must be have the name html.php -->
-<?php   
+<?php  
+    $classes                = array('example-class');   //use your own general class name
+
     /*
         This example uses both block support attributes and ACF and has the following features, usable in the page builder:
         1. Background Image/Color Options
@@ -14,14 +16,13 @@
         $blockId                = array_key_exists('anchor',$block) ? 'id="'.$block['anchor'].'"' : '';
 
     //Classes
-        $classes                = array('example-class');   //use your own general class name
         if(array_key_exists('className',$block)){           //Custom class from user input
             array_push($classes,$block['className']);
         }
     
-        $inlineStyles           = array();                  //inline styles
-        $titleStyles            = '';                       //title styles
-        $titleClasses           = array();
+        $inlineStyles           = array();                  //inline styles - block
+        $titleStyles            = '';                       //title styles  - title h2
+        $titleClasses           = array();                  //title classes
 
 
     //Background Color
@@ -81,6 +82,7 @@
     //Banner Title - Optional        
         $optionalTitle=get_field('example_title') ? '<h2 class="'.implode(' ',$titleClasses).'" style="'.$titleStyles.'">'.get_field('example_title').'</h2>' : '';
 ?>
+
 <div <?php echo $blockId;?> class="<?php echo implode(' ',$classes); ?>" style="<?php echo implode('',$inlineStyles); ?>">
     <div class="wrap">
         <?php echo $optionalTitle; ?>      
