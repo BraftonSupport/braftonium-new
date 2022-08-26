@@ -17,7 +17,7 @@
         },
         'category'          => 'braftonium',
         'mode'			    => 'preview',  
-        'render_callback'   => 'braftonium_blocks_example_template',//each block needs its own callback function
+        'render_callback'   => 'braftonium_blocks_template',//this will add your example.html.php file or look for the template override
         'supports'		    => [//Options - https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/
             'anchor'		    => true,                            //anchor - ID
             'customClassName'	=> true,                            //custom class
@@ -39,19 +39,4 @@
             'html'              => false,                           //Disable HTML editing
         ],  
     ));
-
-    //Call back function with template override in the child theme
-    //No need to edit this, just copy and past to new block folder and rename
-    //You can ofcourse disable theme override or do other stuff if you need
-    function braftonium_blocks_example_template($block, $content = '', $is_preview = false, $post_id = 0){
-        $baseName=str_replace('acf/','',$block['name']);             
-
-        //template override location    - themes/active-theme/braftonium/blocks/example.html.php
-            $themeOverride=get_template_directory().'/braftonium/blocks/'.$baseName.'.html.php';            
-        //default template              - plugins/braftonium/blocks/example/example.html.php
-            $defaultTemplate=dirname(__FILE__).'/'.$baseName.'.html.php';
-        
-        //include template
-            include(is_file($themeOverride) ? $themeOverride : $defaultTemplate);
-    }
 ?>
