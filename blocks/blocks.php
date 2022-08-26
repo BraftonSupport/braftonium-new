@@ -5,12 +5,10 @@
     //Include all blocks - .acf.php
         add_action('acf/init', 'start_blocks');
         function start_blocks(){
-            $includeExample = true; //Set this to true to view example block in the backend
-
             //Loop through block folders and include all .acf.php files
             $files = glob(dirname(__FILE__)."/**/*.acf.php"); 
             foreach($files as $file){  
-                if(is_file($file) && (basename($file)!='example.acf.php' || $includeExample)){
+                if(is_file($file) && basename($file)!='example.acf.php'){
                     require_once $file;//include block setup file
 
                     //include ACF fields

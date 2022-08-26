@@ -113,9 +113,9 @@
                 'id' => '',
             ),
             'choices'   => array(
-                'css'                           => 'CSS',                   //footer
+                'css'                           => 'inline CSS',            //footer
                 'stylesheet'                    => 'Stylesheet',            //footer
-                'js'                            => 'JS',                    //enqueue
+                'js'                            => 'JS script block',       //enqueue
                 'js_script'	                    => 'JS (script)',           //enqueue
                 'js_script_async'               => 'JS (async)',            //enqueue
                 'js_script_defer'               => 'JS (defer)',            //enqueue                       
@@ -177,7 +177,7 @@
             'name'           => 'script_id',
             'parent'         => 'field_braftonium_injectors',
             'type'           => 'text',
-            'required'       => 0,
+            'required'       => 1,
             'wrapper' => array(
                 'width' => '20',
                 'class' => '',

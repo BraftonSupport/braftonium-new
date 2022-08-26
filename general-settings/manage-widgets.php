@@ -107,11 +107,10 @@
         ));
 
         //Check fields and create widgets
-            $widgets=get_field('braftonium_manage_widgets', 'option');
+            $widgets=get_field('braftonium_manage_widgets', 'option');            
             if(isset($widgets) && count($widgets)>0){
                 foreach($widgets as $widget){
                     $name=$widget['widget_name'];
-
                     //get/create id, class and description
                     $id=$widget['widget_id'] ? $widget['widget_id'] : 'braftonium-widget-'.str_replace('_','-',str_replace(' ','-',strtolower($name)));
                     $class=$widget['widget_class'] ? $widget['widget_class'] : 'braftonium-widget-'.$id;                    
