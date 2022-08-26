@@ -223,8 +223,8 @@
             'name'           => 'html_value',
             'parent'         => 'field_braftonium_injectors',
             'type'           => 'textarea',
-            'instructions' => __( 'Either input the URL, JS/CSS you want to inject.', 'braftonium' ),
-            'placeholder'    => 'URL OR just write your css/js.',
+            'instructions' => __( 'JS/CSS you want to inject.', 'braftonium' ),
+            'placeholder'    => 'Just write your css/js.',
             'required'       => 1,
             'wrapper' => array(
                 'width' => '',
@@ -240,6 +240,70 @@
                     ),
                 ),
             ),
+            'conditional_logic' => array(
+				array(
+					array(
+						'field' => 'braftonium_injector_method',
+						'operator' => '==',
+						'value' => 'css',
+					),
+				),
+                array(
+					array(
+						'field' => 'braftonium_injector_method',
+						'operator' => '==',
+						'value' => 'js',
+					),
+				),
+			),
+            'menu_order' => 0,
+            'position' => 'normal',
+            'style' => 'default',
+            'label_placement' => 'top',
+            'instruction_placement' => 'label',
+            'hide_on_screen' => '',
+            'active' => 1,
+            'description' => '',
+        ));
+        acf_add_local_field( array (
+            'key'            => 'braftonium_injector_url',
+            'label'          => 'Url',
+            'name'           => 'url_value',
+            'parent'         => 'field_braftonium_injectors',
+            'type'           => 'text',
+            'instructions' => __( 'Paste your url here.', 'braftonium' ),
+            'placeholder'    => '',
+            'required'       => 1,
+            'wrapper' => array(
+                'width' => '',
+                'class' => '',
+                'id' => '',
+            ),
+            'location' => array(
+                array(
+                    array(
+                        'param' => 'options_page',
+                        'operator' => '!=',
+                        'value' => 'braftonium-injector',
+                    ),
+                ),
+            ),
+            'conditional_logic' => array(
+				array(
+					array(
+						'field' => 'braftonium_injector_method',
+						'operator' => '!=',
+						'value' => 'css',
+					),
+				),
+                array(
+					array(
+						'field' => 'braftonium_injector_method',
+						'operator' => '==',
+						'value' => 'js',
+					),
+				),
+			),
             'menu_order' => 0,
             'position' => 'normal',
             'style' => 'default',
@@ -266,20 +330,20 @@
             foreach(injectionsList() as $rule){
                 if($rule['html_disable']!='disable'){ //skip disabled rules
                     if($rule['inject_method']=='stylesheet'){
-                        wp_enqueue_style( $rule['script_id'] , $rule['html_value'], NULL, NULL, $rule['location']=='footer');
+                        wp_enqueue_style( $rule['script_id'] , $rule['url_value'], NULL, NULL, $rule['location']=='footer');
                     } elseif($rule['inject_method']=='js_script'){
 
                         //JS Enqueue
-                        wp_enqueue_script( $rule['script_id'] , $rule['html_value'], NULL, NULL, $rule['location']=='footer');
+                        wp_enqueue_script( $rule['script_id'] , $rule['url_value'], NULL, NULL, $rule['location']=='footer');
                     } elseif($rule['inject_method']=='js_script_defer'){
                         
                         //JS Defer
-                        wp_enqueue_script( $rule['script_id'], $rule['html_value'], NULL, NULL, $rule['location']=='footer');
+                        wp_enqueue_script( $rule['script_id'], $rule['url_value'], NULL, NULL, $rule['location']=='footer');
                         wp_script_add_data( $rule['script_id'] , 'defer', true );
                     } elseif($rule['inject_method']=='js_script_async'){
                         
                         //JS Async
-                        wp_enqueue_script( $rule['script_id'], $rule['html_value'], NULL, NULL, $rule['location']=='footer');
+                        wp_enqueue_script( $rule['script_id'], $rule['url_value'], NULL, NULL, $rule['location']=='footer');
                         wp_script_add_data( $rule['script_id'] , 'async', true );
                     }
                 }            
