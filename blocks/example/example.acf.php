@@ -14,6 +14,7 @@
         'description'       => __('Custom example block'),        
         'enqueue_assets'    => function (){
             wp_enqueue_style('braftonium-example-css', plugin_dir_url(__FILE__).'/example.css');
+            wp_enqueue_style('braftonium-example-js', plugin_dir_url(__FILE__).'/example.js');
         },
         'category'          => 'braftonium',
         'mode'			    => 'preview',  
