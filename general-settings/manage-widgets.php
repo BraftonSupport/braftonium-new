@@ -23,6 +23,7 @@
                    'type' => 'repeater',
                    'required' => 0,
                    'conditional_logic' => 0,
+                   'instructions' => __( 'You can create new widgets here, which you can then work on in the default widget page.', 'braftonium' ),
                    'wrapper' => array(
                        'width' => '',
                        'class' => '',
@@ -46,8 +47,7 @@
            'label_placement' => 'top',
            'instruction_placement' => 'label',
            'hide_on_screen' => '',
-           'active' => 1,
-           'description' => 'You can create new widgets here, which you can then work on in the default widget page.',
+           'active' => 1,           
        ));
        acf_add_local_field( array (
             'key'            => 'widget_name',

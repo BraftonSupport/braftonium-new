@@ -1,9 +1,9 @@
-<!-- Main block layout - Must be have the name html.php -->
+<!-- Main block layout - Must be have the name.html.php (example.html.php) -->
 <?php  
     $classes                = array('example-class');   //use your own general class name
 
     /*
-        This example uses both block support attributes and ACF and has the following features, usable in the page builder:
+        This example uses both block support attributes and ACF. Example features include:
         1. Background Image/Color Options
         2. Background Image Overlay (Including opacity/alpha with RGBA)
         3. Alignment, Padding & Margin options

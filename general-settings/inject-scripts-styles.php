@@ -15,12 +15,13 @@
         );
         acf_add_local_field_group(array(
              'key' => 'group_braftonium_injector',
-             'title' => 'Scripts & Styles',
+             'title' => 'Scripts & Styles',             
              'fields' => array(
                  array(
                      'key' => 'field_braftonium_injectors',
                      'label' => __( "Rules", "braftonium" ),                     
                      'name' => 'braftonium_injector',
+                     'instructions' => __( 'Use this to inject JS/CSS text or enqueue assets.', 'braftonium' ),
                      'type' => 'repeater',
                      'required' => 0,
                      'conditional_logic' => 0,
@@ -250,38 +251,64 @@
         ));
     }
 
-    function braftonium_inject(){   
-        //Create list of rules
-            $injections=get_field('field_braftonium_injectors', 'option') ? get_field('field_braftonium_injectors', 'option') : array();
-            global $post;
-            $localInjections=get_field('field_braftonium_injectors', $post->ID);
-            if(get_field('field_braftonium_injectors', 'option')){
-                $injections=array_merge(get_field('field_braftonium_injectors', 'option'),$injections);
-            }
+    function injectionsList(){
+        $injections=get_field('field_braftonium_injectors', 'option') ? get_field('field_braftonium_injectors', 'option') : array();
+        global $post;
+        $localInjections=get_field('field_braftonium_injectors', $post->ID);
+        if(get_field('field_braftonium_injectors', 'option')){
+            $injections=array_merge(get_field('field_braftonium_injectors', 'option'),$injections);
+        }
+        return $injections;
+    }
 
-            $scriptCounter=0;
-            foreach($injections as $rule){
-                $scriptCounter=$scriptCounter+1;
+    function braftonium_enqueuer(){   
+        //Create list of rules
+            foreach(injectionsList() as $rule){
                 if($rule['html_disable']!='disable'){ //skip disabled rules
-                    $method=$rule['inject_method'];
-                    $content=$rule['html_value'];
-                    if($method=='css'){
-                        echo '<style>'.$content.'</style>';
-                    } elseif($method=='stylesheet'){
-                        wp_enqueue_style( $rule['script_id'] , $content, NULL, NULL, $rule['location'] && $rule['location']=='footer');
-                    } elseif($method=='js'){
-                        echo '<script>'.$content.'</script>';
-                    } elseif($method=='js_script'){
-                        wp_enqueue_script( $rule['script_id'] , $content, NULL, NULL, $rule['location'] && $rule['location']=='footer');
-                    } elseif($method=='js_script_defer'){
-                        wp_enqueue_script( $rule['script_id'], $content, NULL, NULL, $rule['location'] && $rule['location']=='footer');
+                    if($rule['inject_method']=='stylesheet'){
+                        wp_enqueue_style( $rule['script_id'] , $rule['html_value'], NULL, NULL, $rule['location']=='footer');
+                    } elseif($rule['inject_method']=='js_script'){
+
+                        //JS Enqueue
+                        wp_enqueue_script( $rule['script_id'] , $rule['html_value'], NULL, NULL, $rule['location']=='footer');
+                    } elseif($rule['inject_method']=='js_script_defer'){
+                        
+                        //JS Defer
+                        wp_enqueue_script( $rule['script_id'], $rule['html_value'], NULL, NULL, $rule['location']=='footer');
                         wp_script_add_data( $rule['script_id'] , 'defer', true );
-                    } elseif($method=='js_script_async'){
-                        wp_enqueue_script( $rule['script_id'], $content, NULL, NULL, $rule['location'] && $rule['location']=='footer');
+                    } elseif($rule['inject_method']=='js_script_async'){
+                        
+                        //JS Async
+                        wp_enqueue_script( $rule['script_id'], $rule['html_value'], NULL, NULL, $rule['location']=='footer');
                         wp_script_add_data( $rule['script_id'] , 'async', true );
                     }
                 }            
             }        
     }
-    add_action('wp_enqueue_scripts', 'braftonium_inject');
+    add_action('wp_enqueue_scripts', 'braftonium_enqueuer');
+
+    //wp footer hook -> headerFooterCheck
+    function braftonium_footer_injections(){
+        headerFooterCheck('footer');
+    }
+    add_action('wp_foot', 'braftonium_footer_injections');
+
+    //wp header hook -> headeFooterCheck
+    function braftonium_header_injections(){
+        headerFooterCheck('header');  
+    }
+    add_action('wp_head', 'braftonium_header_injections');
+
+    //Check for CSS/JS to inject into footer/header
+    function headerFooterCheck($location){
+        foreach(injectionsList() as $rule){
+            if($rule['html_disable']!='disable' && $rule['location']==$location){ //skip disabled rules
+                if($rule['inject_method']=='css'){
+                    echo '<style id="'.$rule['script_id'].'">'.$rule['html_value'].'</style>';
+                } elseif($rule['inject_method']=='js'){
+                    echo '<script id="'.$rule['script_id'].'">'.$rule['html_value'].'</script>';
+                }
+            }            
+        }  
+    }    
     ?>

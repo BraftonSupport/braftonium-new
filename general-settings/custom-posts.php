@@ -106,10 +106,7 @@
             ));
            
             //prepare taxonomies for post type - will always have tags & categories
-            $taxonomies=array(
-                'category' => __('Categories','braftonium'),
-                'post_tag' => __('Tags','braftonium'),
-            );                        
+            $taxonomies=array('category' => __('Categories','braftonium'),'post_tag' => __('Tags','braftonium'),);                        
             $taxonomies = array_merge($taxonomies,get_field('custom_post_types_taxonomies', 'option'));
             $taxOptions = array();             
             foreach( $taxonomies as $tax){                        
@@ -127,7 +124,7 @@
                 'type'           => 'checkbox',
                 'required'       => 0,
                 'choices' => $taxOptions,
-                'allow_custom' => false,
+                'allow_custom' => true,
                 'save_custom' => true,
                 'layout' => 'horizontal',
             ));
@@ -154,9 +151,9 @@
 
                         //setup standard info
                         $posttypes_labels = array(
-                            'name'				=> $custom_post_santype.'s',
+                            'name'				=> $custom_post_santype,
                             'singular_name'		=> $custom_post_santype,
-                            'menu_name'			=> $custom_post_santype.'s',
+                            'menu_name'			=> $custom_post_santype,
                             'add_new_item'		=> __( 'Add New ', 'braftonium' ).' '.$custom_post_santype,
                         );
 

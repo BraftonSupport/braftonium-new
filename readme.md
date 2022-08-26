@@ -5,7 +5,7 @@ This is a plugin we have wanted to make for a while, to make our(and clients') l
 ## General User Options
 
 1. Blocks - We have created blocks which will work with Gutenberg, just like any other block. They will all be in the category braftonium.
-2. Manage Widgets - You can easily create multiple widgets with optional settins like (class, id, description). They will appear in the general Wordpress Widgets page.
+2. Widget Areas - You can easily create multiple widgets with optional settings like (class, id, description). They will appear in the general Wordpress Widgets page.
 3. Custom Posts & Taxonomies - Create re-usable taxonomies and multiple custom posts without any coding.
 4. Debug - Debug mode will only turn on debug for administrators, so the public doesn't see funny stuff.
 5. Inject custom CSS/CSS stylesheet/JS/JS file with async/defer into the header or footer.
@@ -16,28 +16,29 @@ This is a plugin we have wanted to make for a while, to make our(and clients') l
 1. Blocks - You can override our blocks templates in your child theme (See Readme in /blocks)
 2. Custom Posts & Taxonomies - Create re-usable taxonomies and multiple custom posts without any coding. You will need to create your own templates, as usual.
 3. Debug - Debug mode will only turn on debug for administrators, so the public doesn't see funny stuff.
-4. Inject custom CSS/CSS stylesheet/JS/JS file with async/defer into the header or footer.
-5. Swop a template for a specific audience so you can work on template B while the public see template A, helping you avoid live problems. This is like a mini staging area.
-6. Include Fonts Awesome - We all tend to use this pretty often.
-7. Change the Wordpress Administrator without requiring an email confirmation.
+4. Inject custom CSS/CSS stylesheet/JS/JS file with async/defer into the header or footer for specific pages/posts or on the entire site.
+5. Swop a template for a specific audience so you can work on a template while the public see the old template, helping you avoid live problems. This is like a mini staging area.
+6. Change the Wordpress Administrator without requiring an email confirmation.
 
-## Blocks
+## Brafonium Blocks
 
 ### Overview
 
-It can be a tedious task creating blocks.. You need to rewrite ALOT of code. We have developed a system which speeds things up(ALOT).. and requires minimal code. We have included a SCSS compiler, given you the ability to override templates in your child theme and JSON fields (no database work required to setup fields/groups).
+It can be a tedious task creating blocks.. You need to rewrite/remember ALOT of code. We have developed a system which speeds things up(ALOT).. and requires minimal code, while keeping the dev in full control. We have included a SCSS compiler and given you the ability to override templates in your child theme. We also enabled JSON field import so you can just export it using ACF in Wordpress itself.
 
 ### Example
 
-There is an example block in folder /example. Use this, and it's comments to guide you. This guide will be based on the Example Block.
+There is an example block in folder /example. Use this, and it's comments to guide you. This guide will be based on the New Block.
 
 ### Creating a block
 
-1. Create a new folder in /blocks/example
-2. Add acf.php, copy the example.acf.php file and make your changes
-3. Add html.php (this will be where your block outputs)
-4. Create your field group using ACF on the backend and export it to a file with the name fields.json
-5. Add JS/CSS files to the folder and enqueue them (example.acf.php)
+1. Create a new folder in /blocks/new-block
+2. Copy the example.acf.php file to new-block and rename it new-block.html.php & delete example features you won't be using
+3. Edit All block fields like: title, description, assets, render_callback (must match braftonium_blocks_new_block_template)
+4. Rename braftonium_blocks_example_template function to braftonium_blocks_new_block_template (and update as callback in)
+5. Create all your asset files/libraries & enqueue them.
+6. Create new-block.html.php file to output the block.
+7. On Wordpress backend in ACF, create your field group, click tools and export it to a file with the name new-block-fields.json
 
 ### Create & Export Fields
 
@@ -49,18 +50,19 @@ There is an example block in folder /example. Use this, and it's comments to gui
 
 ### SASS
 
-We have added a sass compiler to our blocks. You can work with SCSS and your CSS file will be created/updated. CSS will NOT be commited to Github, but will be compiled using a Github Workflow (.github/workflows/compile-scss.yml).
+We have added a sass compiler to our blocks. You can work with SCSS and your CSS file will be created/updated. CSS will NOT be commited to Github, but will be compiled using a Github Workflow (.github/workflows/compile-scss.yml). 
 
 Follow the steps below to use SCSS on your local machine!
 
-1. Create example.scss(can have anyname) file in the block folder (remember to enqueue example.css in acf.php)
-2. Open your terminal to the /blocks root folder: /wp-content/plugins/braftonium-new/blocks
+1. Create new-block.scss (sass will compile any file name) file in the block folder (remember to enqueue new-block.css)
+2. Open your terminal to the folder: /wp-content/plugins/braftonium-new/blocks
 3. Run "install npm" (First time)
 4. Run "npm sass-watch" (Everytime)
+* You do not need to create the CSS file first, the compiler will do it
 
 ### Override Template
 
-You may want to override the default template (blocks/example/html.php) in your child theme. If you have example.php in /themes/current-theme/templates/blocks/example.php it will be used instead of the default temple (blocks/example/html.php).
+You/someone else may want to override the default template (/wp-content/plugins/braftonium-new/blocks/new-block.html.php). If the template new-block.html.php is found in /themes/current-theme/braftonium/blocks/ it will be used instead of the default template.
 
 ## Custom Posts & Taxonomies
 
@@ -72,7 +74,9 @@ There is a repeater which let's you create multiple post types and add multiple 
 
 This will give you a few different ways to inject/enqueue JS, Scripts, CSS or Stylesheets. Add global rules for all pages or you can add rules for specific posts/pages. Options include:
 1. Location: Header/Footer
-2. Method: CSS/CSS stylesheet/JS/JS Async/JS Defer
+2. Method Files: CSS stylesheet/JS Async/JS Defer
+3. Method Inline: Type actual JS/CSS
+4. Give each rule a unique id
 3. Disable: Disable any rule, without having to delete it.
 4. Content: This will either be your JS/CSS/URL
 
@@ -80,7 +84,7 @@ This will give you a few different ways to inject/enqueue JS, Scripts, CSS or St
 
 You can enable/disable the debug mode. Debug can only be enabled for the administrators, making sure the public don't see weird stuff.
 
-## Manage Widgets
+## Widget Areas
 
 No dev work should be needed here. All you need to do is go into the Braftonium settings and enter your widget name and it will appear in the general Wordpress Widgets page. Optional settings include:
 1. Name (required)
@@ -90,9 +94,12 @@ No dev work should be needed here. All you need to do is go into the Braftonium 
 
 ## Template Swopper
 
-Often we need to work on a template which is live OR create a duplicate page and template so we do affect the live site. The solution to this is to be able to create a new template which will swop with the intended(general/public) template.
+Often we need to work on a template which is live OR create a duplicate page and template so we do affect the live site. The solution to this is to be able to create a new template which will swop with the intended(general/public) template. You can make the template swop by selecting the following options:
+1. Target Template - This can be a template file name, a post/page name or a full url.
+2. Audience - Who should it swop for? Choose between everyone, just you or a few other users.
+3. New Template - This can be anywhere in /wp-content. We recommend you use a child theme or custom plugin.
 
-A swopped template will have the class "template-swopped" added to the page. (This will help with custom styling while you work).
+A swopped template will have the class "dev-template" added to the page. (This will help with custom styling while you work).
 
 ### Steps:
 1. Input template name (eg. page.php - .php is not needed but won't break it) or full url (eg. https://www.yoursite.com/contact-us)
@@ -100,10 +107,6 @@ A swopped template will have the class "template-swopped" added to the page. (Th
 3. Set audience - This can either be set to all or a single username or multiple usernames (no spaces eg. user_1,user_2)
 
 You can disable a swop without deleting the rule.
-
-## Fonts Awesome
-
-This is just a general quick thing you can add to save some time. We all love this :)
 
 ## Admin Email
 

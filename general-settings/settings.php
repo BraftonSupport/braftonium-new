@@ -33,7 +33,7 @@
                         'required' => 0,
                         'conditional_logic' => 0,
                         'wrapper' => array(
-                            'width' => '25',
+                            'width' => '50',
                             'class' => '',
                             'id' => '',
                         ),
