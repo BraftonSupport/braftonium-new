@@ -10,11 +10,22 @@
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
-//Register all acf blocks
-include ("blocks/blocks.php");
+ //stop direct access
+if ( ! defined( 'ABSPATH' ) )  exit;
 
-//Include General Settings - (General, Custom Posts, Template Swopper, Style/Script Injection)
-include ("general-settings/settings.php");
+// get acf, see if plugin exists
+require_once ABSPATH . 'wp-content/plugins/advanced-custom-fields-pro/acf.php';
 
-//Include useful functions
-include("general-settings/useful-functions.php");
+// make acf options
+if(!function_exists("acf_add_local_field_group")){
+	_e( "Hey, do you have the ACF plugin? You don\'t need to activate it but it\'ll be nice if it was there.", "braftonium" );
+} else {
+    //Register all acf blocks
+    include ("blocks/blocks.php");
+
+    //Include General Settings - (General, Custom Posts, Template Swopper, Style/Script Injection)
+    include ("general-settings/settings.php");
+
+    //Include useful functions
+    include("general-settings/useful-functions.php");
+}

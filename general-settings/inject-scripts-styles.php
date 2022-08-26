@@ -115,7 +115,7 @@
             'choices'   => array(
                 'css'                           => 'inline CSS',            //footer
                 'stylesheet'                    => 'Stylesheet',            //footer
-                'js'                            => 'JS script block',       //enqueue
+                'js'                            => 'JS (script block)',     //enqueue
                 'js_script'	                    => 'JS (script)',           //enqueue
                 'js_script_async'               => 'JS (async)',            //enqueue
                 'js_script_defer'               => 'JS (defer)',            //enqueue                       
