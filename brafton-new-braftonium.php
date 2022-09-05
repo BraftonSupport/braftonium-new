@@ -28,4 +28,7 @@ if(!function_exists("acf_add_local_field_group")){
 
     //Include useful functions
     include("general-settings/useful-functions.php");
+
+    //Include patterns
+    include("patterns/include-patterns.php");
 }

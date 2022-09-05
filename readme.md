@@ -19,6 +19,7 @@ This is a plugin we have wanted to make for a while, to make our(and clients') l
 4. Inject custom CSS/CSS stylesheet/JS/JS file with async/defer into the header or footer for specific pages/posts or on the entire site.
 5. Swop a template for a specific audience so you can work on a template while the public see the old template, helping you avoid live problems. This is like a mini staging area.
 6. Change the Wordpress Administrator without requiring an email confirmation.
+7. Patterns - You can create and save patterns in your child theme.
 
 ## Brafonium Blocks
 
@@ -68,7 +69,12 @@ You/someone else may want to override the default template (/wp-content/plugins/
 
 No dev work should be needed here. 
 
-There is a repeater which let's you create multiple post types and add multiple taxonomies. You will have to create your own templates. (https://wphierarchy.com/)
+There is a repeater which let's you create multiple post types and add multiple taxonomies. You will have to create your own templates. (https://wphierarchy.com/).
+
+1. There is a filter for the taxonomy arguments which is: braftonium_taxonomy_filter
+2. There is a filter for Post type arguments which is: braftonium_modify_custom_post_type
+
+You can use these filters to edit/further customize the post types and taxonomies however you may need.
 
 ## Add Scripts or Styles
 
@@ -91,6 +97,18 @@ No dev work should be needed here. All you need to do is go into the Braftonium 
 2. Class
 3. ID
 4. Description
+
+## Patterns
+
+A pattern is a block/blocks which you copy so you can re-use them without having to keep recreating them. For the steps below to make a pattern in your child theme.
+1. Navigate to the plugin folder /patterns and copy example-pattern.php
+2. In your child theme make sure you have the following folder structure: childe-theme/braftonium/patterns and paste the example-pattern.php file there.
+3. Rename your file appropriately using the following schematic: new-example-pattern.php. All patter must end "-pattern.php".
+4. Edit your pattern name & description.
+5. Create a block/collection of blocks in your Wordpress backend and copy them/the block.
+6. Delete the example "content" value and paste your new pattern.
+
+Your new pattern should now be with all the other patterns :)
 
 ## Template Swopper
 

@@ -35,7 +35,7 @@
 
                     //Current page values | Template Name, Full URL & Page Name
                         $defaultTemplateName    = basename($template,'.php'); //removing .php
-                        $currenUrl              = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+                        $currenUrl              = "https://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
                         $currentPageName        = $post->post_name;
 
                     //Template target to replace & new replacement template
@@ -54,6 +54,7 @@
                             $template=$newTemplate;
                             add_filter( 'body_class', 'custom_class' );
                             function custom_class( $classes ) {
+                                remove_filter('body_class','custom_class');
                                 $classes[] = 'dev-template';
                                 return $classes;
                             }

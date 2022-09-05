@@ -211,14 +211,19 @@
                                     'menu_name' => __( $taxName.'s' ),
                                 ); 	
                                 
-                                register_taxonomy(strtolower($tax), array($custom_post_slug), array(
-                                    'hierarchical' => true,
-                                    'labels' => $labels,
-                                    'show_ui' => true,
-                                    'show_admin_column' => true,
-                                    'query_var' => true,
-                                    'rewrite' => array( 'slug' => strtolower($tax) ),
-                                ));
+                                register_taxonomy(
+                                    strtolower($tax), 
+                                    array($custom_post_slug), 
+                                    apply_filters( 'braftonium_taxonomy_filter', array(
+                                        'hierarchical' => true,
+                                        'labels' => $labels,
+                                        'show_ui' => true,
+                                        'show_admin_column' => true,
+                                        'query_var' => true,
+                                        'rewrite' => array( 'slug' => strtolower($tax) ),
+                                        )
+                                    )
+                                );
                             }				
                         }
                     endforeach;

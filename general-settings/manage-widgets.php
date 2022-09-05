@@ -112,9 +112,9 @@
                 foreach($widgets as $widget){
                     $name=$widget['widget_name'];
                     //get/create id, class and description
-                    $id=$widget['widget_id'] ? $widget['widget_id'] : 'braftonium-widget-'.str_replace('_','-',str_replace(' ','-',strtolower($name)));
-                    $class=$widget['widget_class'] ? $widget['widget_class'] : 'braftonium-widget-'.$id;                    
-                    $description=$widget['widget_description'] ? $widget['widget_description'] : 'Braftonium widget';
+                    $id=$widget['widget_id'] ? $widget['widget_id'] && $widget['widget_id']!=='' : 'braftonium-widget-'.str_replace('_','-',str_replace(' ','-',strtolower($name)));
+                    $class=$widget['widget_class'] ? $widget['widget_class'] && $widget['widget_class']!=='' : 'braftonium-widget-'.$id;                    
+                    $description=$widget['widget_description'] ? $widget['widget_description'] && $widget['widget_description']!=='': 'Braftonium widget';
 
                     register_sidebar(array(
                         'name'		  => __( ucfirst($name), 'braftonium' ),//make first letter capital
