@@ -42,7 +42,7 @@
         //template override location    - themes/active-theme/braftonium/blocks/example.html.php
             $themeOverride=get_template_directory().'/braftonium/blocks/'.$baseName.'.html.php';            
         //default template              - plugins/braftonium/blocks/example/example.html.php
-            $defaultTemplate=dirname(__FILE__).'/'.$baseName.'.html.php';
+            $defaultTemplate=dirname(__FILE__).'/'.$baseName.'/'.$baseName.'.html.php';
         
         //include template
             include(is_file($themeOverride) ? $themeOverride : $defaultTemplate);
