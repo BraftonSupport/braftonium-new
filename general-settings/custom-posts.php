@@ -107,7 +107,7 @@
            
             //prepare taxonomies for post type - will always have tags & categories
             $taxonomies=array('category' => __('Categories','braftonium'),'post_tag' => __('Tags','braftonium'),);                        
-            $taxonomies = array_merge($taxonomies,get_field('custom_post_types_taxonomies', 'option'));
+            $taxonomies = array_merge($taxonomies,(array) get_field('custom_post_types_taxonomies', 'option'));
             $taxOptions = array();             
             foreach( $taxonomies as $tax){                        
                 $name=ucfirst(str_replace('_',' ',str_replace('post_tag','tag',$tax)));
