@@ -104,26 +104,27 @@
                 'class' => '',
                 'id' => '',
             ),
-        ));
-
-        //Check fields and create widgets
-            $widgets=get_field('braftonium_manage_widgets', 'option');            
-            if(isset($widgets) && count($widgets)>0){
-                foreach($widgets as $widget){
-                    $name=$widget['widget_name'];
-                    //get/create id, class and description
-                    $id=$widget['widget_id'] ? $widget['widget_id'] && $widget['widget_id']!=='' : 'braftonium-widget-'.str_replace('_','-',str_replace(' ','-',strtolower($name)));
-                    $class=$widget['widget_class'] ? $widget['widget_class'] && $widget['widget_class']!=='' : 'braftonium-widget-'.$id;                    
-                    $description=$widget['widget_description'] ? $widget['widget_description'] && $widget['widget_description']!=='': 'Braftonium widget';
+        ));  
+    }
+    
+    function createWidgetAreas(){
+        $widgets = get_field('braftonium_manage_widgets', 'option');
+        if(isset($widgets) && count($widgets)>0){
+            foreach($widgets as $widget){
+                    $name = $widget['widget_name'];
+                    $id = !empty($widget['widget_id']) ? $widget['widget_id'] : ('braftonium-widget-'.str_replace('_','-',str_replace(' ','-',strtolower($name))));
+                    $class = !empty($widget['widget_class']) ? $widget['widget_class'] : ('braftonium-widget-'.$id);
+                    $description = !empty($widget['widget_description']) ? $widget['widget_description'] : 'Braftonium widget';
 
                     register_sidebar(array(
-                        'name'		  => __( ucfirst($name), 'braftonium' ),//make first letter capital
-                        'id'			=> $id,
+                        'name'          => __( ucfirst($name), 'braftonium' ),//make first letter capital
+                        'id'            => $id,
                         'description'   => __( $description, 'braftonium' ),
                         'before_widget' => '<div class="'.$class.'">',
                         'after_widget'  => '</div>',
                     ));
-                }
-            }    
+            }
+        }
     }
+    add_action( 'widgets_init', 'createWidgetAreas' );
 ?>
