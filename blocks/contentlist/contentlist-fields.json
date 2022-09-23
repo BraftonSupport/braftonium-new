@@ -19,46 +19,13 @@
                 "layout": "block",
                 "sub_fields": [
                     {
-                        "key": "field_632d856c63b84",
-                        "label": "Query Type",
-                        "name": "type",
-                        "type": "select",
-                        "instructions": "",
-                        "required": 0,
-                        "conditional_logic": 0,
-                        "wrapper": {
-                            "width": "",
-                            "class": "",
-                            "id": ""
-                        },
-                        "choices": {
-                            "main_query": "Main Query",
-                            "custom_query": "Custom Query"
-                        },
-                        "default_value": false,
-                        "allow_null": 0,
-                        "multiple": 0,
-                        "ui": 0,
-                        "return_format": "value",
-                        "ajax": 0,
-                        "placeholder": ""
-                    },
-                    {
                         "key": "field_632b2cf65729b",
                         "label": "Content Type",
                         "name": "post_type",
                         "type": "select",
                         "instructions": "",
                         "required": 0,
-                        "conditional_logic": [
-                            [
-                                {
-                                    "field": "field_632d856c63b84",
-                                    "operator": "==",
-                                    "value": "custom_query"
-                                }
-                            ]
-                        ],
+                        "conditional_logic": 0,
                         "wrapper": {
                             "width": "",
                             "class": "",
@@ -86,11 +53,6 @@
                         "required": 0,
                         "conditional_logic": [
                             [
-                                {
-                                    "field": "field_632d856c63b84",
-                                    "operator": "==",
-                                    "value": "custom_query"
-                                },
                                 {
                                     "field": "field_632b2cf65729b",
                                     "operator": "!=",
@@ -121,11 +83,6 @@
                         "required": 0,
                         "conditional_logic": [
                             [
-                                {
-                                    "field": "field_632d856c63b84",
-                                    "operator": "==",
-                                    "value": "custom_query"
-                                },
                                 {
                                     "field": "field_632b2cf65729b",
                                     "operator": "!=",
