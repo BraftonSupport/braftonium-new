@@ -97,6 +97,10 @@
                         $excerpt = get_the_excerpt($post_id);
                         $link    = is_admin() ? '#' : get_the_permalink($post_id);
                         $image   = get_the_post_thumbnail_url($post_id, 'full');
+                        $readingTime = '';
+                        if(function_exists('readingTime')){
+                            $readingTime = readingTime($post_id);
+                        }
                     ?>
                     <div class='list-item'>
                         <?php if($image){ ?>
@@ -107,6 +111,9 @@
                         </div>
                         <?php } ?>
                         <h3 class='list-item-title'><a href='<?php echo $link; ?>'><?php echo $title; ?></a></h3>
+                        <div class='list-item-meta'>
+                            <?php echo $readingTime; ?>
+                        </div>
                         <div class='list-item-content'>
                             <?php echo $excerpt; ?>
                         </div>
@@ -153,8 +160,8 @@
             display: flex;
             flex-flow: column;
             flex-basis: <?php echo $column_pct; ?>%;
-            border-style: solid;
             <?php if($border_width){ ?>
+                border-style: solid;
                 border-width: <?php echo $border_width; ?>px;
             <?php } ?>
             <?php if($border_color){ ?>
