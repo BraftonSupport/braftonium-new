@@ -15,7 +15,7 @@
             'jsx' 			    => true,                            //Enable JSX
             'color'             => [                                //COLORS
                     'background'            => true,
-                    'text'                  => true,             
+                    'text'                  => false,             
                     'gradients'             => true,
             ],
             'spacing'           => [                                //Spacing
