@@ -1,0 +1,42 @@
+.brafton-banner{
+    width: 100vw !important;
+    max-width: 100vw !important;
+    position: relative;
+    min-height: 300px;
+    >img, .overlay{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+    }
+    >.overlay{
+        z-index:0;
+    }
+    >img{
+        object-fit: cover;
+        z-index:0;
+    }
+    >.wrap{
+        padding-top:137px; 
+        padding-bottom:124px;
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto; 
+        @media only screen and (max-width: 600px) {
+            padding-top:80px; 
+            padding-bottom:80px;
+            max-width:calc(100vw - 20px);
+        }    
+    }
+}
+
+.acf-block-preview .brafton-banner {
+    left: calc(50% - 50vw);
+}
+
+.wp-site-blocks, body > .is-root-container, .edit-post-visual-editor__post-title-wrapper, .wp-block-group.alignfull, .wp-block-group.has-background, .wp-block-cover.alignfull, .is-root-container .wp-block[data-align="full"] > .wp-block-group, .is-root-container .wp-block[data-align="full"] > .wp-block-cover {
+    padding-left: inherit !important;
+    padding-right: inherit !important;
+}
+.interface-interface-skeleton__content{
+    overflow-x: hidden;
+}
