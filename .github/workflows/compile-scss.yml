@@ -1,0 +1,22 @@
+name: Compile Sass
+
+on:
+    push:
+        branches:
+            - '**'
+
+
+jobs:
+  Deploy-to-Brafton-Server:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout repo and submodules
+          uses: actions/checkout@v1
+          with:
+            submodules: recursive
+        - name: Use Node.js
+          uses: actions/setup-node@v1
+          with:
+            node-version: '12.x'
+        - name: Compile Sass
+          run: cd ./blocks && npm install && npm run sass-compile
