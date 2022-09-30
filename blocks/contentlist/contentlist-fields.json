@@ -34,7 +34,7 @@
                         "choices": {
                             "post": "Posts",
                             "page": "Pages",
-                            "attachment": "Media"
+                            "test-type": "Test Type"
                         },
                         "default_value": false,
                         "allow_null": 1,
@@ -149,8 +149,29 @@
                 "sub_fields": [
                     {
                         "key": "field_632d9c26bd85c",
-                        "label": "Columns",
-                        "name": "columns",
+                        "label": "Columns (Desktop)",
+                        "name": "columns_desktop",
+                        "type": "number",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": 3,
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "min": 1,
+                        "max": "",
+                        "step": ""
+                    },
+                    {
+                        "key": "field_6336db89ee10a",
+                        "label": "Columns (Tablet)",
+                        "name": "columns_tablet",
                         "type": "number",
                         "instructions": "",
                         "required": 0,
@@ -164,7 +185,49 @@
                         "placeholder": "",
                         "prepend": "",
                         "append": "",
+                        "min": 2,
+                        "max": "",
+                        "step": ""
+                    },
+                    {
+                        "key": "field_6336dba8ee10b",
+                        "label": "Columns (Mobile)",
+                        "name": "columns_mobile",
+                        "type": "number",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": 1,
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
                         "min": 1,
+                        "max": "",
+                        "step": ""
+                    },
+                    {
+                        "key": "field_6336cb9ad0ee2",
+                        "label": "Gap",
+                        "name": "gap",
+                        "type": "number",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": 10,
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "min": "",
                         "max": "",
                         "step": ""
                     }
@@ -311,10 +374,46 @@
                         },
                         "allow_null": 0,
                         "other_choice": 0,
-                        "default_value": "",
+                        "default_value": "stretch",
                         "layout": "horizontal",
                         "return_format": "value",
                         "save_other_choice": 0
+                    },
+                    {
+                        "key": "field_6336da95cc10a",
+                        "label": "Item Background",
+                        "name": "background_color",
+                        "type": "color_picker",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "enable_opacity": 0,
+                        "return_format": "string"
+                    },
+                    {
+                        "key": "field_6336dea7428b7",
+                        "label": "Button Text",
+                        "name": "button_text",
+                        "type": "text",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "maxlength": ""
                     }
                 ]
             }

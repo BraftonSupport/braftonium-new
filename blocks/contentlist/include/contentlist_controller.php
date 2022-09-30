@@ -46,11 +46,11 @@ function contentlist_load_post_types( $field ) {
     $field['choices'] = array();
 
     $post_types = get_post_types(array(
-        'public' => true,
-        '_builtin' => true
+        'public' => true
     ), 'objects');
 
     if( is_array($post_types) ) {
+        $post_types = array_filter($post_types, function($pt){ return $pt->name != 'attachment'; });
         foreach( $post_types as $pt ) {
             $field['choices'][ $pt->name ] = $pt->label;
         }

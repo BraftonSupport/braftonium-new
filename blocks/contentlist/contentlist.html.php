@@ -24,11 +24,25 @@
     // Layout
     // ------
 
-    $columns = get_field('contentlist_layout_columns');
-    $column_pct = 100;
-    if($columns){
-        $column_pct = 100 / $columns;
+    $columns_mobile  = get_field('contentlist_layout_columns_mobile');
+    $columns_pct_mobile = 100;
+    if($columns_mobile > 0){
+        $columns_pct_mobile = round(100 / $columns_mobile, 2);
     }
+
+    $columns_tablet  = get_field('contentlist_layout_columns_tablet');
+    $columns_pct_tablet = 100;
+    if($columns_tablet > 0){
+        $columns_pct_tablet = round(100 / $columns_tablet, 2);
+    }
+
+    $columns_desktop = get_field('contentlist_layout_columns_desktop');
+    $columns_pct_desktop = 100;
+    if($columns_desktop > 0){
+        $columns_pct_desktop = round(100 / $columns_desktop, 2);
+    }
+
+    $gap = (int) get_field('contentlist_layout_gap');
 
     // Item
     // ----
@@ -41,6 +55,9 @@
 
     $vertical_align = get_field('contentlist_item_vertical_alignment');
     $content_align  = get_field('contentlist_item_content_alignment');
+    $item_bg_color  = get_field('contentlist_item_background_color');
+
+    $button_text    = get_field('contentlist_item_button_text');
 
 
     // Common Block Settings
@@ -117,6 +134,11 @@
                         <div class='list-item-content'>
                             <?php echo $excerpt; ?>
                         </div>
+                        <?php if($button_text){ ?>
+                            <a class='list-item-btn' href='<?php echo $link; ?>'>
+                                <?php echo $button_text; ?>
+                            </a>
+                        <?php } ?>
                     </div>
                     <?php
                     }
@@ -132,8 +154,10 @@
 
         <?php echo "#{$blockId} .brafton_contentlist"; ?> {
             display: flex;
-            flex-flow: column;
+            flex-flow: <?php echo $columns_mobile > 1 ? 'row wrap' : 'column'; ?>;
+            gap: <?php echo $gap; ?>px;
         }
+
         @media(min-width:768px){
             <?php echo "#{$blockId} .brafton_contentlist"; ?> {
                 display: flex;
@@ -156,10 +180,11 @@
                 <?php } ?>
             }
         }
+
         <?php echo "#{$blockId} .brafton_contentlist .list-item"; ?> {
             display: flex;
             flex-flow: column;
-            flex-basis: <?php echo $column_pct; ?>%;
+            flex-basis: calc(<?php echo $columns_pct_mobile; ?>% - <?php echo $gap; ?>px);
             <?php if($border_width){ ?>
                 border-style: solid;
                 border-width: <?php echo $border_width; ?>px;
@@ -170,7 +195,21 @@
             <?php if($border_radius){ ?>
                 border-radius: <?php echo $border_radius; ?>px;
             <?php } ?>
+            background-color: <?php echo $item_bg_color; ?>;
         }
+
+        @media(min-width:768px){
+            <?php echo "#{$blockId} .brafton_contentlist .list-item"; ?> {
+                flex-basis: calc(<?php echo $columns_pct_tablet; ?>% - <?php echo $gap; ?>px);
+            }
+        }
+
+        @media(min-width:1024px){
+            <?php echo "#{$blockId} .brafton_contentlist .list-item"; ?> {
+                flex-basis: calc(<?php echo $columns_pct_desktop; ?>% - <?php echo $gap; ?>px);
+            }
+        }
+
         <?php if($image_height) { ?>
             <?php echo "#{$blockId} .brafton_contentlist .list-item .list-item-image"; ?> {
                 padding-bottom: <?php echo $image_height; ?>%; 
@@ -178,6 +217,7 @@
         <?php } ?>
         <?php if($content_align) { ?>
             <?php echo "#{$blockId} .brafton_contentlist .list-item .list-item-title"; ?>,
+            <?php echo "#{$blockId} .brafton_contentlist .list-item .list-item-meta"; ?>,
             <?php echo "#{$blockId} .brafton_contentlist .list-item .list-item-content"; ?>,
             <?php echo "#{$blockId} .brafton_contentlist .list-item .list-item-btn"; ?> {
                 text-align: <?php echo $content_align; ?>
