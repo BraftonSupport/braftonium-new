@@ -27,6 +27,8 @@
     $prev_arrow = "";
     $next_arrow = "";
 
+    $preview = get_field('preview');
+
     if($arrows_visibility == 'visible'){
 
         // default
@@ -109,32 +111,81 @@
         </div>
     </div>
     <script>
-        jQuery(document).ready(function($){
+        var <?php echo "$blockId"; ?>_slider_args = {
+            dots: <?php echo $dots_visibility == 'visible' ? 'true' : 'false'; ?>,
+            arrows: <?php echo $arrows_visibility == 'visible' ? 'true' : 'false'; ?>,
+            prevArrow: "<?php echo $prev_arrow; ?>",
+            nextArrow: "<?php echo $next_arrow; ?>",
+            speed: <?php echo $playback_slide_speed; ?>,
+            autoplay: <?php echo $playback_autoplay_speed ? 'true' : 'false'; ?>,
+            autoplaySpeed: <?php echo $playback_autoplay_speed; ?>,
+            swipeToSlide: <?php echo is_admin() ? "false" : "true"; ?>,
+            infinite: <?php echo is_admin() ? "false" : "true"; ?>,
+            slidesToShow: <?php echo $presentation_slides_to_show; ?>,
+            slidesToScroll: <?php echo $presentation_slides_to_scroll; ?>
+        };
 
-            var selector = "<?php echo "#{$blockId} .brafton_slider"; ?>";
-            var is_editor = document.body.classList.contains( 'block-editor-page' );
+        jQuery(document).ready(function(){
 
-            var slider = $(selector).not('.slick-initialized').slick({
-                dots: <?php echo $dots_visibility == 'visible' ? 'true' : 'false'; ?>,
-                arrows: <?php echo $arrows_visibility == 'visible' ? 'true' : 'false'; ?>,
-                prevArrow: "<?php echo $prev_arrow; ?>",
-                nextArrow: "<?php echo $next_arrow; ?>",
-                speed: <?php echo $playback_slide_speed; ?>,
-                autoplay: <?php echo $playback_autoplay_speed ? 'true' : 'false'; ?>,
-                autoplaySpeed: <?php echo $playback_autoplay_speed; ?>,
-                swipeToSlide: true,
-                infinite: is_editor ? false : true,
-                waitForAnimate: false,
-                slidesToShow: <?php echo $presentation_slides_to_show; ?>,
-                slidesToScroll: <?php echo $presentation_slides_to_scroll; ?>
-            });
+            <?php if(is_admin()){ ?>
+
+                var slider = jQuery(
+    "<?php echo "#{$blockId} > .wrap > .brafton_slider > .block-editor-inner-blocks > .block-editor-block-list__layout"; ?>"
+                )
+                .not('.slick-initialized').slick(<?php echo "$blockId"; ?>_slider_args, '.braftonium-block.slide');
+
+                <?php if(!$preview){ ?>
+
+                jQuery(
+    "<?php echo "#{$blockId} > .wrap > .brafton_slider > .block-editor-inner-blocks > .block-editor-block-list__layout"; ?>"
+                ).slick('unslick');
+
+                <?php } ?>
+
+            <?php } else { ?>
+
+                var slider = jQuery("<?php echo "#{$blockId} .brafton_slider"; ?>")
+                .not('.slick-initialized').slick(<?php echo "$blockId"; ?>_slider_args);
+
+            <?php } ?>
+
 
         });
+
     </script>
     <style>
+        <?php if(is_admin()){ ?>
+            <?php echo "#{$blockId}"; ?> {
+                min-height: 150px;
+                padding:12px;
+                border: 1px solid rgba(200, 200, 200, 0.25);
+            }
+            <?php echo "#{$blockId}:hover"; ?> {
+                border: 1px solid #aaa;
+            }
+            <?php echo "#{$blockId}::before"; ?> {
+                content: 'Slider';
+                position:absolute;
+                top:0;
+                right:0;
+                padding: 2px 4px;
+                background-color: #aaa;
+                font-size: 8px;
+                line-height:1;
+                color: white;
+                opacity:0.25;
+                pointer-events:none;
+            }
+            <?php echo "#{$blockId}:hover:before"; ?> {
+                opacity:1;
+            }
+            <?php echo "#{$blockId} .wrap"; ?> {
+                margin: 0;
+            }
+        <?php } ?>
         <?php if($dots_placement == 'top'){ ?>
             <?php echo "#{$blockId} .brafton_slider .slick-dots"; ?> {
-                top:-50px;
+                top: -50px;
             }
         <?php } ?>
         <?php if($dots_color) { ?>
@@ -150,21 +201,25 @@
         <?php if($arrows_visibility == 'visible' && $arrows_type == 'text'){ ?>
             <?php echo "#{$blockId} .brafton_slider .slick-next.text-next"; ?>,
             <?php echo "#{$blockId} .brafton_slider .slick-prev.text-prev"; ?> {
-                width:auto;
-                font-size:initial;
+                width: auto;
+                font-size: initial;
                 color: <?php echo $arrows_text_color; ?>;
             }
             <?php echo "#{$blockId} .brafton_slider .slick-next.text-next"; ?> {
-                transform:translateX(100%);
+                transform: translateX(100%);
             }
             <?php echo "#{$blockId} .brafton_slider .slick-prev.text-prev"; ?> {
-                transform:translateX(-100%);
+                transform: translateX(-100%);
             }
             <?php echo "#{$blockId} .brafton_slider .text-next::before"; ?>,
             <?php echo "#{$blockId} .brafton_slider .text-prev::before"; ?> {
                 display:none;
             }
         <?php } ?>
+        <?php echo "#{$blockId} .brafton_slider .slick-next::before"; ?>,
+        <?php echo "#{$blockId} .brafton_slider .slick-prev::before"; ?> {
+            color: rgba(0,0,0,0.5);
+        }
         <?php if(!empty($block['align_content'])){ 
             $valign = '';
             if($block['align_content'] == 'top'){

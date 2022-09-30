@@ -4,6 +4,25 @@
         "title": "Slider Configuration",
         "fields": [
             {
+                "key": "field_6336abc8de37f",
+                "label": "Preview",
+                "name": "preview",
+                "type": "true_false",
+                "instructions": "Preview slider?",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0,
+                "ui": 1,
+                "ui_on_text": "",
+                "ui_off_text": ""
+            },
+            {
                 "key": "field_6319af6860106",
                 "label": "Dots",
                 "name": "dots",
@@ -69,7 +88,7 @@
                         },
                         "allow_null": 0,
                         "other_choice": 0,
-                        "default_value": "",
+                        "default_value": "bottom",
                         "layout": "horizontal",
                         "return_format": "value",
                         "save_other_choice": 0
