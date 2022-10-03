@@ -1,0 +1,28 @@
+.braftonium-list{
+    margin:1rem 0;
+    background-repeat: no-repeat;
+    background-size:cover;
+    padding:1rem 0;
+    position: relative;
+    &.full-width{
+        width:100vw;
+        max-width:100vw;
+        margin-left:calc(50% - 50vw) !important;
+    }
+    .wrap{
+        max-width:1200px;
+        margin-inline: auto;
+        z-index:1;
+        position: relative;
+        padding:0 1em;
+    }
+    .background-image{
+        position: absolute;
+        object-position: center;
+        width:100%;
+        height:100%;
+        object-fit: cover;
+        top:0;
+        left:0;
+    }
+}
