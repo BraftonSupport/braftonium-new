@@ -202,28 +202,33 @@
                     <div class="acf-map">
                         <div class="marker" data-lat="<?php echo esc_attr($map['lat']); ?>" data-lng="<?php echo esc_attr($map['lng']); ?>"></div>
                     </div>
-                <?php endif;
-                if( have_rows('address') ):
-                    
-                        while ( have_rows('address') ) : the_row();
+                <?php endif; ?>
+                <div class="client-address-row">
+                <?php
+                if( have_rows('address') ):                    
+                    while ( have_rows('address') ) : the_row();
+                            echo '<div class="client-address">';
                             echo sanitize_text_field(get_sub_field('address_line'));
-                            echo '<br/>';
-                        endwhile;
-                endif;
-                if( have_rows('phone') ):
+                            echo '</div>';
+                    endwhile;
+                endif; 
+
+                if( have_rows('phone') ): 
                     while ( have_rows('phone') ) : the_row();
+                        echo '<div class="client-phone">';
                         echo sanitize_text_field(get_sub_field('phone_label')).': ';
                         $tel = '';
                         $tel = sanitize_text_field(get_sub_field('phone_number'));
                         printf('<a href="tel:%s">%s</a>', $tel, $tel);
-                        echo '<br/>';
+                        echo '</div>';
                     endwhile;
-                endif;
-                if( have_rows('email') ):
+                endif; 
+                if( have_rows('email') ): 
                     while ( have_rows('email') ) : the_row();
+                        echo '<div class="client-email">';
                         echo sanitize_text_field(get_sub_field('email_label')).': ';
                         echo sanitize_text_field(get_sub_field('email_address'));
-                        echo '<br/>';
+                        echo '</div>';
                     endwhile;
                 endif;
         ?>
