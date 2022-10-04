@@ -98,6 +98,7 @@
             'hide_on_screen' => '',
             'active' => 1,
             'description' => '',
+            'layout' => 'horizontal',
         ));
         acf_add_local_field( array (
             'key'            => 'braftonium_injector_method',
@@ -374,5 +375,5 @@
                 }
             }            
         }  
-    }    
+    } 
     ?>

@@ -2,7 +2,10 @@
     //Please review example files(all have comments) & Readme file
     //SET includeExample = true to add example to back end
 
-    //Include all blocks - .acf.php
+    //Add braftonium folder to your childtheme then add blocks folder to it
+    //Add Templates or Fields to /child-theme/braftonium/blocks to override either file
+
+    //Initialize all blocks and fields
         add_action('acf/init', 'start_blocks');
         function start_blocks(){
             //Loop through block folders and include all .acf.php files
@@ -11,15 +14,17 @@
                 if(is_file($file) && basename($file)!='example.acf.php'){
                     require_once $file;//include block setup file
 
-                    //include ACF fields
-                    $json=dirname($file).'/'.str_replace('.acf.php','-fields.json',basename($file));
+                    //Select correct JSON file to include, can be overwritten in a child-theme. See Readme for notes.
+                    $themeOverride  = get_template_directory().'/braftonium/blocks/'.$baseName.'-fields.html.php'; 
+                    $json           = is_file($themeOverride) ? $themeOverride : dirname($file).'/'.str_replace('.acf.php','-fields.json',basename($file));          
+
                     if(is_file($json)){        
                         $jsonObject=json_decode(file_get_contents($json));
                         foreach($jsonObject as $group){
                             $jsonArray=json_decode(json_encode($group), true);
                             acf_add_local_field_group($jsonArray);
                         }                        
-                    }                    
+                    }
                 }
             }            
         }
@@ -31,20 +36,32 @@
                 'title' => 'Braftonium'
             );        
             return $categories;
-        } );
+        });
 
-    //Call back function with template override in the child theme
+    //Call back function with template override for the child theme
     //No need to edit this, just copy and past to new block folder and rename
     //You can ofcourse disable theme override or do other stuff if you need
     function braftonium_blocks_template($block, $content = '', $is_preview = false, $post_id = 0){
-        $baseName=str_replace('acf/','',$block['name']);             
+            $baseName=str_replace('acf/','',$block['name']);             
 
         //template override location    - themes/active-theme/braftonium/blocks/example.html.php
             $themeOverride=get_template_directory().'/braftonium/blocks/'.$baseName.'.html.php';            
         //default template              - plugins/braftonium/blocks/example/example.html.php
             $defaultTemplate=dirname(__FILE__).'/'.$baseName.'/'.$baseName.'.html.php';
         
-        //include template
-            include(is_file($themeOverride) ? $themeOverride : $defaultTemplate);
+        //template priorities
+        //Theme override -> Template in block folder -> Display error if none found
+            if(is_file($themeOverride)){
+                include($themeOverride);
+            } else if (is_file($defaultTemplate)){
+                include($defaultTemplate);
+            } else {
+                echo '<p style="color-red;font-size:2rem;font-weight:bold;">No template found</p>';
+                echo '<p style="color-red;">'.
+                        'Your template should have the name: '.$baseName.'.html.php<br>'.
+                        'Please make sure there is a template in the block folder first: '.
+                        dirname(__FILE__).'/'.$baseName.'/'.$baseName.'.html.php'.
+                     '</p>';
+            }
     }
 ?>

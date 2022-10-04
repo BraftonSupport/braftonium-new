@@ -24,7 +24,7 @@
 
     //Include a file if user is administrator
     function includeForAdmin($file){
-        if(current_user_can('administrator')){
+        if(current_user_can('administrator') && !is_admin()){
             include $file;
         }
     }

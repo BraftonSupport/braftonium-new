@@ -41,7 +41,7 @@
                     //Template target to replace & new replacement template
                         $newTemplate            = $keys[getTemplateValue($optionCounter,'template')];
                         $targetToReplace        = $keys[getTemplateValue($optionCounter,'val')];
-                        $newTemplate            = WP_CONTENT_DIR.$newTemplate;   
+                        $newTemplate            = get_template_directory().'/braftonium/templates/'.$baseName.'.html.php';            
                     
                     //Check if current URL, Page Name/Template name are targeted
                         $isTargetUrl            = $currenUrl            ==  $targetToReplace;
@@ -90,7 +90,7 @@
                     'label' => __( "Template Overrides", "braftonium" ),
                     'name' => 'braftonium_template_page',
                     'type' => 'repeater',
-                    'instructions' => __( 'Create a template redirect for a specific audience. Now you can develop without breaking a template everyone else sees and share it with other users.', 'braftonium' ),
+                    'instructions' => __( 'Create a template redirect for a specific audience. Now you can develop without breaking a template everyone else sees and share it with other users. Templates MUST be in /child-theme/braftonium/templates/', 'braftonium' ),
                     'required' => 0,
                     'conditional_logic' => 0,
                     'wrapper' => array(
@@ -125,11 +125,11 @@
             'name'           => 'template_override_val',
             'parent'         => 'field_braftonium_template_override',
             'type'           => 'text',
-            'placeholder'    => 'filename.php/full-url/page name',
-            'instructions' => __( 'Add the target template as a filename(no need for .php) or a specific full url', 'braftonium' ),
+            'placeholder'    => 'filename.php/full-url',
+            'instructions' => __( 'Add the target template filename or specific full url', 'braftonium' ),
             'required'       => 1,
             'wrapper' => array(
-                'width' => '80',
+                'width' => '34',
                 'class' => '',
                 'id' => '',
             ),
@@ -139,13 +139,14 @@
             'label'          => 'Disable',
             'name'           => 'template_override_disable',
             'parent'         => 'field_braftonium_template_override',
+            'instructions' => __( 'Rule off', 'braftonium' ),
             'type'           => 'checkbox',
             'choices' => array(
                 'disable' => 'Yes',
             ),
             'required'       => 0,
             'wrapper' => array(
-                'width' => '20',
+                'width' => '10',
                 'class' => '',
                 'id' => '',
             ),
@@ -155,12 +156,12 @@
             'label'          => 'New Template',
             'name'           => 'template_override_template',
             'parent'         => 'field_braftonium_template_override',
-            'placeholder'    => '/themes/.. OR /plugins/..',
-            'instructions' => __( 'The path will be added onto /wp-content. You can choose any theme/plugin.', 'braftonium' ),
+            'placeholder'    => 'template-name.php',
+            'instructions' => __('Child theme', 'braftonium' ),
             'type'           => 'text',
             'required'       => 1,
             'wrapper' => array(
-                'width' => '',
+                'width' => '20',
                 'class' => '',
                 'id' => '',
             ),
@@ -171,12 +172,12 @@
             'name'           => 'template_override_audience',
             'parent'         => 'field_braftonium_template_override',
             'type'           => 'text',
-            'instructions' => __( 'You can set all to switch the template for any user OR specific user/s... all or username csv(without spaces): {user_1,dev,some_other_person,etc}', 'braftonium' ),
+            'instructions' => __( 'Choose who sees new template', 'braftonium' ),
             'placeholder'   => esc_html(wp_get_current_user()->user_login ).'/all/'.esc_html(wp_get_current_user()->user_login ).',username1,username2',
             'default_value'   => esc_html(wp_get_current_user()->user_login ),
             'required'       => 1,
             'wrapper' => array(
-                'width' => '',
+                'width' => '36',
                 'class' => '',
                 'id' => '',
             ),
