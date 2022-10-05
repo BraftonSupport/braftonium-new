@@ -164,7 +164,7 @@
                 border: 1px solid #aaa;
             }
             <?php echo "#{$blockId}::before"; ?> {
-                content: 'Slider';
+                content: 'SLIDER';
                 position:absolute;
                 top:0;
                 right:0;

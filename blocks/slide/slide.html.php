@@ -44,7 +44,7 @@
                 border: 1px solid #aaa;
             }
             <?php echo "#{$blockId}::before"; ?> {
-                content: 'Single Slide';
+                content: 'SINGLE SLIDE';
                 position: absolute;
                 top: 0;
                 right: 0;

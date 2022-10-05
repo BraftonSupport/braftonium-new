@@ -5,12 +5,6 @@
         'title'               => __('Single Slide'),
         'description'         => __('Single Slide for the Content Slider'),
 
-        'enqueue_assets'      => function (){
-            if(is_admin()){
-                wp_enqueue_style('slide-css', plugin_dir_url(__FILE__).'slide.css');
-            }
-        },
-
         'parent'              => ['acf/slider'],
 
         'category'            => 'braftonium',
