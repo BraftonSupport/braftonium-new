@@ -36,7 +36,7 @@
                             "page": "Pages",
                             "test-type": "Test Type"
                         },
-                        "default_value": false,
+                        "default_value": "post",
                         "allow_null": 1,
                         "multiple": 0,
                         "ui": 0,
@@ -181,11 +181,11 @@
                             "class": "",
                             "id": ""
                         },
-                        "default_value": "",
+                        "default_value": 2,
                         "placeholder": "",
                         "prepend": "",
                         "append": "",
-                        "min": 2,
+                        "min": 1,
                         "max": "",
                         "step": ""
                     },
@@ -212,8 +212,29 @@
                     },
                     {
                         "key": "field_6336cb9ad0ee2",
-                        "label": "Gap",
-                        "name": "gap",
+                        "label": "Column Gap",
+                        "name": "column_gap",
+                        "type": "number",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": 10,
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "min": "",
+                        "max": "",
+                        "step": ""
+                    },
+                    {
+                        "key": "field_633c123b9f91b",
+                        "label": "Row Gap",
+                        "name": "row_gap",
                         "type": "number",
                         "instructions": "",
                         "required": 0,
@@ -320,13 +341,30 @@
                             "class": "",
                             "id": ""
                         },
-                        "default_value": "",
+                        "default_value": 75,
                         "placeholder": "",
                         "prepend": "",
                         "append": "",
                         "min": 0,
                         "max": 100,
                         "step": ""
+                    },
+                    {
+                        "key": "field_633c2b022d978",
+                        "label": "Background Color",
+                        "name": "background_color",
+                        "type": "color_picker",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "",
+                        "enable_opacity": 1,
+                        "return_format": "string"
                     },
                     {
                         "key": "field_632d9d280e14a",
@@ -342,9 +380,9 @@
                             "id": ""
                         },
                         "choices": {
-                            "left": "Left",
+                            "start": "Left",
                             "center": "Center",
-                            "right": "Right"
+                            "end": "Right"
                         },
                         "allow_null": 0,
                         "other_choice": 0,
@@ -355,36 +393,10 @@
                     },
                     {
                         "key": "field_632dbd65afcd6",
-                        "label": "Height Alignment",
+                        "label": "List Item Layout",
                         "name": "vertical_alignment",
-                        "type": "radio",
-                        "instructions": "",
-                        "required": 0,
-                        "conditional_logic": 0,
-                        "wrapper": {
-                            "width": "",
-                            "class": "",
-                            "id": ""
-                        },
-                        "choices": {
-                            "top": "Top",
-                            "center": "Center",
-                            "bottom": "Bottom",
-                            "stretch": "Stretch"
-                        },
-                        "allow_null": 0,
-                        "other_choice": 0,
-                        "default_value": "stretch",
-                        "layout": "horizontal",
-                        "return_format": "value",
-                        "save_other_choice": 0
-                    },
-                    {
-                        "key": "field_6336da95cc10a",
-                        "label": "Item Background",
-                        "name": "background_color",
-                        "type": "color_picker",
-                        "instructions": "",
+                        "type": "number",
+                        "instructions": "Use this to select which item in the card should expand to fill the available area. Top item starts at 1.",
                         "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
@@ -393,8 +405,12 @@
                             "id": ""
                         },
                         "default_value": "",
-                        "enable_opacity": 0,
-                        "return_format": "string"
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "min": 0,
+                        "max": "",
+                        "step": ""
                     },
                     {
                         "key": "field_6336dea7428b7",

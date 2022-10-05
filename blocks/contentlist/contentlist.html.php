@@ -31,18 +31,21 @@
     }
 
     $columns_tablet  = get_field('contentlist_layout_columns_tablet');
-    $columns_pct_tablet = 100;
+    $columns_pct_tablet = 50;
     if($columns_tablet > 0){
         $columns_pct_tablet = round(100 / $columns_tablet, 2);
     }
 
     $columns_desktop = get_field('contentlist_layout_columns_desktop');
-    $columns_pct_desktop = 100;
+    $columns_pct_desktop = 33.33;
     if($columns_desktop > 0){
         $columns_pct_desktop = round(100 / $columns_desktop, 2);
     }
 
-    $gap = (int) get_field('contentlist_layout_gap');
+    $column_gap     = get_field('contentlist_layout_column_gap');
+    if($column_gap === null){ $column_gap = 10; }
+    $row_gap        = get_field('contentlist_layout_row_gap');
+    if($row_gap === null){ $row_gap = 10; }
 
     // Item
     // ----
@@ -52,9 +55,12 @@
     $border_radius  = get_field('contentlist_item_border_radius');
 
     $image_height   = get_field('contentlist_item_image_height');
+    if($image_height === null){
+        $image_height = 75;
+    }
 
-    $vertical_align = get_field('contentlist_item_vertical_alignment');
     $content_align  = get_field('contentlist_item_content_alignment');
+    $vertical_align = get_field('contentlist_item_vertical_alignment');
     $item_bg_color  = get_field('contentlist_item_background_color');
 
     $button_text    = get_field('contentlist_item_button_text');
@@ -86,14 +92,20 @@
     if(!empty($block['style'])){
         $styles = $block['style'];
 
-        //Margins & Padding
-        if(!empty($styles['spacing'])){
-            foreach($styles['spacing'] as $type => $values){
+        // Text Color
+        if(!empty($styles['color'])){
+            foreach($styles['color'] as $type => $values){
                 foreach($values as $key => $value){
                     array_push($inlineStyles, $type.'-'.$key.':'.$value.';');
                 }
             }
         }
+    }
+
+    // Text Color
+    $textColorClass = '';
+    if(array_key_exists('textColor',$block)){
+        $textColorClass = ' has-'.$block['textColor'].'-color';
     }
 
 ?>
@@ -104,7 +116,6 @@
     <div class="wrap">
         <div class='brafton_contentlist'>
             <?php
-
                 $items = contentlist_query($post_type, $taxonomy, $term, $count);
 
                 if($items){
@@ -127,11 +138,13 @@
                             </a>
                         </div>
                         <?php } ?>
-                        <h3 class='list-item-title'><a href='<?php echo $link; ?>'><?php echo $title; ?></a></h3>
-                        <div class='list-item-meta'>
+                        <h3 class='list-item-title'>
+                            <a <?php if($textColorClass){ echo "class='$textColorClass' "; } ?> href='<?php echo $link; ?>'><?php echo $title; ?></a>
+                        </h3>
+                        <div class='list-item-meta<?php echo $textColorClass; ?>'>
                             <?php echo $readingTime; ?>
                         </div>
-                        <div class='list-item-content'>
+                        <div class='list-item-content<?php echo $textColorClass; ?>'>
                             <?php echo $excerpt; ?>
                         </div>
                         <?php if($button_text){ ?>
@@ -155,36 +168,23 @@
         <?php echo "#{$blockId} .brafton_contentlist"; ?> {
             display: flex;
             flex-flow: <?php echo $columns_mobile > 1 ? 'row wrap' : 'column'; ?>;
-            gap: <?php echo $gap; ?>px;
+            gap: <?php echo "{$row_gap}px {$column_gap}px"; ?>;
         }
 
         @media(min-width:768px){
             <?php echo "#{$blockId} .brafton_contentlist"; ?> {
                 display: flex;
                 flex-flow: row wrap;
-                <?php if($vertical_align){ 
-                    $valign = '';
-                    if($vertical_align == 'top'){
-                        $valign = 'start';
-                    } else if($vertical_align == 'center'){
-                        $valign = 'center';
-                    } else if($vertical_align == 'bottom'){
-                        $valign = 'end';
-                    } else if($vertical_align == 'stretch'){
-                        $valign = 'stretch';
-                    } else {
-                        $valign = 'start';
-                    }
-                ?>
-                align-items: <?php echo $valign; ?>;
-                <?php } ?>
+                align-items: stretch;
             }
         }
 
         <?php echo "#{$blockId} .brafton_contentlist .list-item"; ?> {
             display: flex;
             flex-flow: column;
-            flex-basis: calc(<?php echo $columns_pct_mobile; ?>% - <?php echo $gap; ?>px);
+            flex-basis: <?php 
+                echo $column_gap ? "calc({$columns_pct_mobile}% - {$column_gap}px)" : "{$columns_pct_mobile}%";
+            ?>;
             <?php if($border_width){ ?>
                 border-style: solid;
                 border-width: <?php echo $border_width; ?>px;
@@ -195,18 +195,28 @@
             <?php if($border_radius){ ?>
                 border-radius: <?php echo $border_radius; ?>px;
             <?php } ?>
-            background-color: <?php echo $item_bg_color; ?>;
+            <?php if($item_bg_color){ ?>
+                background-color: <?php echo $item_bg_color; ?>;
+            <?php } ?>
+            <?php if($content_align) { ?>
+                align-items: <?php echo $content_align; ?>;
+                text-align: <?php echo $content_align == 'start' ? 'left' : ($content_align == 'end' ? 'right' : 'center'); ?>;
+        <?php } ?>
         }
 
         @media(min-width:768px){
             <?php echo "#{$blockId} .brafton_contentlist .list-item"; ?> {
-                flex-basis: calc(<?php echo $columns_pct_tablet; ?>% - <?php echo $gap; ?>px);
+                flex-basis: <?php 
+                echo $column_gap ? "calc({$columns_pct_tablet}% - {$column_gap}px)" : "{$columns_pct_tablet}%";
+            ?>;
             }
         }
 
         @media(min-width:1024px){
             <?php echo "#{$blockId} .brafton_contentlist .list-item"; ?> {
-                flex-basis: calc(<?php echo $columns_pct_desktop; ?>% - <?php echo $gap; ?>px);
+                flex-basis: <?php 
+                echo $column_gap ? "calc({$columns_pct_desktop}% - {$column_gap}px)" : "{$columns_pct_desktop}%";
+            ?>;
             }
         }
 
@@ -215,15 +225,12 @@
                 padding-bottom: <?php echo $image_height; ?>%; 
             }
         <?php } ?>
-        <?php if($content_align) { ?>
-            <?php echo "#{$blockId} .brafton_contentlist .list-item .list-item-title"; ?>,
-            <?php echo "#{$blockId} .brafton_contentlist .list-item .list-item-meta"; ?>,
-            <?php echo "#{$blockId} .brafton_contentlist .list-item .list-item-content"; ?>,
-            <?php echo "#{$blockId} .brafton_contentlist .list-item .list-item-btn"; ?> {
-                text-align: <?php echo $content_align; ?>
+
+        <?php if($vertical_align) { ?>
+            <?php echo "#{$blockId} .brafton_contentlist .list-item :nth-child({$vertical_align})"; ?> {
+                flex: 1;
             }
         <?php } ?>
-
     </style>
     <?php if(is_admin()){ ?>
     <script>
@@ -260,6 +267,7 @@
 
                 // Post Type Select Field
                 acf.addAction('new_field/key=<?php echo $pt_field_id; ?>', function(f){
+
                     pt_select_field = f.$el.find('select');
 
                     $(pt_select_field).on('change', function(e){
@@ -284,6 +292,13 @@
                             });
                         }
                     });
+
+                    setTimeout(function(){ 
+                        if($(tax_select_field).val() == ''){
+                            $(pt_select_field).trigger('change'); 
+                        }
+                    }, 1000);
+
                 });
 
                 // Taxonomy Select Field

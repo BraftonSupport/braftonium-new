@@ -21,11 +21,8 @@ acf_register_block_type(array(
         'align'           => [ 'left', 'center', 'right', 'full' ],
         'jsx'             => true,
         'color'           => [
-            'text'        => true
-        ],
-        'spacing'         => [
-            'margin'      => ['top','bottom'],
-            'padding'     => ['top','bottom']
+            'text'        => true,
+            'background'  => false
         ],
         'html'            => false
     ]

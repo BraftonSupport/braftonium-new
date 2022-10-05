@@ -38,8 +38,6 @@ function contentlist_get_terms($taxonomy) {
     return $terms;
 }
 
-// Field Populators
-
 // Load Post Types
 function contentlist_load_post_types( $field ) {
 
@@ -129,12 +127,10 @@ function contentlist_query($post_type, $taxonomy, $term, $count)
         'post_status' => 'publish'
     ];
 
-    if($post_type){ 
-        $args['post_type'] = $post_type; 
-    } else {
-        $args['post_type'] = 'post';
+    if($post_type){
+        $args['post_type'] = $post_type;
     }
-    
+
     if($taxonomy && $term){ 
         $args['tax_query'] = [ [
             'taxonomy' => $taxonomy,
@@ -146,7 +142,6 @@ function contentlist_query($post_type, $taxonomy, $term, $count)
     if($count){
         $args['posts_per_page'] = $count;
     }
-
 
     $query = new \WP_Query($args);
     $items = $query->posts;
