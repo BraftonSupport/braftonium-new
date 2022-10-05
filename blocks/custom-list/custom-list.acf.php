@@ -1,10 +1,10 @@
 <?php
     acf_register_block_type(array(
-        'name'			    => 'list',
-        'title'			    => __('List'),
+        'name'			    => 'custom-list',
+        'title'			    => __('Custom List'),
         'description'       => __('List Block.'),
         'enqueue_assets'    => function (){
-            wp_enqueue_style('braftonium-list-css', plugin_dir_url(__FILE__).'list.css');
+            wp_enqueue_style('custom-list-css', plugin_dir_url(__FILE__).'custom-list.css');
         },
         'category'          => 'braftonium',
         'mode'			    => 'preview',  

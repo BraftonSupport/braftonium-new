@@ -1,17 +1,11 @@
 <?php
 
     acf_register_block_type(array(
-        'name'                => 'list-item',
-        'title'               => __('List Item'),
-        'description'         => __('List Item for use by List Container'),
+        'name'                => 'custom-list-item',
+        'title'               => __('Custom List Item'),
+        'description'         => __('Custom List Item for use by Braftonium Custom List'),
 
-        'enqueue_assets'      => function (){
-            if(is_admin()){
-                wp_enqueue_style('list-item-css', plugin_dir_url(__FILE__).'list-item.css');
-            }
-        },
-
-        'parent'              => ['acf/list'],
+        'parent'              => ['acf/custom-list'],
 
         'category'            => 'braftonium',
         'mode'                => 'preview',  

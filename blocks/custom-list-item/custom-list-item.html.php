@@ -9,7 +9,7 @@
     $blockId = !empty($block['anchor']) ? $block['anchor'] : $block['id'];
 
     // Classes
-    $classes = array('braftonium-block','list-item');
+    $classes = array('braftonium-block','custom-list-item');
 
     // Custom Class
     if(!empty($block['className'])){
@@ -45,18 +45,20 @@
 </div>
 <?php if(is_admin()){ ?>
 <style>
-    <?php echo "#{$blockId}"; ?> {
+    <?php // Helper Overlay
+        echo "#{$blockId}"; ?> {
         min-height: 150px;
+        outline: 1px solid rgba(200, 200, 200, 0.25);
+        height: calc(100% - 24px);
         padding:12px;
-        border: 1px solid rgba(200, 200, 200, 0.25);
-        height: 100%;
     }
 
     <?php echo "#{$blockId}:hover"; ?> {
-        border: 1px solid #aaa;
+        outline: 1px solid #aaa;
+        z-index:99;
     }
     <?php echo "#{$blockId}::before"; ?> {
-        content: 'LIST ITEM';
+        content: 'CUSTOM LIST ITEM';
         position: absolute;
         top: 0;
         right: 0;
@@ -67,6 +69,7 @@
         color: white;
         opacity: 0.25;
         pointer-events:none;
+        z-index:99;
     }
     <?php echo "#{$blockId}:hover:before"; ?> {
         opacity:1;
