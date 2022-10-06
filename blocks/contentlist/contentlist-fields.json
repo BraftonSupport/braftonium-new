@@ -392,6 +392,27 @@
                         "save_other_choice": 0
                     },
                     {
+                        "key": "field_633ee234d7302",
+                        "label": "Content Padding",
+                        "name": "content_padding",
+                        "type": "number",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": 10,
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "min": 0,
+                        "max": "",
+                        "step": ""
+                    },
+                    {
                         "key": "field_632dbd65afcd6",
                         "label": "List Item Layout",
                         "name": "vertical_alignment",

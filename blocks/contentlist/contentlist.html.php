@@ -59,11 +59,12 @@
         $image_height = 75;
     }
 
-    $content_align  = get_field('contentlist_item_content_alignment');
-    $vertical_align = get_field('contentlist_item_vertical_alignment');
-    $item_bg_color  = get_field('contentlist_item_background_color');
-
-    $button_text    = get_field('contentlist_item_button_text');
+    $content_align   = get_field('contentlist_item_content_alignment');
+    $content_padding = get_field('contentlist_item_content_padding');
+    if($content_padding === null){ $content_padding = 10; }
+    $vertical_align  = get_field('contentlist_item_vertical_alignment');
+    $item_bg_color   = get_field('contentlist_item_background_color');
+    $button_text     = get_field('contentlist_item_button_text');
 
 
     // Common Block Settings
@@ -138,20 +139,22 @@
                             </a>
                         </div>
                         <?php } ?>
-                        <h3 class='list-item-title'>
-                            <a <?php if($textColorClass){ echo "class='$textColorClass' "; } ?> href='<?php echo $link; ?>'><?php echo $title; ?></a>
-                        </h3>
-                        <div class='list-item-meta<?php echo $textColorClass; ?>'>
-                            <?php echo $readingTime; ?>
+                        <div class='list-item-content'>
+                            <h3 class='list-item-title'>
+                                <a <?php if($textColorClass){ echo "class='$textColorClass' "; } ?> href='<?php echo $link; ?>'><?php echo $title; ?></a>
+                            </h3>
+                            <div class='list-item-meta<?php echo $textColorClass; ?>'>
+                                <?php echo $readingTime; ?>
+                            </div>
+                            <div class='list-item-content<?php echo $textColorClass; ?>'>
+                                <?php echo $excerpt; ?>
+                            </div>
+                            <?php if($button_text){ ?>
+                                <a class='list-item-btn' href='<?php echo $link; ?>'>
+                                    <?php echo $button_text; ?>
+                                </a>
+                            <?php } ?>
                         </div>
-                        <div class='list-item-content<?php echo $textColorClass; ?>'>
-                            <?php echo $excerpt; ?>
-                        </div>
-                        <?php if($button_text){ ?>
-                            <a class='list-item-btn' href='<?php echo $link; ?>'>
-                                <?php echo $button_text; ?>
-                            </a>
-                        <?php } ?>
                     </div>
                     <?php
                     }
@@ -229,6 +232,12 @@
         <?php if($vertical_align) { ?>
             <?php echo "#{$blockId} .brafton_contentlist .list-item :nth-child({$vertical_align})"; ?> {
                 flex: 1;
+            }
+        <?php } ?>
+
+        <?php if($content_padding) { ?>
+            <?php echo "#{$blockId} .brafton_contentlist .list-item .list-item-content"; ?> {
+                padding: <?php echo $content_padding; ?>px;
             }
         <?php } ?>
     </style>
