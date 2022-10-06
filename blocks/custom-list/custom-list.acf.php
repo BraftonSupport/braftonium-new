@@ -8,19 +8,19 @@
         },
         'category'          => 'braftonium',
         'mode'			    => 'preview',  
-        'render_callback'   => 'braftonium_blocks_template',//this will add your example.html.php file or look for the template override
-        'supports'		    => [//Options - https://developer.wordpress.org/block-editor/reference-guides/block-api/block-supports/
+        'render_callback'   => 'braftonium_blocks_template',
+        'supports'		    => [
             'anchor'		    => true,                            //anchor - ID
-            'customClassName'	=> true,                            //custom class    //alignment            
+            'customClassName'	=> true,                            //custom class
             'jsx' 			    => true,                            //Enable JSX
             'color'             => [                                //COLORS
-                    'background'            => true,
-                    'text'                  => false,             
-                    'gradients'             => true,
+                'background'            => true,
+                'text'                  => false,
+                'gradients'             => true,
             ],
             'spacing'           => [                                //Spacing
-                    'margin'                => ['top','bottom'],
-                    'padding'               => ['top','bottom', 'left','right'],
+                'margin'            => ['top','bottom'],
+                'padding'           => ['top','bottom', 'left','right'],
             ],
             'html'              => false,                           //Disable HTML editing
         ],  

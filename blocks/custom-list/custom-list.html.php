@@ -35,7 +35,7 @@
                 }
                 $img.=";";
             }
-            array_push($inlineStyles,$img);
+            array_push($inlineStyles, $img);
         }
 
     //Block Styles
@@ -61,7 +61,6 @@
         if($full_width){
             array_push($classes,'full-width');
         }
-    
 
     // Grid Settings
     // -------------
@@ -72,8 +71,17 @@
         $list_grid_row_gap       = get_field('list_grid_row_gap');
         $list_grid_column_gap    = get_field('list_grid_column_gap');
 
-    // Item
-    // ----
+    // List Item
+    // ---------
+
+    // Item Background
+    $item_bg_color = get_field('list_item_background_color');
+
+    // Content Alignment
+        $content_alignment = get_field('list_item_content_alignment');
+
+    // Item Layout
+        $growth_selector = get_field('list_item_vertical_alignment');
 
     // Border
 
@@ -95,15 +103,6 @@
             $list_item_shadow_blur   = get_field('list_item_box_shadow_blur_amount');
             $list_item_shadow_spread = get_field('list_item_box_shadow_spread_amount');
             $list_item_shadow_color  = get_field('list_item_box_shadow_spread_color');
-
-    // Item Background
-        $item_bg_color = get_field('list_item_background_color');
-
-    // Content Alignment
-        $alignment_options = get_field('list_item_alignment');
-
-    // Growth Selector
-        $child_selector = get_field('list_item_vertical_alignment_child_selector');
 
 ?>
 
@@ -165,7 +164,7 @@
             row-gap: <?php echo $list_grid_row_gap; ?>px;
             column-gap: <?php echo $list_grid_column_gap; ?>px;
             align-items: stretch;
-            text-align: <?php echo $alignment_options; ?>;
+            text-align: <?php echo $content_alignment; ?>;
             height: 100%;
         }
 
@@ -230,8 +229,8 @@
             <?php } ?>
         }
 
-        <?php if($child_selector){ ?>
-            <?php echo "{$list_item_container} :nth-child($child_selector)"; ?> {
+        <?php if($growth_selector){ ?>
+            <?php echo "{$list_item_container} :nth-child($growth_selector)"; ?> {
                 flex: 1;
             }
         <?php } ?>

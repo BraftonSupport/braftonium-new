@@ -277,9 +277,89 @@
                 ]
             },
             {
-                "key": "field_6336f6d732346",
-                "label": "List Item",
-                "name": "list_item",
+                "key": "field_633ed51bc794d",
+                "label": "List Items",
+                "name": "",
+                "type": "message",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "new_lines": "wpautop",
+                "esc_html": 0
+            },
+            {
+                "key": "field_633c9b9503b29",
+                "label": "Background Color",
+                "name": "list_item_background_color",
+                "type": "color_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "enable_opacity": 1,
+                "return_format": "string"
+            },
+            {
+                "key": "field_6336ff7a51b1a",
+                "label": "Content Alignment",
+                "name": "list_item_content_alignment",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "start": "Left",
+                    "center": "Center",
+                    "end": "Right"
+                },
+                "allow_null": 0,
+                "other_choice": 0,
+                "default_value": "center",
+                "layout": "horizontal",
+                "return_format": "value",
+                "save_other_choice": 0
+            },
+            {
+                "key": "field_633abab5ac046",
+                "label": "Item Layout",
+                "name": "list_item_vertical_alignment",
+                "type": "number",
+                "instructions": "Use this to select which item in the card should expand to fill the available area",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "min": 0,
+                "max": "",
+                "step": ""
+            },
+            {
+                "key": "field_633ed50b3eda8",
+                "label": "Border",
+                "name": "list_item_border",
                 "type": "group",
                 "instructions": "",
                 "required": 0,
@@ -293,8 +373,8 @@
                 "sub_fields": [
                     {
                         "key": "field_6336f75f3234c",
-                        "label": "Border Thickness",
-                        "name": "border_thickness",
+                        "label": "Thickness",
+                        "name": "thickness",
                         "type": "number",
                         "instructions": "",
                         "required": 0,
@@ -314,8 +394,8 @@
                     },
                     {
                         "key": "field_6336f74c3234b",
-                        "label": "Border Color",
-                        "name": "border_color",
+                        "label": "Color",
+                        "name": "color",
                         "type": "color_picker",
                         "instructions": "",
                         "required": 0,
@@ -331,8 +411,8 @@
                     },
                     {
                         "key": "field_6336f7fc32350",
-                        "label": "Border Radius",
-                        "name": "border_radius",
+                        "label": "Radius",
+                        "name": "radius",
                         "type": "group",
                         "instructions": "",
                         "required": 0,
@@ -429,151 +509,29 @@
                                 "step": ""
                             }
                         ]
-                    },
+                    }
+                ]
+            },
+            {
+                "key": "field_6336f87a32355",
+                "label": "Box Shadow",
+                "name": "list_item_box_shadow",
+                "type": "group",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "layout": "block",
+                "sub_fields": [
                     {
-                        "key": "field_6336f87a32355",
-                        "label": "Box Shadow",
-                        "name": "box_shadow",
-                        "type": "group",
-                        "instructions": "",
-                        "required": 0,
-                        "conditional_logic": 0,
-                        "wrapper": {
-                            "width": "",
-                            "class": "",
-                            "id": ""
-                        },
-                        "layout": "block",
-                        "sub_fields": [
-                            {
-                                "key": "field_6336f90232358",
-                                "label": "Blur Amount",
-                                "name": "blur_amount",
-                                "type": "number",
-                                "instructions": "",
-                                "required": 0,
-                                "conditional_logic": 0,
-                                "wrapper": {
-                                    "width": "",
-                                    "class": "",
-                                    "id": ""
-                                },
-                                "default_value": "",
-                                "placeholder": "",
-                                "prepend": "",
-                                "append": "",
-                                "min": "",
-                                "max": "",
-                                "step": ""
-                            },
-                            {
-                                "key": "field_6336f91b3235a",
-                                "label": "Color",
-                                "name": "color",
-                                "type": "color_picker",
-                                "instructions": "",
-                                "required": 0,
-                                "conditional_logic": 0,
-                                "wrapper": {
-                                    "width": "",
-                                    "class": "",
-                                    "id": ""
-                                },
-                                "default_value": "#333333",
-                                "enable_opacity": 0,
-                                "return_format": "string"
-                            },
-                            {
-                                "key": "field_6336f90d32359",
-                                "label": "Spread Amount",
-                                "name": "spread_amount",
-                                "type": "number",
-                                "instructions": "",
-                                "required": 0,
-                                "conditional_logic": [
-                                    [
-                                        {
-                                            "field": "field_6336f90232358",
-                                            "operator": "!=empty"
-                                        }
-                                    ]
-                                ],
-                                "wrapper": {
-                                    "width": "",
-                                    "class": "",
-                                    "id": ""
-                                },
-                                "default_value": 0,
-                                "placeholder": "",
-                                "prepend": "",
-                                "append": "",
-                                "min": "",
-                                "max": "",
-                                "step": ""
-                            },
-                            {
-                                "key": "field_6336f8c532356",
-                                "label": "Horizontal Offset",
-                                "name": "horizontal_offset",
-                                "type": "number",
-                                "instructions": "",
-                                "required": 0,
-                                "conditional_logic": [
-                                    [
-                                        {
-                                            "field": "field_6336f90232358",
-                                            "operator": "!=empty"
-                                        }
-                                    ]
-                                ],
-                                "wrapper": {
-                                    "width": "",
-                                    "class": "",
-                                    "id": ""
-                                },
-                                "default_value": 0,
-                                "placeholder": "",
-                                "prepend": "",
-                                "append": "",
-                                "min": "",
-                                "max": "",
-                                "step": ""
-                            },
-                            {
-                                "key": "field_6336f8d432357",
-                                "label": "Vertical Offset",
-                                "name": "vertical_offset",
-                                "type": "number",
-                                "instructions": "",
-                                "required": 0,
-                                "conditional_logic": [
-                                    [
-                                        {
-                                            "field": "field_6336f90232358",
-                                            "operator": "!=empty"
-                                        }
-                                    ]
-                                ],
-                                "wrapper": {
-                                    "width": "",
-                                    "class": "",
-                                    "id": ""
-                                },
-                                "default_value": 0,
-                                "placeholder": "",
-                                "prepend": "",
-                                "append": "",
-                                "min": "",
-                                "max": "",
-                                "step": ""
-                            }
-                        ]
-                    },
-                    {
-                        "key": "field_633c9b9503b29",
-                        "label": "Background Color",
-                        "name": "background_color",
-                        "type": "color_picker",
+                        "key": "field_6336f90232358",
+                        "label": "Blur Amount",
+                        "name": "blur_amount",
+                        "type": "number",
                         "instructions": "",
                         "required": 0,
                         "conditional_logic": 0,
@@ -583,71 +541,113 @@
                             "id": ""
                         },
                         "default_value": "",
-                        "enable_opacity": 1,
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "min": "",
+                        "max": "",
+                        "step": ""
+                    },
+                    {
+                        "key": "field_6336f91b3235a",
+                        "label": "Color",
+                        "name": "color",
+                        "type": "color_picker",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": "#333333",
+                        "enable_opacity": 0,
                         "return_format": "string"
                     },
                     {
-                        "key": "field_6336ff7a51b1a",
-                        "label": "Content Alignment",
-                        "name": "alignment",
-                        "type": "radio",
+                        "key": "field_6336f90d32359",
+                        "label": "Spread Amount",
+                        "name": "spread_amount",
+                        "type": "number",
                         "instructions": "",
                         "required": 0,
-                        "conditional_logic": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_6336f90232358",
+                                    "operator": "!=empty"
+                                }
+                            ]
+                        ],
                         "wrapper": {
                             "width": "",
                             "class": "",
                             "id": ""
                         },
-                        "choices": {
-                            "start": "Left",
-                            "center": "Center",
-                            "end": "Right"
-                        },
-                        "allow_null": 0,
-                        "other_choice": 0,
-                        "default_value": "center",
-                        "layout": "horizontal",
-                        "return_format": "value",
-                        "save_other_choice": 0
+                        "default_value": 0,
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "min": "",
+                        "max": "",
+                        "step": ""
                     },
                     {
-                        "key": "field_633abaa8ac045",
-                        "label": "List Item Layout",
-                        "name": "vertical_alignment",
-                        "type": "group",
+                        "key": "field_6336f8c532356",
+                        "label": "Horizontal Offset",
+                        "name": "horizontal_offset",
+                        "type": "number",
                         "instructions": "",
                         "required": 0,
-                        "conditional_logic": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_6336f90232358",
+                                    "operator": "!=empty"
+                                }
+                            ]
+                        ],
                         "wrapper": {
                             "width": "",
                             "class": "",
                             "id": ""
                         },
-                        "layout": "block",
-                        "sub_fields": [
-                            {
-                                "key": "field_633abab5ac046",
-                                "label": "Select List Item to Grow",
-                                "name": "child_selector",
-                                "type": "number",
-                                "instructions": "Use this to select which item in the card should expand to fill the available area",
-                                "required": 0,
-                                "conditional_logic": 0,
-                                "wrapper": {
-                                    "width": "",
-                                    "class": "",
-                                    "id": ""
-                                },
-                                "default_value": "",
-                                "placeholder": "",
-                                "prepend": "",
-                                "append": "",
-                                "min": 0,
-                                "max": "",
-                                "step": ""
-                            }
-                        ]
+                        "default_value": 0,
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "min": "",
+                        "max": "",
+                        "step": ""
+                    },
+                    {
+                        "key": "field_6336f8d432357",
+                        "label": "Vertical Offset",
+                        "name": "vertical_offset",
+                        "type": "number",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_6336f90232358",
+                                    "operator": "!=empty"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": 0,
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "min": "",
+                        "max": "",
+                        "step": ""
                     }
                 ]
             }
