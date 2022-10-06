@@ -1,0 +1,42 @@
+@import '../sass/variables';
+.slider-block{
+    padding:1em 0;
+    &.full-width{
+        width:100vw;
+        margin-left:calc(50% - 50vw);
+    }
+    .slick-slide{
+        padding:.5rem 1rem;
+        
+    }
+    .slick-arrow{
+        display:none !important;
+    }
+    .slick-track{
+        display:flex;
+        align-items: center;
+    }
+    &.with-dots{
+        .slick-dots{
+            li{
+                button{
+                    background-color: $meta-gray;
+                    border-radius:100%;
+                    width:15px;
+                    height:15px;
+                    &:before{
+                        color:$meta-gray;
+                    }
+                }
+                &.slick-active{
+                    button{
+                        background-color:white;
+                        &:before{
+                            color:white;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
