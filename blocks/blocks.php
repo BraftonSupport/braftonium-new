@@ -14,9 +14,8 @@
                 if(is_file($file) && basename($file)!='example.acf.php'){
                     require_once $file;//include block setup file
 
-                    //Select correct JSON file to include, can be overwritten in a child-theme. See Readme for notes.
-                    $themeOverride  = get_template_directory().'/braftonium/blocks/'.$baseName.'-fields.html.php'; 
-                    $json           = is_file($themeOverride) ? $themeOverride : dirname($file).'/'.str_replace('.acf.php','-fields.json',basename($file));          
+                    //include ACF fields
+                    $json=dirname($file).'/'.str_replace('.acf.php','-fields.json',basename($file));       
 
                     if(is_file($json)){        
                         $jsonObject=json_decode(file_get_contents($json));

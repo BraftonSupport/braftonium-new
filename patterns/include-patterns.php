@@ -12,12 +12,6 @@
                         require_once $file;
                     }
                 }
-
-                //Include all patterns in theme/braftonium/patterns
-                $files = glob(get_template_directory().'/braftonium/patterns/*-pattern.php'); 
-                foreach($files as $file){  
-                    require_once $file;//include all patterns in the /patterns folder
-                }
             }
         }
         add_action( 'init', 'my_register_block_patterns' );

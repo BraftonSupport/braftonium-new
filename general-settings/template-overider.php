@@ -41,7 +41,7 @@
                     //Template target to replace & new replacement template
                         $newTemplate            = $keys[getTemplateValue($optionCounter,'template')];
                         $targetToReplace        = $keys[getTemplateValue($optionCounter,'val')];
-                        $newTemplate            = get_template_directory().'/braftonium/templates/'.$baseName.'.html.php';            
+                        $newTemplate            = WP_CONTENT_DIR.$newTemplate;      
                     
                     //Check if current URL, Page Name/Template name are targeted
                         $isTargetUrl            = $currenUrl            ==  $targetToReplace;
