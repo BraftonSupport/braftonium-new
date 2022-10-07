@@ -367,6 +367,27 @@
                         "return_format": "string"
                     },
                     {
+                        "key": "field_633ef4e2261cc",
+                        "label": "Word Count",
+                        "name": "word_count",
+                        "type": "number",
+                        "instructions": "Specify the excerpt word count.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "default_value": 25,
+                        "placeholder": "",
+                        "prepend": "",
+                        "append": "",
+                        "min": 0,
+                        "max": "",
+                        "step": ""
+                    },
+                    {
                         "key": "field_632d9d280e14a",
                         "label": "Content Alignment",
                         "name": "content_alignment",

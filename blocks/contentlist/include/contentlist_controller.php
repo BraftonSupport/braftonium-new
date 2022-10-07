@@ -118,8 +118,9 @@ function contentlist_field_populator()
 }
 add_action("wp_ajax_contentlist_query", 'contentlist_field_populator');
 
+
 // Perform Parameterized Query
-function contentlist_query($post_type, $taxonomy, $term, $count)
+function contentlist_query($post_type, $taxonomy, $term, $post_count, $word_count)
 {
     $items = [];
 
@@ -139,11 +140,21 @@ function contentlist_query($post_type, $taxonomy, $term, $count)
         ] ];
     }
 
-    if($count){
-        $args['posts_per_page'] = $count;
+    if($post_count){
+        $args['posts_per_page'] = $post_count;
     }
 
+    $excerpt_word_count_adjuster = function ($length) use ($word_count) { return $word_count; };
+    $excerpt_clean_more_link     = function ($more) { return '.'; };
+
+    add_filter('excerpt_more', $excerpt_clean_more_link, 999);
+    if($word_count){ add_filter( 'excerpt_length', $excerpt_word_count_adjuster, 999 ); }
+
     $query = new \WP_Query($args);
+
+    if($word_count){ remove_filter('excerpt_length', $excerpt_word_count_adjuster); }
+    remove_filter('excerpt_more', $excerpt_clean_more_link);
+
     $items = $query->posts;
 
     return $items;

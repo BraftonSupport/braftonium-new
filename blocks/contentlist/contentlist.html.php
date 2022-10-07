@@ -18,8 +18,8 @@
     $term = get_field('contentlist_query_term');
     $term_field_id = 'field_632b307f5729d';
 
-    // Count
-    $count = get_field('contentlist_query_count');
+    // Post Count
+    $post_count = get_field('contentlist_query_count');
 
     // Layout
     // ------
@@ -66,6 +66,8 @@
     $item_bg_color   = get_field('contentlist_item_background_color');
     $button_text     = get_field('contentlist_item_button_text');
 
+    // Word Count
+    $word_count = get_field('contentlist_item_word_count');
 
     // Common Block Settings
     // ---------------------
@@ -117,7 +119,7 @@
     <div class="wrap">
         <div class='brafton_contentlist'>
             <?php
-                $items = contentlist_query($post_type, $taxonomy, $term, $count);
+                $items = contentlist_query($post_type, $taxonomy, $term, $post_count, $word_count);
 
                 if($items){
                     foreach($items as $item){ 
@@ -188,6 +190,7 @@
             flex-basis: <?php 
                 echo $column_gap ? "calc({$columns_pct_mobile}% - {$column_gap}px)" : "{$columns_pct_mobile}%";
             ?>;
+            flex-grow: 1;
             <?php if($border_width){ ?>
                 border-style: solid;
                 border-width: <?php echo $border_width; ?>px;
