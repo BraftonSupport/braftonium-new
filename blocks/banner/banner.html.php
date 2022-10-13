@@ -1,6 +1,6 @@
 <!-- Main block layout - Must be have the name.html.php (example.html.php) -->
 <?php  
-        $classes                = array('brafton-banner');   //use your own general class name
+        $classes                = array('braftonium-banner');   //use your own general class name
 
     //Block ID
         $blockId                = array_key_exists('anchor',$block) ? 'id="'.$block['anchor'].'"' : '';
