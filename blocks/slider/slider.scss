@@ -1,0 +1,69 @@
+.acf-block-preview .braftonium-slider {
+
+    min-height: 150px;
+    padding: 12px;
+    border: 1px solid rgba(200, 200, 200, 0.25);
+
+    &::before {
+        content: 'SLIDER';
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 2px 4px;
+        background-color: #aaa;
+        font-size: 8px;
+        line-height: 1;
+        color: white;
+        opacity: 0.25;
+        pointer-events:none;
+    }
+
+    &:hover {
+        border: 1px solid #aaa;
+        &:before {
+            opacity: 1;
+        }
+    }
+
+    .wrap,
+    .wp-block-image {
+        margin: 0;
+    }
+}
+
+.braftonium-slider {
+
+    &.slick-dots-top {
+        .slick-dots {
+            top: -50px;
+        }
+    }
+
+    .slick-next.text-next,
+    .slick-prev.text-prev {
+        width: auto;
+        font-size: initial;
+    }
+    
+    .slick-next.text-next {
+        transform: translateX(100%);
+    }
+
+    .slick-prev.text-prev {
+        transform: translateX(-100%);
+    }
+
+    .text-next::before,
+    .text-prev::before {
+        display: none;
+    }
+
+    // default color to make elements visible (Transparent by default)
+    .slick-next.text-next,
+    .slick-prev.text-prev,
+    .slick-next::before,
+    .slick-prev::before {
+        color: rgba(0,0,0,0.5);
+    }
+
+}

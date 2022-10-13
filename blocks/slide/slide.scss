@@ -1,0 +1,32 @@
+.acf-block-preview .braftonium-slide {
+
+    min-height: 150px;
+    padding: 12px;
+    border: 1px solid rgba(200, 200, 200, 0.25);
+
+    &::before {
+        content: 'SINGLE SLIDE';
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 2px 4px;
+        background-color: #aaa;
+        font-size: 8px;
+        line-height: 1;
+        color: white;
+        opacity: 0.25;
+        pointer-events: none;
+    }
+
+    &:hover {
+        border: 1px solid #aaa;
+        &:before {
+            opacity: 1;
+        }
+    }
+
+    .wrap,
+    .wp-block-image {
+        margin: 0;
+    }
+}
