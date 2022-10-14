@@ -152,7 +152,7 @@
                         "label": "Columns (Desktop)",
                         "name": "columns_desktop",
                         "type": "number",
-                        "instructions": "",
+                        "instructions": "Max 6 columns",
                         "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
@@ -165,7 +165,7 @@
                         "prepend": "",
                         "append": "",
                         "min": 1,
-                        "max": "",
+                        "max": 6,
                         "step": ""
                     },
                     {
@@ -173,7 +173,7 @@
                         "label": "Columns (Tablet)",
                         "name": "columns_tablet",
                         "type": "number",
-                        "instructions": "",
+                        "instructions": "Max 6 columns",
                         "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
@@ -186,7 +186,7 @@
                         "prepend": "",
                         "append": "",
                         "min": 1,
-                        "max": "",
+                        "max": 6,
                         "step": ""
                     },
                     {
@@ -194,7 +194,7 @@
                         "label": "Columns (Mobile)",
                         "name": "columns_mobile",
                         "type": "number",
-                        "instructions": "",
+                        "instructions": "Max 6 columns",
                         "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
@@ -207,7 +207,7 @@
                         "prepend": "",
                         "append": "",
                         "min": 1,
-                        "max": "",
+                        "max": 6,
                         "step": ""
                     },
                     {
@@ -269,65 +269,6 @@
                 },
                 "layout": "block",
                 "sub_fields": [
-                    {
-                        "key": "field_632d9ca0b66e8",
-                        "label": "Border Width",
-                        "name": "border_width",
-                        "type": "number",
-                        "instructions": "",
-                        "required": 0,
-                        "conditional_logic": 0,
-                        "wrapper": {
-                            "width": "",
-                            "class": "",
-                            "id": ""
-                        },
-                        "default_value": "",
-                        "placeholder": "",
-                        "prepend": "",
-                        "append": "",
-                        "min": "",
-                        "max": "",
-                        "step": ""
-                    },
-                    {
-                        "key": "field_632d9ccc0e147",
-                        "label": "Border Color",
-                        "name": "border_color",
-                        "type": "color_picker",
-                        "instructions": "",
-                        "required": 0,
-                        "conditional_logic": 0,
-                        "wrapper": {
-                            "width": "",
-                            "class": "",
-                            "id": ""
-                        },
-                        "default_value": "",
-                        "enable_opacity": 0,
-                        "return_format": "string"
-                    },
-                    {
-                        "key": "field_632d9ce10e148",
-                        "label": "Border Radius",
-                        "name": "border_radius",
-                        "type": "number",
-                        "instructions": "",
-                        "required": 0,
-                        "conditional_logic": 0,
-                        "wrapper": {
-                            "width": "",
-                            "class": "",
-                            "id": ""
-                        },
-                        "default_value": "",
-                        "placeholder": "",
-                        "prepend": "",
-                        "append": "",
-                        "min": "",
-                        "max": "",
-                        "step": ""
-                    },
                     {
                         "key": "field_632d9d160e149",
                         "label": "Image Height",
@@ -426,27 +367,6 @@
                             "id": ""
                         },
                         "default_value": 10,
-                        "placeholder": "",
-                        "prepend": "",
-                        "append": "",
-                        "min": 0,
-                        "max": "",
-                        "step": ""
-                    },
-                    {
-                        "key": "field_632dbd65afcd6",
-                        "label": "List Item Layout",
-                        "name": "vertical_alignment",
-                        "type": "number",
-                        "instructions": "Use this to select which item in the card should expand to fill the available area. Top item starts at 1.",
-                        "required": 0,
-                        "conditional_logic": 0,
-                        "wrapper": {
-                            "width": "",
-                            "class": "",
-                            "id": ""
-                        },
-                        "default_value": "",
                         "placeholder": "",
                         "prepend": "",
                         "append": "",
