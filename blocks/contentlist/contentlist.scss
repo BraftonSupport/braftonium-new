@@ -43,6 +43,9 @@ $columns:6;
         .list-item-content {
             display:flex;
             flex-flow:column;
+            a {
+                color: inherit;
+            }
         }
 
         > .list-item-image {
