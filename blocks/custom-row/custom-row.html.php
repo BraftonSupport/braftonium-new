@@ -31,19 +31,19 @@
 
     //Background Image - With Overlay
         $bannerImage       = get_field('background_image');
+        $bg_style = "";
         if($bannerImage){
             $background_position  = get_field('background_image_position');
-            $img ='background-image: ';
+          
             
-            $img.='url('.$bannerImage['url'].');';
             if($background_position){
-                $img.='background-position:';   
+                $bg_style.='object-position:';   
                 foreach($background_position as $key => $value){
                     if($value){
-                        $img.=' '.$key.' '.$value.'px';
+                        $bg_style.=' '.$key.' '.$value.'px';
                     }
                 }
-                $img.=";";
+                $bg_style.=";";
             }
             // array_push($inlineStyles,$img);
         }
@@ -76,7 +76,7 @@
 
 <div <?php echo $blockId;?> class="<?php echo implode(' ',$classes); ?>" style="<?php echo implode('',$inlineStyles); ?>">
 <?php if($bannerImage){
-    printf('<img src="%s" class="background-image" loading="lazy">', $bannerImage['url']);
+    printf('<img src="%s" class="background-image" loading="lazy" style="%s">', $bannerImage['url'], $bg_style);
 }?>
     <div class="wrap">   
         <InnerBlocks />
