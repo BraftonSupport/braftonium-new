@@ -66,4 +66,11 @@ $columns:6;
             }
         }
     }
+
+    @for $i from 1 through 10 {
+        &.grow-child-#{$i} .list-item .list-item-content :nth-child(#{$i}) {
+            flex:1;
+        }
+    }
+
 }

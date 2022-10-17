@@ -1,72 +1,5 @@
 <?php
 
-    // Content List Configuration
-    // ==========================
-
-    // Query
-    // -----
-
-    // Post Type
-    $post_type = get_field('contentlist_query_post_type');
-    $pt_field_id = 'field_632b2cf65729b';
-
-    // Taxonomy
-    $taxonomy = get_field('contentlist_query_taxonomies');
-    $tax_field_id = 'field_632b30575729c';
-
-    // Terms
-    $term = get_field('contentlist_query_term');
-    $term_field_id = 'field_632b307f5729d';
-
-    // Post Count
-    $post_count = get_field('contentlist_query_count');
-
-    // Layout
-    // ------
-
-    $columns_mobile  = get_field('contentlist_layout_columns_mobile');
-    if($columns_mobile === null){ $columns_mobile = 1; }
-    $col_class_mobile = "col-sm-{$columns_mobile}";
-
-    $columns_tablet  = get_field('contentlist_layout_columns_tablet');
-    if($columns_tablet === null){ $columns_tablet = 1; }
-    $col_class_tablet = "col-md-{$columns_tablet}";
-
-    $columns_desktop = get_field('contentlist_layout_columns_desktop');
-    if($columns_desktop === null){ $columns_desktop = 1; }
-    $col_class_desktop = "col-lg-{$columns_desktop}";
-
-    $col_classes = "{$col_class_mobile} {$col_class_tablet} {$col_class_desktop}";
-
-    $column_gap     = get_field('contentlist_layout_column_gap');
-    if($column_gap === null){ $column_gap = 10; }
-    $row_gap        = get_field('contentlist_layout_row_gap');
-    if($row_gap === null){ $row_gap = 10; }
-
-    // Item
-    // ----
-
-    $image_height   = get_field('contentlist_item_image_height');
-    if($image_height === null){
-        $image_height = 75;
-    }
-
-    $content_align   = get_field('contentlist_item_content_alignment');
-    $content_padding = get_field('contentlist_item_content_padding');
-    if($content_padding === null){ $content_padding = 10; }
-
-    $item_bg_color   = get_field('contentlist_item_background_color');
-    $button_text     = get_field('contentlist_item_button_text');
-
-    // List Item inline Styling
-    $itemInlineStyles  = "align-items: $content_align;";
-    $itemInlineStyles .= "text-align: " . ($content_align == 'start' ? 
-        'left' : ($content_align == 'end' ? 'right' : 'center')) . ';';
-    $itemInlineStyles .= "background-color: {$item_bg_color};";
-
-    // Word Count
-    $word_count = get_field('contentlist_item_word_count');
-
     // Common Block Settings
     // ---------------------
 
@@ -111,7 +44,78 @@
         }
     }
 
+    // Content List Configuration
+    // ==========================
+
+    // Query
+    // -----
+
+    // Post Type
+    $post_type = get_field('contentlist_query_post_type');
+    $pt_field_id = 'field_632b2cf65729b';
+
+    // Taxonomy
+    $taxonomy = get_field('contentlist_query_taxonomies');
+    $tax_field_id = 'field_632b30575729c';
+
+    // Terms
+    $term = get_field('contentlist_query_term');
+    $term_field_id = 'field_632b307f5729d';
+
+    // Post Count
+    $post_count = get_field('contentlist_query_count');
+
+    // Layout
+    // ------
+
+    $columns_mobile  = get_field('contentlist_layout_columns_mobile');
+    if($columns_mobile === null){ $columns_mobile = 1; }
+    $col_class_mobile = "col-sm-{$columns_mobile}";
+
+    $columns_tablet  = get_field('contentlist_layout_columns_tablet');
+    if($columns_tablet === null){ $columns_tablet = 1; }
+    $col_class_tablet = "col-md-{$columns_tablet}";
+
+    $columns_desktop = get_field('contentlist_layout_columns_desktop');
+    if($columns_desktop === null){ $columns_desktop = 1; }
+    $col_class_desktop = "col-lg-{$columns_desktop}";
+
+    $col_classes = "{$col_class_mobile} {$col_class_tablet} {$col_class_desktop}";
+
+    $column_gap     = get_field('contentlist_layout_column_gap');
+    if($column_gap === null){ $column_gap = 10; }
+    $row_gap        = get_field('contentlist_layout_row_gap');
+    if($row_gap === null){ $row_gap = 10; }
     array_push($blockInlineStyles, "gap: {$row_gap}px {$column_gap}px; --col-gap:{$column_gap}px;");
+
+    // Item
+    // ----
+
+    $image_height   = get_field('contentlist_item_image_height');
+    if($image_height === null){
+        $image_height = 75;
+    }
+
+    $content_align   = get_field('contentlist_item_content_alignment');
+    $content_padding = get_field('contentlist_item_content_padding');
+    if($content_padding === null){ $content_padding = 10; }
+
+    // Item Layout
+    $growth_selector = get_field('contentlist_item_vertical_alignment');
+    if($growth_selector === null){ $growth_selector = 1; }
+    array_push($classes, "grow-child-{$growth_selector}");
+
+    $item_bg_color   = get_field('contentlist_item_background_color');
+    $button_text     = get_field('contentlist_item_button_text');
+
+    // List Item inline Styling
+    $itemInlineStyles  = "align-items: $content_align;";
+    $itemInlineStyles .= "text-align: " . ($content_align == 'start' ? 
+        'left' : ($content_align == 'end' ? 'right' : 'center')) . ';';
+    $itemInlineStyles .= "background-color: {$item_bg_color};";
+
+    // Word Count
+    $word_count = get_field('contentlist_item_word_count');
 
     // Text Color
     $textColorClass = '';
