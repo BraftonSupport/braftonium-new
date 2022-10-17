@@ -76,7 +76,7 @@
 
 <div <?php echo $blockId;?> class="<?php echo implode(' ',$classes); ?>" style="<?php echo implode('',$inlineStyles); ?>">
 <?php if($bannerImage){
-    printf('<img src="%s" class="background-image" loading="laxy">', $bannerImage['url']);
+    printf('<img src="%s" class="background-image" loading="lazy">', $bannerImage['url']);
 }?>
     <div class="wrap">   
         <InnerBlocks />
