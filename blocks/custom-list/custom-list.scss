@@ -1,22 +1,60 @@
-.custom-list {
+$grid_container_admin: ".wrap > .block-editor-inner-blocks > .block-editor-block-list__layout";
+$grid_container: ".wrap";
+
+$list_item_container: ".braftonium-custom-list-item";
+$list_item_container_admin: "> .wp-block-acf-custom-list-item > div > div > div > div > div > .block-editor-block-list__layout";
+
+.acf-block-preview .braftonium-custom-list {
+
+    min-height: 150px;
+    padding: 12px;
+    border: 1px solid rgba(200, 200, 200, 0.25);
+
+    &::after {
+        content: 'CUSTOM LIST';
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 2px 4px;
+        background-color: #aaa;
+        font-size: 8px;
+        line-height: 1;
+        color: white;
+        opacity: 0.25;
+        pointer-events:none;
+    }
+
+    &:hover {
+        border: 1px solid #aaa;
+        &:after {
+            opacity: 1;
+        }
+    }
+
+    .wp-block-image {
+        margin: 0;
+    }
+}
+
+.braftonium-custom-list,
+.braftonium-custom-list * {
+    box-sizing: border-box;
+}
+
+.braftonium-custom-list {
     margin:1rem 0;
     background-repeat: no-repeat;
     background-size:cover;
     padding:1rem 0;
     position: relative;
+
     &.full-width{
         width:100vw;
         max-width:100vw;
         margin-left:calc(50% - 50vw) !important;
     }
-    .wrap{
-        max-width:1200px;
-        margin-inline: auto;
-        z-index:1;
-        position: relative;
-        padding:0 1em;
-    }
-    .background-image{
+
+    .background-image {
         position: absolute;
         object-position: center;
         width:100%;
@@ -25,4 +63,60 @@
         top:0;
         left:0;
     }
+
+    #{$grid_container_admin} .block-editor-inner-blocks,
+    #{$grid_container_admin} .wp-block-acf-custom-list-item .acf-block-body,
+    #{$grid_container_admin} .wp-block-acf-custom-list-item .acf-block-body > div,
+    #{$grid_container_admin} .wp-block-acf-custom-list-item .acf-block-body > div > .acf-block-preview {
+        width: 100%;
+        height: 100%;
+    }
+
+    #{$grid_container}, 
+    #{$grid_container_admin} {
+        display: grid;
+        grid-template: auto / repeat(var(--cols-sm, 1), auto);
+        grid-auto-rows: 1fr;
+        row-gap: var(--row-gap);
+        column-gap: var(--col-gap);
+        max-width:1200px;
+        align-items: stretch;
+        margin-inline: auto;
+        z-index:1;
+        position: relative;
+        padding:0 1em;
+        height: 100%;
+    }
+
+    @media(min-width:768px){
+        #{$grid_container}, 
+        #{$grid_container_admin} {
+            grid-template: auto / repeat(var(--cols-md, 2), auto);
+        }
+    }
+
+    @media(min-width:1024px){
+        #{$grid_container}, 
+        #{$grid_container_admin} {
+            grid-template: auto / repeat(var(--cols-lg, 3), auto);
+        }
+    }
+
+    #{$grid_container} #{$list_item_container},
+    #{$grid_container} #{$list_item_container_admin} {
+        background-color: var(--item-bg);
+        position: relative;
+        display: flex;
+        flex-flow: column;
+        overflow: hidden;
+        height:100%;
+    }
+
+    @for $i from 1 through 10 {
+        &.grow-child-#{$i} #{$grid_container} #{$list_item_container} :nth-child(#{$i}),
+        &.grow-child-#{$i} #{$grid_container} #{$list_item_container_admin} :nth-child(#{$i}){
+            flex:1;
+        }
+    }
+
 }

@@ -4,7 +4,7 @@
         'title'			    => __('Custom List'),
         'description'       => __('List Block.'),
         'enqueue_assets'    => function (){
-            wp_enqueue_style('custom-list-css', plugin_dir_url(__FILE__).'custom-list.css');
+            wp_enqueue_style('braftonium-custom-list-css', plugin_dir_url(__FILE__).'custom-list.css');
         },
         'category'          => 'braftonium',
         'mode'			    => 'preview',  

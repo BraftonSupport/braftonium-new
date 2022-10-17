@@ -11,6 +11,10 @@
         'mode'                => 'preview',  
         'render_callback'     => 'braftonium_blocks_template',
 
+        'enqueue_assets'    => function (){
+            wp_enqueue_style('braftonium-custom-list-item-css', plugin_dir_url(__FILE__).'custom-list-item.css');
+        },
+
         'supports'            => [
             'anchor'          => true,
             'customClassName' => true,
