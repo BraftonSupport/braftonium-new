@@ -424,6 +424,25 @@
                 "min": 1,
                 "max": "",
                 "step": 1
+            },
+            {
+                "key": "field_634e57520ce66",
+                "label": "Infinite Slides",
+                "name": "presentation_infinite",
+                "type": "true_false",
+                "instructions": "Whether to loop back to the first slide when the last slide was transitioned.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0,
+                "ui": 1,
+                "ui_on_text": "",
+                "ui_off_text": ""
             }
         ],
         "location": [

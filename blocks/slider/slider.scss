@@ -1,10 +1,17 @@
+
+.editor-styles-wrapper:has(.preview-mode),
+.is-root-container:has(.preview-mode),
+.wp-block-acf-slider:has(.preview-mode){
+    pointer-events: none !important;
+}
+
 .acf-block-preview .braftonium-slider {
 
     min-height: 150px;
     padding: 12px;
     border: 1px solid rgba(200, 200, 200, 0.25);
 
-    &::before {
+    &::after {
         content: 'SLIDER';
         position: absolute;
         top: 0;
@@ -18,14 +25,24 @@
         pointer-events:none;
     }
 
+    &.preview-mode {
+        pointer-events: none !important;
+        .braftonium-slide {
+            pointer-events: none !important;
+        }
+        .slick-prev, .slick-next, .slick-dots {
+            pointer-events: initial;
+            cursor: pointer;
+        }
+    }
+
     &:hover {
         border: 1px solid #aaa;
-        &:before {
+        &:after {
             opacity: 1;
         }
     }
 
-    .wrap,
     .wp-block-image {
         margin: 0;
     }

@@ -58,6 +58,10 @@
     $next_arrow = "";
 
     $preview_mode = get_field('preview');
+    if($preview_mode === null){ $preview_mode = false; }
+    if($preview_mode){
+        array_push($classes, "preview-mode");
+    }
     $preview_mode_field_id = 'field_6336abc8de37f';
 
     if($arrows_visibility == 'visible'){
@@ -91,6 +95,9 @@
     $presentation_slides_to_scroll = get_field('presentation_slides_to_scroll');
     if($presentation_slides_to_scroll === null){ $presentation_slides_to_scroll = 1; }
 
+    $presentation_infinite = get_field('presentation_infinite'); 
+    if($presentation_infinite === null){ $presentation_infinite = false; }
+
     // Block ID
     $blockId = !empty($block['anchor']) ? $block['anchor'] : $block['id'];
 
@@ -100,68 +107,60 @@
     id="<?php echo esc_attr($blockId); ?>"
     class="<?php echo esc_attr(implode(' ', $classes)); ?>"
     <?php if($inlineStyles){ ?> style="<?php echo implode('', $inlineStyles); ?>" <?php } ?> >
-    <div class="wrap">
-        <InnerBlocks/>
-    </div>
-    <script>
-        var <?php echo "$blockId"; ?>_slider_args = {
-            dots: <?php echo $dots_visibility == 'visible' ? 'true' : 'false'; ?>,
-            arrows: <?php echo $arrows_visibility == 'visible' ? 'true' : 'false'; ?>,
-            <?php if($prev_arrow){ ?>prevArrow: "<?php echo $prev_arrow; ?>",<?php } ?>
-            <?php if($next_arrow){ ?>nextArrow: "<?php echo $next_arrow; ?>",<?php } ?>
-            speed: <?php echo $playback_slide_speed; ?>,
-            autoplay: <?php echo $playback_autoplay_speed ? 'true' : 'false'; ?>,
-            autoplaySpeed: <?php echo $playback_autoplay_speed; ?>,
-            swipeToSlide: <?php echo $is_preview ? "false" : "true"; ?>,
-            infinite: true,
-            slidesToShow: <?php echo $presentation_slides_to_show; ?>,
-            slidesToScroll: <?php echo $presentation_slides_to_scroll; ?>
-        };
-
-        jQuery(document).ready(function(){
-
-            <?php 
-            // gutenberg editor
-            if($is_preview){
-            ?>
-
-                // hide fields in side panel on preview
-                var preview_mode = false;
-                acf.addAction('new_field/key=<?php echo $preview_mode_field_id; ?>', function(f){
-                    var preview_mode_field = f.$el.find('input[type="checkbox"]');
-                    jQuery(preview_mode_field).on('change', function(e){
-                        preview_mode = !preview_mode;
-                        if(preview_mode){
-                            jQuery(".acf-block-panel .acf-field:not(.acf-field-6336abc8de37f)").hide();
-                        } else {
-                            jQuery(".acf-block-panel .acf-field:not(.acf-field-6336abc8de37f)").show();
-                        }
-                    });
-                });
-
-                // initialize slick
-                var slider = jQuery(
-                    "<?php echo "#{$blockId} > .wrap > .block-editor-inner-blocks > .block-editor-block-list__layout"; ?>"
-                ).not('.slick-initialized');
-                slider.slick(<?php echo "$blockId"; ?>_slider_args, '.braftonium-block.slide');
-
-                <?php if(!$preview_mode){ ?>
-                    jQuery(
-                        "<?php echo "#{$blockId} > .wrap > .block-editor-inner-blocks > .block-editor-block-list__layout"; ?>"
-                    ).slick('unslick');
-                <?php } ?>
-
-            <?php 
-            // frontend
-            } else { 
-            ?>
-                var slider = jQuery("<?php echo "#{$blockId} > .wrap"; ?>");
-                slider.not('.slick-initialized').slick(<?php echo "$blockId"; ?>_slider_args);
-            <?php 
-            } // end if
-            ?>
-
-        });
-
-    </script>
+    <InnerBlocks/>
 </div>
+<script>
+    var <?php echo "$blockId"; ?>_slider_args = {
+        dots: <?php echo $dots_visibility == 'visible' ? 'true' : 'false'; ?>,
+        arrows: <?php echo $arrows_visibility == 'visible' ? 'true' : 'false'; ?>,
+        <?php if($prev_arrow){ ?>prevArrow: "<?php echo $prev_arrow; ?>",<?php } ?>
+        <?php if($next_arrow){ ?>nextArrow: "<?php echo $next_arrow; ?>",<?php } ?>
+        speed: <?php echo $playback_slide_speed; ?>,
+        autoplay: <?php echo $playback_autoplay_speed ? 'true' : 'false'; ?>,
+        autoplaySpeed: <?php echo $playback_autoplay_speed; ?>,
+        swipeToSlide: <?php echo $is_preview ? "false" : "true"; ?>,
+        infinite: <?php echo $presentation_infinite ? "true" : "false"; ?>,
+        slidesToShow: <?php echo $presentation_slides_to_show; ?>,
+        slidesToScroll: <?php echo $presentation_slides_to_scroll; ?>
+    };
+
+    jQuery(document).ready(function(){
+        <?php 
+        // gutenberg editor
+        if($is_preview){
+        ?>
+            // hide fields in side panel on preview
+            var preview_mode = false;
+            acf.addAction('new_field/key=<?php echo $preview_mode_field_id; ?>', function(f){
+                var preview_mode_field = f.$el.find('input[type="checkbox"]');
+                jQuery(preview_mode_field).on('change', function(e){
+                    preview_mode = !preview_mode;
+                    if(preview_mode){
+                        jQuery(".acf-block-panel .acf-field:not(.acf-field-6336abc8de37f)").hide();
+                    } else {
+                        jQuery(".acf-block-panel .acf-field:not(.acf-field-6336abc8de37f)").show();
+                    }
+                });
+            });
+            // initialize slick
+            var slider = jQuery(
+                "<?php echo "#{$blockId} > .block-editor-inner-blocks > .block-editor-block-list__layout"; ?>"
+            ).not('.slick-initialized');
+            slider.slick(<?php echo "$blockId"; ?>_slider_args, '.braftonium-block.slide');
+
+            <?php if(!$preview_mode){ ?>
+                jQuery(
+                    "<?php echo "#{$blockId} > .block-editor-inner-blocks > .block-editor-block-list__layout"; ?>"
+                ).slick('unslick');
+            <?php } ?>
+        <?php 
+        // frontend
+        } else { 
+        ?>
+            var slider = jQuery("<?php echo "#{$blockId}"; ?>");
+            slider.not('.slick-initialized').slick(<?php echo "$blockId"; ?>_slider_args);
+        <?php 
+        } // end if
+        ?>
+    });
+</script>
