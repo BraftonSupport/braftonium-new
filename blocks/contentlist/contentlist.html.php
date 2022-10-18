@@ -73,11 +73,11 @@
     $col_class_mobile = "col-sm-{$columns_mobile}";
 
     $columns_tablet  = get_field('contentlist_layout_columns_tablet');
-    if($columns_tablet === null){ $columns_tablet = 1; }
+    if($columns_tablet === null){ $columns_tablet = 2; }
     $col_class_tablet = "col-md-{$columns_tablet}";
 
     $columns_desktop = get_field('contentlist_layout_columns_desktop');
-    if($columns_desktop === null){ $columns_desktop = 1; }
+    if($columns_desktop === null){ $columns_desktop = 3; }
     $col_class_desktop = "col-lg-{$columns_desktop}";
 
     $col_classes = "{$col_class_mobile} {$col_class_tablet} {$col_class_desktop}";
