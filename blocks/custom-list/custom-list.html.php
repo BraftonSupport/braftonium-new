@@ -19,24 +19,22 @@
         }
 
     //Background Image - With Overlay
-        $bannerImage = get_field('background_image');
-        if($bannerImage){
-            $background_position  = get_field('background_image_position');
-            $bg ='background-image: ';
-            
-            $bg.='url('.$bannerImage['url'].');';
-            if($background_position){
-                $bg.='background-position:';
-
-                foreach($background_position as $key => $value){
-                    if($value){
-                        $bg.=' '.$value.'px';
-                    }
+    $bannerImage       = get_field('background_image');
+    $bg_style = "";
+    if($bannerImage){
+        $background_position  = get_field('background_image_position');
+      
+        
+        if($background_position){
+            $bg_style.='object-position:';   
+            foreach($background_position as $key => $value){
+                if($value){
+                    $bg_style.=' '.$key.' '.$value.'px';
                 }
-                $bg.=";";
             }
-            array_push($blockInlineStyles, $bg);
+            $bg_style.=";";
         }
+    }
 
     //Block Styles
         if(array_key_exists('style',$block)){
@@ -110,19 +108,13 @@
         if($growth_selector === null){ $growth_selector = 1; }
         array_push($classes, "grow-child-{$growth_selector}");
 
-    // create align class ("alignwide") from block setting ("wide")
-    $align_class = $block['align'] ? 'align' . $block['align'] : '';
-    if($align_class){
-        array_push($classes, $align_class);
-    }
-
 ?>
 <div 
     id="<?php echo $blockId;?>" 
     class="<?php echo implode(' ', $classes); ?>" style="<?php echo implode('', $blockInlineStyles); ?>">
     <?php if($bannerImage){
-        printf('<img src="%s" class="background-image" loading="lazy">', $bannerImage['url']);
-    }?>
+    printf('<img src="%s" class="background-image" loading="lazy" style="%s">', $bannerImage['url'], $bg_style);
+}?>
     <div class="wrap">
         <InnerBlocks />
     </div>
