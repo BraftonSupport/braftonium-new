@@ -136,6 +136,23 @@
                 ]
             },
             {
+                "key": "field_633c9b9503b29",
+                "label": "List Item Background Color",
+                "name": "list_item_background_color",
+                "type": "color_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "enable_opacity": 1,
+                "return_format": "string"
+            },
+            {
                 "key": "field_6336ee454c597",
                 "label": "Full Width",
                 "name": "full_width",
@@ -294,23 +311,6 @@
                 "esc_html": 0
             },
             {
-                "key": "field_633c9b9503b29",
-                "label": "Background Color",
-                "name": "list_item_background_color",
-                "type": "color_picker",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "enable_opacity": 1,
-                "return_format": "string"
-            },
-            {
                 "key": "field_6336ff7a51b1a",
                 "label": "Content Alignment",
                 "name": "list_item_content_alignment",
@@ -352,7 +352,7 @@
                 "placeholder": "",
                 "prepend": "",
                 "append": "",
-                "min": 0,
+                "min": 1,
                 "max": "",
                 "step": ""
             }
