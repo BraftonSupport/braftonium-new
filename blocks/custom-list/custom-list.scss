@@ -1,8 +1,5 @@
-$grid_container_admin: ".wrap > .block-editor-inner-blocks > .block-editor-block-list__layout";
-$grid_container: ".wrap";
-
-$list_item_container: ".braftonium-custom-list-item";
-$list_item_container_admin: "> .wp-block-acf-custom-list-item > div > div > div > div > div > .block-editor-block-list__layout";
+$grid_container_admin: "> .wrap.bedit > .block-editor-inner-blocks > .block-editor-block-list__layout";
+$grid_container: "> .wrap.bfront";
 
 .acf-block-preview .braftonium-custom-list {
 
@@ -31,6 +28,7 @@ $list_item_container_admin: "> .wp-block-acf-custom-list-item > div > div > div 
         }
     }
 
+    .wrap,
     .wp-block-image {
         margin: 0;
     }
@@ -42,13 +40,16 @@ $list_item_container_admin: "> .wp-block-acf-custom-list-item > div > div > div 
 }
 
 .braftonium-custom-list {
+
     margin:1rem 0;
     background-repeat: no-repeat;
     background-size:cover;
+    background-color: var(--bg-col);
     padding:1rem 0;
     position: relative;
+    height: 100%;
 
-    &.full-width{
+    &.full-width {
         width:100vw;
         max-width:100vw;
         margin-left:calc(50% - 50vw) !important;
@@ -64,59 +65,50 @@ $list_item_container_admin: "> .wp-block-acf-custom-list-item > div > div > div 
         left:0;
     }
 
-    #{$grid_container_admin} .block-editor-inner-blocks,
-    #{$grid_container_admin} .wp-block-acf-custom-list-item .acf-block-body,
-    #{$grid_container_admin} .wp-block-acf-custom-list-item .acf-block-body > div,
-    #{$grid_container_admin} .wp-block-acf-custom-list-item .acf-block-body > div > .acf-block-preview {
+    #{$grid_container_admin} > div > div,
+    #{$grid_container_admin} > div > div > div,
+    #{$grid_container_admin} > div > div > div > div,
+    #{$grid_container_admin} > div > div > div > div > div {
         width: 100%;
         height: 100%;
     }
 
+    #{$grid_container} {
+        padding:0 1em;
+    }
+
     #{$grid_container}, 
     #{$grid_container_admin} {
+
         display: grid;
-        grid-template: auto / repeat(var(--cols-sm, 1), auto);
+        grid-template: 1fr / repeat(var(--cols-sm, 1), minmax(0, auto));
         grid-auto-rows: 1fr;
         row-gap: var(--row-gap);
         column-gap: var(--col-gap);
+
         max-width:1200px;
-        align-items: stretch;
         margin-inline: auto;
         z-index:1;
         position: relative;
-        padding:0 1em;
-        height: 100%;
     }
-
+    
     @media(min-width:768px){
         #{$grid_container}, 
         #{$grid_container_admin} {
-            grid-template: auto / repeat(var(--cols-md, 2), auto);
+            grid-template: 1fr / repeat(var(--cols-md, 2), minmax(0, auto));
         }
     }
-
+    
     @media(min-width:1024px){
         #{$grid_container}, 
         #{$grid_container_admin} {
-            grid-template: auto / repeat(var(--cols-lg, 3), auto);
+            grid-template: 1fr / repeat(var(--cols-lg, 3), minmax(0, auto));
         }
     }
-
-    #{$grid_container} #{$list_item_container},
-    #{$grid_container} #{$list_item_container_admin} {
-        background-color: var(--item-bg);
-        position: relative;
-        display: flex;
-        flex-flow: column;
-        overflow: hidden;
-        height:100%;
-    }
-
-    @for $i from 1 through 10 {
-        &.grow-child-#{$i} #{$grid_container} #{$list_item_container} :nth-child(#{$i}),
-        &.grow-child-#{$i} #{$grid_container} #{$list_item_container_admin} :nth-child(#{$i}){
-            flex:1;
-        }
-    }
-
 }
+
+
+
+
+
+

@@ -1,3 +1,6 @@
+$list_item_container: ".braftonium-custom-list-item";
+$list_item_container_admin: ".braftonium-custom-list-item > .block-editor-inner-blocks > .block-editor-block-list__layout";
+
 .acf-block-preview .braftonium-custom-list-item {
 
     min-height: 150px;
@@ -25,8 +28,29 @@
         }
     }
 
-    .wrap,
     .wp-block-image {
         margin: 0;
     }
 }
+
+#{$list_item_container}{
+    background-color: var(--item-bg);
+}
+
+#{$list_item_container},
+#{$list_item_container_admin} {
+
+    position: relative;
+    display: flex;
+    flex-flow: column;
+    overflow: hidden;
+    height:100%;
+    align-self: stretch;
+
+    @for $i from 1 through 10 {
+        &.grow-child-#{$i} :nth-child(#{$i}){
+            flex:1;
+        }
+    }
+}
+
