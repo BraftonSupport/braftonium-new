@@ -33,10 +33,6 @@ $list_item_container_admin: ".braftonium-custom-list-item > .block-editor-inner-
     }
 }
 
-#{$list_item_container}{
-    background-color: var(--item-bg);
-}
-
 #{$list_item_container},
 #{$list_item_container_admin} {
 
@@ -47,10 +43,5 @@ $list_item_container_admin: ".braftonium-custom-list-item > .block-editor-inner-
     height:100%;
     align-self: stretch;
 
-    @for $i from 1 through 10 {
-        &.grow-child-#{$i} :nth-child(#{$i}){
-            flex:1;
-        }
-    }
 }
 

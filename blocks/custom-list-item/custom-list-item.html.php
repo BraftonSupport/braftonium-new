@@ -33,18 +33,6 @@
             array( 'core/paragraph', array( 'content' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer molestie orci massa, eu fringilla nunc sollicitudin ut. Proin quis mi ultrices, malesuada felis non, tempus lorem.' ) )
         );
 
-    // Custom List Item Configuration
-    // ------------------------------
-
-    // Item Background Color
-        $item_bg_color = get_field('background_color');
-        array_push($blockInlineStyles, "--item-bg:{$item_bg_color};");
-
-    // Item Expansion
-        $growth_selector = get_field('item_expansion');
-        if($growth_selector === null){ $growth_selector = 1; }
-        array_push($classes, "grow-child-{$growth_selector}");
-
 ?>
 <div id="<?php echo esc_attr($blockId); ?>"
     class="<?php echo esc_attr(implode(' ', $classes)); ?>"
