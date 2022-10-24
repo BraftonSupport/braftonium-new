@@ -271,10 +271,10 @@
                 "sub_fields": [
                     {
                         "key": "field_632d9d160e149",
-                        "label": "Image Height",
-                        "name": "image_height",
+                        "label": "Image Aspect Ratio",
+                        "name": "image_aspect_ratio",
                         "type": "number",
-                        "instructions": "Height in percentage.",
+                        "instructions": "For a square image use a value of 100. For a horizontal landscape image, use values below 100. For a Vertical aspect ratio, use a value above 100.",
                         "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {
@@ -327,6 +327,25 @@
                         "min": 0,
                         "max": "",
                         "step": ""
+                    },
+                    {
+                        "key": "field_63563d7c38fd7",
+                        "label": "Read Time",
+                        "name": "read_time",
+                        "type": "true_false",
+                        "instructions": "Whether to display the time it takes to read the article.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "message": "",
+                        "default_value": 0,
+                        "ui": 1,
+                        "ui_on_text": "",
+                        "ui_off_text": ""
                     },
                     {
                         "key": "field_632d9d280e14a",

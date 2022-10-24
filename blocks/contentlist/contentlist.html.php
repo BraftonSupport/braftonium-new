@@ -91,7 +91,7 @@
     // Item
     // ----
 
-    $image_height   = get_field('contentlist_item_image_height');
+    $image_height   = get_field('contentlist_item_image_aspect_ratio');
     if($image_height === null){
         $image_height = 75;
     }
@@ -116,6 +116,9 @@
 
     // Word Count
     $word_count = get_field('contentlist_item_word_count');
+
+    // Read Time
+    $show_read_time = get_fielD('contentlist_item_read_time');
 
     // Text Color
     $textColorClass = '';
@@ -158,7 +161,7 @@
                             <a <?php if($textColorClass){ echo "class='$textColorClass' "; } ?> href='<?php echo $link; ?>'><?php echo $title; ?></a>
                         </h3>
                         <div class='list-item-meta <?php echo $textColorClass; ?>'>
-                            <?php echo $readingTime; ?>
+                            <?php if($show_read_time){ echo $readingTime; } ?>
                         </div>
                         <div class='list-item-excerpt <?php echo $textColorClass; ?>'>
                             <?php echo $excerpt; ?>
