@@ -232,6 +232,5 @@
                     endwhile;
                 endif;
         ?>
-        <InnerBlocks />
     </div>
 </div>
