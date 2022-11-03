@@ -62,6 +62,25 @@
                         ),
                         'return_format' => 'value'
                     ),
+                    array(
+                        'key' => 'field_braftonium_settings_4',
+                        'label' => 'Google API Key',
+                        'name' => 'google-api-key',
+                        'type' => 'text',
+                        'required' => 0,
+                        'conditional_logic' => 0,
+                        'instructions' => 'Enter your Google API key.',
+                        'wrapper' => array(
+                            'width' => '50',
+                            'class' => '',
+                            'id' => '',
+                        ),
+                        'default_value' => '',
+                        'choices' => array(
+                            'on'	=> 'On'
+                        ),
+                        'return_format' => 'value'
+                    ),
                 ),
                 'location' => array (
                     array (                
@@ -79,7 +98,7 @@
                 'instruction_placement' => 'label',
                 'hide_on_screen' => '',
             ));
-
+            
             if(get_field('debug-on', 'option')!==null && get_field('debug-on', 'option')[0]=='on' && current_user_can('administrator')){
                 error_reporting( E_ALL );
                 ini_set( 'display_errors', 1 );
@@ -93,7 +112,7 @@
                     update_option('admin_email',$adminEmailOverride);
                     update_option('new_admin_email',$adminEmailOverride);
                 }
-            } 
+            }
         }  
 
     //Each file is kind of self explanatory, open the specific php file for more info
