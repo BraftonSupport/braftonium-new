@@ -1,0 +1,39 @@
+.braftonium-cta {
+    margin:1rem 0;
+    background-repeat: no-repeat;
+    background-size:cover;
+    padding:1rem 0;
+    position: relative;
+    min-height: 250px;
+    &.full-width{
+        width:100vw;
+        max-width:100vw;
+        margin-left:calc(50% - 50vw) !important;
+    }
+    .wrap {
+        max-width:1200px;
+        margin-inline: auto;
+        z-index:1;
+        position: relative;
+        padding:0 1em;
+        &.cta-rows {
+            display: flex;
+            padding: 2.5%;
+            position: relative;
+            align-items: center;
+            height: 100%;
+            .cta-row {
+                width: 50%;
+            }
+        }
+    }
+    .background-image {
+        position: absolute;
+        object-position: center;
+        width:100%;
+        height:100%;
+        object-fit: cover;
+        top:0;
+        left:0;
+    }
+}
