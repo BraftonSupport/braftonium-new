@@ -21,7 +21,6 @@
         }
     
         $inlineStyles           = array();                  //inline styles - block
-        $titleStyles            = '';                       //title styles  - title h2
         $titleClasses           = array();                  //title classes
 
 
@@ -42,13 +41,6 @@
                         array_push($inlineStyles,$type.'-'.$key.':'.$value.';');
                     }
                 }
-            }
-
-            //Typography            
-            if(array_key_exists('typography',$styles)){
-                $typography = $styles['typography'];
-                $titleStyles=array_key_exists('fontSize',$typography) ? 'font-size:'.$typography['fontSize'].';' : '';
-                $titleStyles.=array_key_exists('lineHeight',$typography) ? 'line-height:'.$typography['lineHeight'].'px;' : '';
             }
         }
 
