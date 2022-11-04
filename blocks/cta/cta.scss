@@ -16,16 +16,6 @@
         z-index:1;
         position: relative;
         padding:0 1em;
-        &.cta-rows {
-            display: flex;
-            padding: 2.5%;
-            position: relative;
-            align-items: center;
-            height: 100%;
-            .cta-row {
-                width: 50%;
-            }
-        }
     }
     .background-image {
         position: absolute;

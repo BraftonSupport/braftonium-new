@@ -31,21 +31,18 @@
 
     //Background Image - With Overlay
         $bannerImage       = get_field('cta_background_image');
+        $bg_style = "";
         if($bannerImage){
             $background_position  = get_field('cta_background_image_position');
-            $img ='background-image: ';
-            
-            $img.='url('.$bannerImage['url'].');';
             if($background_position){
-                $img.='background-position:';   
+                $bg_style.='object-position:';   
                 foreach($background_position as $key => $value){
                     if($value){
-                        $img.=' '.$key.' '.$value.'px';
+                        $bg_style.=' '.$key.' '.$value.'px';
                     }
                 }
-                $img.=";";
+                $bg_style.=";";
             }
-            // array_push($inlineStyles,$img);
         }
     //CTA Heading
         $ctaHeading = get_field('cta_heading');
@@ -74,22 +71,34 @@
         if($full_width){
             array_push($classes,'full-width');
         }
-       
+        $template = array(
+            array( 'core/columns', array(), array(
+                array( 'core/column', array(), array(
+                    array( 'core/heading', array( 'content' => '<div><strong>Heading</strong>', "level" => 4 ) ),
+                    array( 'core/paragraph', array( 'content' => 'Lorem ipsum dolor sit amet' ) ),
+                ) ),
+                array( 'core/column', array(), array(
+                    array( 'core/button', array(
+                        'text'      => 'your text',
+                        'url'       => '', 
+                        'className' => 'braftonium-button'
+                    ) 
+                )
+                ) ),
+            ) ),
+            
+        ); 
+        $allowed_blocks = array( 'core/heading', 'core/paragraph', 'core/button' );
 ?>
 
 <div <?php echo $blockId;?> class="<?php echo implode(' ',$classes); ?>" style="<?php echo implode('',$inlineStyles); ?>">
-<?php if($bannerImage){
-    printf('<img src="%s" class="background-image" loading="lazy">', $bannerImage['url']); ?>
+    <?php if($bannerImage){
+        printf('<img src="%s" class="background-image" loading="lazy" style="%s">', $bannerImage['url'], $bg_style);
+    }?>    
     <div class="cta-rows cta-left wrap">
         <div class="cta-row">
-            <?php if($ctaHeading) printf('<h3>%s</h3>',$ctaHeading); ?>
-            <?php if($ctaText) printf('<p>%s</p>',$ctaText); ?>
-        </div>
-        <div class="cta-row cta-right">
-            <div class="cta-button">
-                <InnerBlocks />
-            </div>
+                <InnerBlocks allowedBlocks="<?php esc_attr( wp_json_encode( $allowed_blocks ) ) ?>" template="<?php echo esc_attr( wp_json_encode( $template ) ); ?>" />
         </div>
     </div>
-<?php }?>
+
 </div>
