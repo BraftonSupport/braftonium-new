@@ -24,7 +24,8 @@
             'align'			    => [ 'left', 'right', 'full' ],     //alignment            
             'jsx' 			    => true,                            //Enable JSX
             'color'             => [                                //COLORS
-                    'background'            => true,          
+                    'background'            => true,
+                    'text'                  => false,        
                     'gradients'             => true,
             ],
             'spacing'           => [                                //Spacing
