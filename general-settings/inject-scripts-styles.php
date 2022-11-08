@@ -347,7 +347,10 @@
                         wp_script_add_data( $rule['script_id'] , 'async', true );
                     }
                 }            
-            }        
+            }
+            if(get_field('google-api-key','option')) {
+                wp_enqueue_script('google_api','https://maps.googleapis.com/maps/api/js?key='. get_field('google-api-key','option'),NULL, NULL, false);
+            }       
     }
     add_action('wp_enqueue_scripts', 'braftonium_enqueuer');
 
@@ -374,5 +377,8 @@
                 }
             }            
         }  
-    }    
+    } 
+    
+    
+       
     ?>

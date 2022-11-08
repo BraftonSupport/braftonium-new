@@ -13,7 +13,7 @@
         'title'			    => __('Google Map'),
         'description'       => __('Google Map block'),        
         'enqueue_assets'    => function (){
-            wp_enqueue_style('google-map-css', plugin_dir_url(__FILE__).'/google-map.css');
+            
         },
         'category'          => 'braftonium',
         'mode'			    => 'preview',  
@@ -47,4 +47,11 @@
         }
         add_filter('acf/fields/google_map/api', 'braftonium_acf_google_map_api');
     endif;
+    
+    /*function my_acf_init() {
+        if(get_field('google-api-key','option')) {
+            acf_update_setting('google_api_key', get_field('google-api-key','option') );
+        }
+    }
+    add_action('acf/init', 'my_acf_init');*/
 ?>
