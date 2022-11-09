@@ -8,12 +8,18 @@
         NOTE
         You can add a template to /themes/child-theme/braftonium/blocks/ using the same template name for your block ie. example.html.php
     */
+    /*if(get_field('google-api-key','option')) {
+        wp_enqueue_script('google_api','https://maps.googleapis.com/maps/api/js?key='. get_field('google-api-key','option'),NULL, NULL, false);
+    }*/
     acf_register_block_type(array(
         'name'			    => 'google-map',
         'title'			    => __('Google Map'),
         'description'       => __('Google Map block'),        
         'enqueue_assets'    => function (){
-            
+            if(get_field('google-api-key','option')) {
+                wp_enqueue_script('google_api','https://maps.googleapis.com/maps/api/js?key='. get_field('google-api-key','option'),NULL, NULL, false);
+                wp_enqueue_script('google_map',plugin_dir_url(__FILE__).'js/acf-map.js',NULL, NULL, true);
+            }
         },
         'category'          => 'braftonium',
         'mode'			    => 'preview',  
