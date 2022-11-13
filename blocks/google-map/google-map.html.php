@@ -1,19 +1,13 @@
 <!-- Main block layout - Must be have the name.html.php (example.html.php) -->
 <?php  
-    $classes                = array('google-map');   //use your own general class name
+    include_once ('util/maputility.php');
+    global $post;
+    $classes = array('brafton-google-map');  
     $map = get_field('google_map');
-    /*
-        This example uses both block support attributes and ACF. Example features include:
-        1. Background Image/Color Options
-        2. Background Image Overlay (Including opacity/alpha with RGBA)
-        3. Alignment, Padding & Margin options
-        4. Custom ID and Class
-        5. Title Input (optional) - Font-size, line-height, color
-        6. Innerblocks - So you can add any other blocks inside        
-    */
+    $lastMapBlockID = MapUtility::getLastMapBlockID( $post->post_content );
 
     //Block ID
-        $blockId                = array_key_exists('anchor',$block) ? 'id="'.$block['anchor'].'"' : '';
+    $blockId                = array_key_exists('anchor',$block) ? 'id="'.$block['anchor'].'"' : '';
 
     //Classes
         if(array_key_exists('className',$block)){           //Custom class from user input
@@ -60,28 +54,29 @@
         }
 ?>
 
-<div <?php echo $blockId;?> class="<?php echo implode(' ',$classes); ?>" style="<?php echo implode('',$inlineStyles); ?>">
-    <div class="wrap"> 
-        <!-- <script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo get_field('google-api-key','option') ?>"></script> -->
-        
+    <div <?php echo $blockId;?> class="<?php echo implode(' ',$classes); ?>" style="<?php echo implode('',$inlineStyles); ?>">    
         <?php   
-                if( !empty($map) ): 
+                if( !empty($map) ) : 
                     ?>
-                    <div id="braftonium-acf-map" class="acf-map <?php echo get_field('google-api-key','option') ?>">
+                
+                    <div class="brafton-google-map acf-map <?php echo get_field('google-api-key','option') ?>">
                         <div class="marker" data-lat="<?php echo esc_attr($map['lat']); ?>" data-lng="<?php echo esc_attr($map['lng']); ?>"></div>
                     </div>
+                    <!-- Only run this script when the final map block on the page has been rendered -->
+                    <?php if( $block['id'] === $lastMapBlockID ) : ?>
+                        <script defer>
+                            (( $ ) => {
+                                // Render maps on page load.
+                                $(document).ready(function(){
+                                    $('.acf-map').each(function(){
+                                        var map = initMap( $(this) );
+                                    });
+                                });
+                            })(jQuery);                   
+                        </script>
+                    <?php endif; ?>
                 <?php endif; ?>
-                <script type="text/javascript">
-                (function( $ ) {
-
-                // Render maps on page load.
-                $(window).load(function(){
-                    const map = initMap( $('#braftonium-acf-map') );
-                });
-
-                })(jQuery);
                 
-                </script>
                 <div class="client-address-row">
                 <?php
                 if( have_rows('address') ):                    
@@ -110,7 +105,7 @@
                         echo '</div>';
                     endwhile;
                 endif;
-        ?>
-        
+                ?>
+                </div>
     </div>
-</div>
+        
