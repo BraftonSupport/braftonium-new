@@ -6,7 +6,7 @@ class MapUtility {
      * @param $blocks Array of parsed block objects
      * @return array acf/google-map blocks
      */
-    public static function getAllMapBlocksFromContent($content,$blocks) : array {
+    private static function getAllMapBlocksFromContent($content,$blocks) : array {
         $columns = array_column($blocks,"blockName");
         return array_filter($columns,function($key) {
             return $key == 'acf/google-map';
@@ -22,7 +22,7 @@ class MapUtility {
         $maps = MapUtility::getAllMapBlocksFromContent($content,$blocks);
         $mapsKeys = array_keys($maps);
         $lastMapBlock = $blocks[$mapsKeys[array_key_last($mapsKeys)]];
-        return $lastMapBlock['attrs']['id'];
+        return $lastMapBlock['attrs']['id'] ? : "";
     }
 
 }
