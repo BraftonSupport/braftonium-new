@@ -71,23 +71,7 @@
         if($full_width){
             array_push($classes,'full-width');
         }
-        $template = array(
-            array( 'core/columns', array(), array(
-                array( 'core/column', array(), array(
-                    array( 'core/heading', array( 'content' => '<div><strong>Heading</strong>', "level" => 4 ) ),
-                    array( 'core/paragraph', array( 'content' => 'Lorem ipsum dolor sit amet' ) ),
-                ) ),
-                array( 'core/column', array(), array(
-                    array( 'core/button', array(
-                        'text'      => 'your text',
-                        'url'       => '', 
-                        'className' => 'braftonium-button'
-                    ) 
-                )
-                ) ),
-            ) ),
-            
-        ); 
+       
         $allowed_blocks = array( 'core/heading', 'core/paragraph', 'core/button' );
 ?>
 
@@ -97,7 +81,7 @@
     }?>    
     <div class="cta-rows cta-left wrap">
         <div class="cta-row">
-                <InnerBlocks allowedBlocks="<?php esc_attr( wp_json_encode( $allowed_blocks ) ) ?>" template="<?php echo esc_attr( wp_json_encode( $template ) ); ?>" />
+                <InnerBlocks allowedBlocks="<?php esc_attr( wp_json_encode( $allowed_blocks ) ) ?>"  ?>" />
         </div>
     </div>
 
