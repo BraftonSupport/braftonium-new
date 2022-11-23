@@ -98,6 +98,7 @@
                 'instruction_placement' => 'label',
                 'hide_on_screen' => '',
             ));
+
             if(get_field('debug-on', 'option')!==null && (sizeof(get_field('debug-on', 'option')) !== 0 && get_field('debug-on', 'option')[0]=='on') && current_user_can('administrator')){
                 error_reporting( E_ALL );
                 ini_set( 'display_errors', 1 );
