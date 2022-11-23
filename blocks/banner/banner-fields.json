@@ -68,25 +68,6 @@
                 "layout": "horizontal",
                 "return_format": "value",
                 "save_other_choice": 0
-            },
-            {
-                "key": "field_6335968c6d2f4",
-                "label": "Content Wrap",
-                "name": "content_wrap",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "50",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
             }
         ],
         "location": [
