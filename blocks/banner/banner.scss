@@ -31,6 +31,10 @@
     }
 }
 
+.components-popover.block-editor-block-popover {
+    z-index: 999999 !important;
+}
+
 html{
     overflow-x: clip;
 }
