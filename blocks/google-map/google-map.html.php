@@ -1,10 +1,13 @@
 <!-- Main block layout - Must be have the name.html.php (example.html.php) -->
-<?php  
+<?php 
+if(!is_admin()) { 
     include_once ('util/maputility.php');
     global $post;
     $classes = array('brafton-google-map');  
     $map = get_field('google_map');
+    
     $lastMapBlockID = MapUtility::getLastMapBlockID( $post->post_content );
+
 
     //Block ID
     $blockId                = array_key_exists('anchor',$block) ? 'id="'.$block['anchor'].'"' : '';
@@ -56,6 +59,7 @@
     <style>
         .acf-map { min-height: 275px }
     </style>
+
     <div <?php echo $blockId;?> class="<?php echo implode(' ',$classes); ?>" style="<?php echo implode('',$inlineStyles); ?>">    
         <?php   
                 if( !empty($map) ) : 
@@ -65,7 +69,7 @@
                         <div class="marker" data-lat="<?php echo esc_attr($map['lat']); ?>" data-lng="<?php echo esc_attr($map['lng']); ?>"></div>
                     </div>
                     <!-- Only run this script when the final map block on the page has been rendered -->
-                    <?php if( $block['id'] === $lastMapBlockID ) : ?>
+                    <?php if( $lastMapBlockID && $block['id'] === $lastMapBlockID ) : ?>
                         <script defer>
                             (( $ ) => {
                                 // Render maps on page load.
@@ -110,4 +114,4 @@
                 ?>
                 </div>
     </div>
-        
+<?php }       ?>
