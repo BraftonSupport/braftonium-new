@@ -53,7 +53,9 @@
             array_push($classes,'align'.$block['align']);
         }
 ?>
-
+    <style>
+        .acf-map { min-height: 275px }
+    </style>
     <div <?php echo $blockId;?> class="<?php echo implode(' ',$classes); ?>" style="<?php echo implode('',$inlineStyles); ?>">    
         <?php   
                 if( !empty($map) ) : 
