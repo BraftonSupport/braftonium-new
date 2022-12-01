@@ -19,6 +19,7 @@
             if(get_field('google-api-key','option')) {
                 wp_enqueue_script('google_api','https://maps.googleapis.com/maps/api/js?key='. get_field('google-api-key','option'),NULL, NULL, false);
                 wp_enqueue_script('google_map',plugin_dir_url(__FILE__).'js/acf-map.js',NULL, NULL, true);
+                wp_enqueue_style('google-map-css', plugin_dir_url(__FILE__).'google-map.css');
             }
         },
         'category'          => 'braftonium',
