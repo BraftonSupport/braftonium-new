@@ -1,5 +1,7 @@
 <!-- Main block layout - Must be have the name.html.php (example.html.php) -->
 <?php  
+
+// echo '<pre>';var_dump($block);echo '</pre>';
     $classes                = array('braftonium-custom-row');   //use your own general class name
     /*
         This example uses both block support attributes and ACF. Example features include:
@@ -28,6 +30,7 @@
         if(array_key_exists('backgroundColor',$block)){
             array_push($classes,'has-'.$block['backgroundColor'].'-background-color');
         }
+        
 
     //Background Image - With Overlay
         $bannerImage       = get_field('background_image');
@@ -61,8 +64,14 @@
                 }
             }
             if(array_key_exists('color', $styles)){
-                array_push($inlineStyles, sprintf("background-color: %s;", $styles['color']['background']) );
+                if(array_key_exists('background', $styles['color'])){
+                    array_push($inlineStyles, sprintf("background-color: %s;", $styles['color']['background']) );
+                }
+                if(array_key_exists('gradient', $styles['color'])){
+                    array_push($inlineStyles, sprintf("background: %s;", $styles['color']['gradient']) );
+                }
             }
+            
         } 
 
     //Alignment
