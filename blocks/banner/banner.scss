@@ -29,6 +29,23 @@
             max-width:calc(100vw - 20px);
         }    
     }
+    &.align-wrap-{
+        &left{
+            .wrap{
+                > * {
+                    width:clamp(300px, 60%,1000px);
+                }
+            }
+        }
+        &right{
+            .wrap{
+                > * {
+                    width:clamp(300px, 60%,1000px);
+                    margin-left:auto;
+                }
+            }
+        }
+    }
 }
 
 .components-popover.block-editor-block-popover {

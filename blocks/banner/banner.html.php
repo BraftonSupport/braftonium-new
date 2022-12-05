@@ -42,12 +42,12 @@
         }
 
         $alignContent = get_field('align_content');
-        $alignContent = isset($alignContent) ? 'text-align:'.$alignContent.';' : '';
+        $classes[] = "align-wrap-".$alignContent
 ?>
 
 <div <?php echo $blockId;?> class="<?php echo implode(' ',$classes); ?>" style="<?php echo implode('',$inlineStyles); ?>">
     <?php echo $img; ?>
-    <div class="wrap" style="<?php echo $alignContent; ?>">    
+    <div class="wrap">    
         <InnerBlocks />
     </div>
 </div>
