@@ -21,7 +21,7 @@ class MapUtility {
         $blocks = parse_blocks($content);
         $maps = MapUtility::getAllMapBlocksFromContent($content,$blocks);
         $mapsKeys = array_keys($maps);
-        $lastMapBlock = $blocks[$mapsKeys[array_key_last($mapsKeys)]];
+        $lastMapBlock = $blocks[$mapsKeys[array_key_last($mapsKeys)]] ? : array();
         return $lastMapBlock['attrs']['id'] ? : "";
     }
 
