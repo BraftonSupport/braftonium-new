@@ -10,7 +10,7 @@ if(!is_admin()) {
 
 
     //Block ID
-    $blockId                = array_key_exists('anchor',$block) ? 'id="'.$block['anchor'].'"' : '';
+    $blockId                = 'id="'.$block['id'].'"';
 
     //Classes
         if(array_key_exists('className',$block)){           //Custom class from user input
@@ -69,18 +69,16 @@ if(!is_admin()) {
                         <div class="marker" data-lat="<?php echo esc_attr($map['lat']); ?>" data-lng="<?php echo esc_attr($map['lng']); ?>"></div>
                     </div>
                     <!-- Only run this script when the final map block on the page has been rendered -->
-                    <?php if( $lastMapBlockID && $block['id'] === $lastMapBlockID ) : ?>
+                    
                         <script defer>
                             (( $ ) => {
                                 // Render maps on page load.
                                 $(document).ready(function(){
-                                    $('.acf-map').each(function(){
-                                        var map = initMap( $(this) );
-                                    });
+                                    initMap($('#<?php echo $block['id']; ?> .acf-map'));
                                 });
                             })(jQuery);                   
                         </script>
-                    <?php endif; ?>
+                    
                 <?php endif; ?>
                 
                 <div class="client-address-row">
