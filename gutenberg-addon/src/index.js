@@ -9,6 +9,8 @@ const {compose } = wp.compose;
 const useSelect  = wp.data.useSelect;
 const withSelect = wp.data.withSelect;
 const { Component } = wp.element;
+const {useEffect} = wp.element;
+import Select from 'react-select';
 /**
  * Add custom attribute for mobile visibility.
  *
@@ -106,10 +108,37 @@ addFilter(
 			})
 			
 		}
+		if(!isSelected){
+			setAttributes({classesFetched: false});
+			setAttributes({loading: false});
+		}
+		function handleClassSelection(newClasses){
+			
+			var ClassValues = Array.from(newClasses, x=>x.value);
+			
+			// console.log(newSize, attributes);
+			var classes = attributes.className? attributes.className : "";
+			var classes = classes.split(" ");
+			var classOptionValues = availableClasses.map(function(item){
+				return item.value;
+			})
+			var nonOptions = classes.filter(item=>{
+				if(classOptionValues.includes(item)){
+					return false;
+				}
+				return true;
+			})
+			setAttributes( {braftoniumClasses: newClasses});
+			setAttributes( {  className:  nonOptions.join(" ")+" "+ClassValues.join(" ") } )
+		}
 		// console.log('attribute classes',availableClasses);
 		// classOptions = availableClasses;
 		// console.log('my data',classOptions);
-		
+		// useEffect(async ()=>{
+		// 	if(isSelected){
+		// 		console.log('help');
+		// 	}
+		// });
 		if(isSelected && loading){
 			return (
 				<Fragment>
@@ -135,33 +164,20 @@ addFilter(
 			<Fragment>
 				<BlockEdit {...props} />
 
-				{ isSelected &&
+				{ isSelected && 
 					<InspectorAdvancedControls>
 						<div class="special">
-							<SelectControl 
+							<lable>Braftonium Microstyles</lable>
+							<Select 
 									size=""
 									help={__('These are micro styles for your theme. They are distint from block styles in that these will contain a more focused style option. Hold Ctrl and click the classes you wish to add or remove.')}
-									multiple={true}
+									isMulti={true}
 									label="Braftonium MicroStyles"
 									value={ braftoniumClasses }
 									options={availableClasses}
-									onChange={ ( newClasses ) => {
-										// console.log(newSize, attributes);
-										var classes = attributes.className? attributes.className : "";
-										var classes = classes.split(" ");
-										var classOptionValues = availableClasses.map(function(item){
-											return item.value;
-										})
-										var nonOptions = classes.filter(item=>{
-											if(classOptionValues.includes(item)){
-												return false;
-											}
-											return true;
-										})
-										setAttributes( {braftoniumClasses: newClasses});
-										setAttributes( {  className:  nonOptions.join(" ")+" "+newClasses.join(" ") } )
-									 } }
+									onChange={handleClassSelection}
 								/>
+								<span>These are micro styles for your theme. They are distint from block styles in that these will contain a more focused style option. Hold Ctrl and click the classes you wish to add or remove.</span>
 								</div>
 						{/* <ToggleControl
 							label={ __( 'Mobile Devices Visibity' ) }
