@@ -139,7 +139,7 @@
                 foreach($items as $item){ 
                     $post_id = $item->ID;
                     $title   = $item->post_title;
-                    $excerpt = get_the_excerpt($post_id);
+                    $excerpt = wp_trim_words(get_the_excerpt($post_id), $word_count,'');
                     $link    = $is_preview ? '#' : get_the_permalink($post_id);
                     $image   = get_the_post_thumbnail_url($post_id, 'full');
                     $readingTime = '';

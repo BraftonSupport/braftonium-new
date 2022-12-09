@@ -33,14 +33,14 @@
         &left{
             .wrap{
                 > * {
-                    width:clamp(300px, 60%,1000px);
+                    width:clamp(300px, 55%,1000px);
                 }
             }
         }
         &right{
             .wrap{
                 > * {
-                    width:clamp(300px, 60%,1000px);
+                    width:clamp(300px, 55%,1000px);
                     margin-left:auto;
                 }
             }

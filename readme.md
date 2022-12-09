@@ -137,4 +137,16 @@ Some functions which we either need often or would just help minimize code:
 2. readingTime - Optional values: choose between min/minute and append text
 3. includeForAdmin - Only include a php file if the user is admin, avoid public errors
 
+## MicroStyles
+What is a microstyle. Microstyles are minor tweaks that are used in combination with block styles or other microstyles to achieve minor changes to an element. With micros styles we can apply numberous changes with a class (which block styles don't allow), while providing the user with options to select that apply a class name rather than remember a class name and what it does.
+No code updates are required in the plugin. You can register micro style classes in your theme or another plugin with the following filter.
+```php
+/**
+ * @var classList Array of current classess applied to this block
+ * @var blockType the block type currently in use
+ */
+apply_filters('braftonium_class_list',$classList, $blockType);
+```
+By checking the current block type you can add classes only for specific blocks.
+
 ## More Coming soon!

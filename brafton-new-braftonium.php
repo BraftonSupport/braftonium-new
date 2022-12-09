@@ -15,7 +15,10 @@ if ( ! defined( 'ABSPATH' ) )  exit;
 
 // get acf, see if plugin exists
 require_once ABSPATH . 'wp-content/plugins/advanced-custom-fields-pro/acf.php';
-
+require_once dirname(__FILE__).'/gutenberg-addon/class-loader.php';
+add_action('enqueue_block_editor_assets', function() {
+	wp_enqueue_script('braftonium-gutenberg-filters', plugin_dir_url(__FILE__) . '/gutenberg-addon/build/index.js', ['wp-edit-post']);
+});
 // make acf options
 if(!function_exists("acf_add_local_field_group")){
 	_e( "Hey, do you have the ACF plugin? You don\'t need to activate it but it\'ll be nice if it was there.", "braftonium" );
