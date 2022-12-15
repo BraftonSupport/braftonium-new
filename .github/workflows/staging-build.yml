@@ -1,0 +1,82 @@
+name: Staging Build
+
+on:
+  push:
+    # Sequence of patterns matched against refs/heads
+    branches:
+      # Push events to branches matching refs/heads/mona/octocat
+      - 'master'
+    # Sequence of patterns matched against refs/tags
+    tags-ignore:
+      - v*.*    
+
+jobs:
+  calculate-version:
+    name: Calculate Version
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2.4.0
+        with:
+          fetch-depth: 0
+
+      - uses: benjlevesque/short-sha@v1.2
+        id: short-sha
+        with:
+          length: 7
+
+      - name: Determine Version
+        uses: Stelzi79/action-minver@main-Stelzi79
+        id: version
+        with:
+          auto-increment: patch
+          default-pre-release-phase: rc
+          tag-prefix: v
+
+      - name: Output Version
+        run: |
+          echo '### Build Version - ${{ steps.version.outputs.version }}' >> $GITHUB_STEP_SUMMARY
+          echo '```${{ steps.version.outputs.version }} ```' >> $GITHUB_STEP_SUMMARY
+  build-package:
+    name: Build Plugin Package 
+    runs-on: ubuntu-latest
+    needs: [calculate-version]
+    steps:
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: Compile Sass
+        run: cd ./blocks && npm install && npm run sass-compile
+      - name: Build React Addon
+        run: cd ./gutenberg-addon && npm install && npm run build
+      # Artifacts
+      - name: Store Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: braftonium
+          path: |
+            /
+            !node_modules
+            !gutenberg-addon/node_modules 
+
+      # Drafts your next Release notes as Pull Requests are merged into "master"
+      - uses: release-drafter/release-drafter@v5.18.1
+        with:
+            # (Optional) specify config name to use, relative to .github/. Default: release-drafter.yml
+            config-name: release-drafter.yml
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # send staging release email notification
+      - name: Email Release Notification
+        uses: brafton/email-release-notes-action@v1.1.1
+        with:
+          github_token: ${{ github.token }}
+          repo_name: platform-app
+          product_name: Braftonium Plugin
+          email_recipient: pass.shack@brafton.com
+          email_password: password
+          email_username: stewart.snow@brafton.com
