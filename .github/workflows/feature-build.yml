@@ -85,4 +85,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: braftonium-test
-          path: ./braftonium-test.zip
+          path: ./braftonium-test-container-zip.zip
