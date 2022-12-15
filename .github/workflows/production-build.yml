@@ -62,7 +62,12 @@ jobs:
             !gutenberg-addon/node_modules
             !.git
             !.github
-
+          # zip the bundle
+      - name: zip bundle
+        uses: vimtor/action-zip@v1
+        with:
+          files: ./
+          dest: braftonium.zip
       # Get latest release notes, so we can attach assets and pull text
       - name: Fetch Latest Release
         id: fetch-latest-release
