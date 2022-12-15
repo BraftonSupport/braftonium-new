@@ -28,34 +28,6 @@
                 "mime_types": ""
             },
             {
-                "key": "field_632aff5701e57",
-                "label": "Align Image",
-                "name": "align_image",
-                "type": "number",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": [
-                    [
-                        {
-                            "field": "field_632ae933c0131",
-                            "operator": "!=empty"
-                        }
-                    ]
-                ],
-                "wrapper": {
-                    "width": "30",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "min": "",
-                "max": "",
-                "step": ""
-            },
-            {
                 "key": "field_632aebb1c0138",
                 "label": "Banner Overlay Color",
                 "name": "banner_background_overlay",
@@ -96,25 +68,6 @@
                 "layout": "horizontal",
                 "return_format": "value",
                 "save_other_choice": 0
-            },
-            {
-                "key": "field_6335968c6d2f4",
-                "label": "Content Wrap",
-                "name": "content_wrap",
-                "type": "text",
-                "instructions": "",
-                "required": 0,
-                "conditional_logic": 0,
-                "wrapper": {
-                    "width": "50",
-                    "class": "",
-                    "id": ""
-                },
-                "default_value": "",
-                "placeholder": "",
-                "prepend": "",
-                "append": "",
-                "maxlength": ""
             }
         ],
         "location": [

@@ -20,10 +20,6 @@
         $img               = '';
 
         if(get_field('banner_background_image')){            
-            $alignImage     = get_field('align_image');
-            if(isset($alignImage)){
-                $img=' style="object-position:0 '.$alignImage.'px;"';
-            }
             $img='<img src="'.get_field('banner_background_image')['url'].'"'.$img.' fetchpriority="high"/>';
         }
         $rgba  = get_field('banner_background_overlay');
@@ -45,16 +41,13 @@
             }
         }
 
-        $alignText = get_field('align_content');
-        $alignText = isset($alignText) ? 'text-align:'.$alignText.';' : '';
-
-        $contentMaxWidth = get_field('content_wrap');
-        $contentMaxWidth = isset($contentMaxWidth) ? 'max-width:'.$contentMaxWidth.';' : '';
+        $alignContent = get_field('align_content');
+        $classes[] = "align-wrap-".$alignContent
 ?>
 
 <div <?php echo $blockId;?> class="<?php echo implode(' ',$classes); ?>" style="<?php echo implode('',$inlineStyles); ?>">
     <?php echo $img; ?>
-    <div class="wrap" style="<?php echo $alignText.$contentMaxWidth; ?>">    
+    <div class="wrap">    
         <InnerBlocks />
     </div>
 </div>

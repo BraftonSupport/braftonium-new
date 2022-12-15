@@ -347,7 +347,7 @@
                         wp_script_add_data( $rule['script_id'] , 'async', true );
                     }
                 }            
-            }        
+            }     
     }
     add_action('wp_enqueue_scripts', 'braftonium_enqueuer');
 
@@ -374,5 +374,8 @@
                 }
             }            
         }  
-    }    
+    } 
+    
+    
+       
     ?>

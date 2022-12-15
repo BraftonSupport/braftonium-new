@@ -1,0 +1,467 @@
+[
+    {
+        "key": "group_6319adf84e66a",
+        "title": "Slider Configuration",
+        "fields": [
+            {
+                "key": "field_6336abc8de37f",
+                "label": "Preview Slider?",
+                "name": "preview",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0,
+                "ui": 1,
+                "ui_on_text": "",
+                "ui_off_text": ""
+            },
+            {
+                "key": "field_6347ebea19371",
+                "label": "",
+                "name": "",
+                "type": "message",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "<strong>Dot Options<\/strong>\r\n<hr>",
+                "new_lines": "wpautop",
+                "esc_html": 0
+            },
+            {
+                "key": "field_6319af7160107",
+                "label": "Visibility",
+                "name": "dots_visibility",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "visible": "Visible",
+                    "hidden": "Hidden"
+                },
+                "allow_null": 0,
+                "other_choice": 0,
+                "default_value": "visible",
+                "layout": "horizontal",
+                "return_format": "value",
+                "save_other_choice": 0
+            },
+            {
+                "key": "field_6319c086551a6",
+                "label": "Placement",
+                "name": "dots_placement",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_6319af7160107",
+                            "operator": "==",
+                            "value": "visible"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "top": "Top",
+                    "bottom": "Bottom"
+                },
+                "allow_null": 0,
+                "other_choice": 0,
+                "default_value": "bottom",
+                "layout": "horizontal",
+                "return_format": "value",
+                "save_other_choice": 0
+            },
+            {
+                "key": "field_6347ebf819372",
+                "label": "",
+                "name": "",
+                "type": "message",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "<strong>Arrow Options<\/strong>\r\n<hr>",
+                "new_lines": "wpautop",
+                "esc_html": 0
+            },
+            {
+                "key": "field_6319afce6010b",
+                "label": "Visibility",
+                "name": "arrows_visibility",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "visible": "Visible",
+                    "hidden": "Hidden"
+                },
+                "allow_null": 0,
+                "other_choice": 0,
+                "default_value": "visible",
+                "layout": "horizontal",
+                "return_format": "value",
+                "save_other_choice": 0
+            },
+            {
+                "key": "field_631af66d727d6",
+                "label": "Type",
+                "name": "arrows_type",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_6319afce6010b",
+                            "operator": "==",
+                            "value": "visible"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "default": "Default",
+                    "image": "Image",
+                    "text": "Text"
+                },
+                "allow_null": 0,
+                "other_choice": 0,
+                "default_value": "default",
+                "layout": "horizontal",
+                "return_format": "value",
+                "save_other_choice": 0
+            },
+            {
+                "key": "field_6319b0476010d",
+                "label": "Left Image",
+                "name": "arrows_left_image",
+                "type": "image",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_6319afce6010b",
+                            "operator": "==",
+                            "value": "visible"
+                        },
+                        {
+                            "field": "field_631af66d727d6",
+                            "operator": "==",
+                            "value": "image"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "url",
+                "preview_size": "medium",
+                "library": "all",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": ""
+            },
+            {
+                "key": "field_6319b0636010e",
+                "label": "Right Image",
+                "name": "arrows_right_image",
+                "type": "image",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_6319afce6010b",
+                            "operator": "==",
+                            "value": "visible"
+                        },
+                        {
+                            "field": "field_631af66d727d6",
+                            "operator": "==",
+                            "value": "image"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "url",
+                "preview_size": "medium",
+                "library": "all",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": ""
+            },
+            {
+                "key": "field_6319b09460110",
+                "label": "Left Text",
+                "name": "arrows_left_text",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_6319afce6010b",
+                            "operator": "==",
+                            "value": "visible"
+                        },
+                        {
+                            "field": "field_631af66d727d6",
+                            "operator": "==",
+                            "value": "text"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_6319b0b260112",
+                "label": "Right Text",
+                "name": "arrows_right_text",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_6319afce6010b",
+                            "operator": "==",
+                            "value": "visible"
+                        },
+                        {
+                            "field": "field_631af66d727d6",
+                            "operator": "==",
+                            "value": "text"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_6347ec0c19373",
+                "label": "",
+                "name": "",
+                "type": "message",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "<strong>Playback Options<\/strong>\r\n<hr>",
+                "new_lines": "wpautop",
+                "esc_html": 0
+            },
+            {
+                "key": "field_6319b15d60118",
+                "label": "Autoplay Speed",
+                "name": "playback_autoplay_speed",
+                "type": "number",
+                "instructions": "How long to wait before transitioning to the next slide (milliseconds).",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": 3000,
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "min": 0,
+                "max": "",
+                "step": 1
+            },
+            {
+                "key": "field_6319b18f60119",
+                "label": "Slide Speed",
+                "name": "playback_slide_speed",
+                "type": "number",
+                "instructions": "How fast to transition to the next slide (milliseconds).",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": 3000,
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "min": 0,
+                "max": "",
+                "step": 1
+            },
+            {
+                "key": "field_6347ec1719374",
+                "label": "",
+                "name": "",
+                "type": "message",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "<strong>Presentation Options<\/strong>\r\n<hr>",
+                "new_lines": "wpautop",
+                "esc_html": 0
+            },
+            {
+                "key": "field_6319b1db6011b",
+                "label": "Slides to Show",
+                "name": "presentation_slides_to_show",
+                "type": "number",
+                "instructions": "The number of slides to show at a time.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": 1,
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "min": 1,
+                "max": "",
+                "step": 1
+            },
+            {
+                "key": "field_6319bd546a366",
+                "label": "Slides to Scroll",
+                "name": "presentation_slides_to_scroll",
+                "type": "number",
+                "instructions": "The number of slides to scroll at a time.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": 1,
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "min": 1,
+                "max": "",
+                "step": 1
+            },
+            {
+                "key": "field_634e57520ce66",
+                "label": "Infinite Slides",
+                "name": "presentation_infinite",
+                "type": "true_false",
+                "instructions": "Whether to loop back to the first slide when the last slide was transitioned.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0,
+                "ui": 1,
+                "ui_on_text": "",
+                "ui_off_text": ""
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "block",
+                    "operator": "==",
+                    "value": "acf\/slider"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0
+    }
+]

@@ -1,8 +1,6 @@
 <!-- Main block layout - Must be have the name.html.php (example.html.php) -->
 <?php  
-
-// echo '<pre>';var_dump($block);echo '</pre>';
-    $classes                = array('braftonium-custom-row');   //use your own general class name
+    $classes                = array('braftonium-cta');   //use your own general class name
     /*
         This example uses both block support attributes and ACF. Example features include:
         1. Background Image/Color Options
@@ -30,15 +28,12 @@
         if(array_key_exists('backgroundColor',$block)){
             array_push($classes,'has-'.$block['backgroundColor'].'-background-color');
         }
-        
 
     //Background Image - With Overlay
-        $bannerImage       = get_field('background_image');
+        $bannerImage       = get_field('cta_background_image');
         $bg_style = "";
         if($bannerImage){
-            $background_position  = get_field('background_image_position');
-          
-            
+            $background_position  = get_field('cta_background_image_position');
             if($background_position){
                 $bg_style.='object-position:';   
                 foreach($background_position as $key => $value){
@@ -48,9 +43,11 @@
                 }
                 $bg_style.=";";
             }
-            // array_push($inlineStyles,$img);
         }
-
+    //CTA Heading
+        $ctaHeading = get_field('cta_heading');
+    //CTA Text
+        $ctaText = get_field('cta_text');
     //Block Styles
         if(array_key_exists('style',$block)){
             $styles=$block['style'];
@@ -64,30 +61,28 @@
                 }
             }
             if(array_key_exists('color', $styles)){
-                if(array_key_exists('background', $styles['color'])){
-                    array_push($inlineStyles, sprintf("background-color: %s;", $styles['color']['background']) );
-                }
-                if(array_key_exists('gradient', $styles['color'])){
-                    array_push($inlineStyles, sprintf("background: %s;", $styles['color']['gradient']) );
-                }
+                array_push($inlineStyles, sprintf("background-color: %s;", $styles['color']['background']) );
             }
-            
         } 
 
     //Alignment
-    $full_width = get_field('full_width');
+    $full_width = get_field('cta_full_width');
 
         if($full_width){
             array_push($classes,'full-width');
         }
        
+        $allowed_blocks = array( 'core/heading', 'core/paragraph', 'core/button' );
 ?>
 
 <div <?php echo $blockId;?> class="<?php echo implode(' ',$classes); ?>" style="<?php echo implode('',$inlineStyles); ?>">
-<?php if($bannerImage){
-    printf('<img src="%s" class="background-image" loading="lazy" style="%s">', $bannerImage['url'], $bg_style);
-}?>
-    <div class="wrap">   
-        <InnerBlocks />
+    <?php if($bannerImage){
+        printf('<img src="%s" class="background-image" loading="lazy" style="%s">', $bannerImage['url'], $bg_style);
+    }?>    
+    <div class="cta-rows cta-left wrap">
+        <div class="cta-row">
+                <InnerBlocks allowedBlocks="<?php esc_attr( wp_json_encode( $allowed_blocks ) ) ?>"  ?>" />
+        </div>
     </div>
+
 </div>

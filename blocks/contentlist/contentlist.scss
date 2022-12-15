@@ -1,0 +1,78 @@
+
+$columns:6;
+
+@function get-col-pct($column){
+    @return 100 / $column;
+}
+
+@mixin generate-column-classes($size){
+    @for $i from 1 through $columns {
+        &.col-#{$size}-#{$i} {
+            flex-basis: calc(#{get-col-pct($i)}% - var(--col-gap));
+        }
+    }
+}
+
+.braftonium-contentlist,
+.braftonium-contentlist * {
+    box-sizing: border-box;
+}
+
+.braftonium-contentlist {
+
+    display: flex;
+    flex-flow: row wrap;
+    align-items: stretch;
+
+    .list-item {
+
+        display: flex;
+        flex-flow: column;
+        flex-grow: 1;
+        justify-content: stretch;
+
+        @include generate-column-classes('sm');
+
+        @media(min-width:768px){
+            @include generate-column-classes('md');
+        }
+
+        @media(min-width:1024px){
+            @include generate-column-classes('lg');
+        }
+
+        .list-item-content {
+            display:flex;
+            flex-flow:column;
+            a {
+                // color: inherit;
+            }
+            height: 100%;
+        }
+
+        > .list-item-image {
+
+            position: relative;
+            width: 100%;
+            height: 0;
+
+            img {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+    }
+
+    @for $i from 1 through 10 {
+        &.grow-child-#{$i} .list-item .list-item-content :nth-child(#{$i}) {
+            flex:1;
+        }
+    }
+
+}
