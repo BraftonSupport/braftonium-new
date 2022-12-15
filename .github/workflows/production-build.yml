@@ -1,14 +1,8 @@
-name: Staging Build
+name: Production Build
 
 on:
-  push:
-    # Sequence of patterns matched against refs/heads
-    branches:
-      # Push events to branches matching refs/heads/mona/octocat
-      - 'master'
-    # Sequence of patterns matched against refs/tags
-    tags-ignore:
-      - v*.*    
+  release:
+    types: [published]  
 
 jobs:
   calculate-version:
@@ -69,13 +63,24 @@ jobs:
             !.git
             !.github
 
-      # Drafts your next Release notes as Pull Requests are merged into "master"
-      - uses: release-drafter/release-drafter@v5.18.1
+      # Get latest release notes, so we can attach assets and pull text
+      - name: Fetch Latest Release
+        id: fetch-latest-release
+        uses: thebritican/fetch-latest-release@v2.0.0
         with:
-            # (Optional) specify config name to use, relative to .github/. Default: release-drafter.yml
-            config-name: release-drafter.yml
+          github_token: ${{ github.token }}
+      - run: echo "Latest Release - ${{ steps.fetch-latest-release.outputs.name }}"
+
+      # upload the bundle zip
+      - name: Upload Release Bundle Asset
+        uses: actions/upload-release-asset@v1.0.2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.fetch-latest-release.outputs.upload_url }}
+          asset_path: ./braftonium.zip
+          asset_name: braftonium.zip
+          asset_content_type: application/zip
           # send staging release email notification
       - name: Email Release Notification
         uses: brafton/email-release-notes-action@v1.1.1
