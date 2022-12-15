@@ -64,6 +64,6 @@ jobs:
         with:
           name: braftonium
           path: |
-            /
+            ./
             !node_modules
             !gutenberg-addon/node_modules 
