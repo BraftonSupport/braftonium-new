@@ -65,7 +65,9 @@ jobs:
           path: |
             /
             !node_modules
-            !gutenberg-addon/node_modules 
+            !gutenberg-addon/node_modules
+            !.git
+            !.github
 
       # Drafts your next Release notes as Pull Requests are merged into "master"
       - uses: release-drafter/release-drafter@v5.18.1
