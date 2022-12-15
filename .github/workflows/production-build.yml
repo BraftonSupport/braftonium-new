@@ -57,7 +57,7 @@ jobs:
         with:
           name: braftonium
           path: |
-            /
+            ./
             !node_modules
             !gutenberg-addon/node_modules
             !.git
@@ -89,5 +89,5 @@ jobs:
           repo_name: platform-app
           product_name: Braftonium Plugin
           email_recipient: pass.shack@brafton.com
-          email_password: 1Fle.Rob
+          email_password: ${{secrets.EMAIL_PASSWORD}}
           email_username: stewart.snow@brafton.com
