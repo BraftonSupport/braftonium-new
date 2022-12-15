@@ -59,3 +59,30 @@ jobs:
         run: cd ./blocks && npm install && npm run sass-compile
       - name: Build React Addon
         run: cd ./gutenberg-addon && npm install && npm run build
+      - name: Store Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: braftonium
+          path: |
+            ./
+            !node_modules
+            !gutenberg-addon/node_modules
+            !.git
+            !.github
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+        with: 
+          name: braftonium
+          path: ./dist
+      - name: test
+        run: cd ./dist && ls
+      - name: zip bundle
+        uses: vimtor/action-zip@v1
+        with:
+          files: ./dist
+          dest: braftonium-test.zip
+      - name: Store test Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: braftonium-test
+          path: ./braftonium-test.zip
