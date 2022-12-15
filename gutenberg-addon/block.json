@@ -1,7 +1,7 @@
 {
 	"apiVersion": 2,
-	"name": "brafton/test-block",
-	"title": "Test Block",
+	"name": "brafton/microstyles",
+	"title": "Micro Styles",
 	"category": "braftonium",
 	"icon": "translation",
 	"description": "Example block written with ESNext standard and JSX support – build step required.",
@@ -27,7 +27,7 @@
 			
 		}
 	},
-	"textdomain": "test-block",
+	"textdomain": "microstyles",
 	"editorScript": "file:./build/index.js",
 	"editorStyle": "file:./build/index.css",
 	"style": "file:./build/style-index.css",
