@@ -55,3 +55,11 @@ jobs:
         run: cd ./blocks && npm install && npm run sass-compile
       - name: Build React Addon
         run: cd ./gutenberg-addon && npm install && npm run build
+      - name: Store Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: braftonium
+          path: |
+            /
+            !node_modules
+            !gutenberg-addon/node_modules 
