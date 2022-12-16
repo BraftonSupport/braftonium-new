@@ -69,20 +69,3 @@ jobs:
             !gutenberg-addon/node_modules
             !.git
             !.github
-      - name: Download Artifacts
-        uses: actions/download-artifact@v3
-        with: 
-          name: braftonium
-          path: ./dist
-      - name: test
-        run: cd ./dist && ls
-      - name: zip bundle
-        uses: vimtor/action-zip@v1
-        with:
-          files: ./dist
-          dest: braftonium-test.zip
-      - name: Store test Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: braftonium-test
-          path: ./braftonium-test-container-zip.zip
