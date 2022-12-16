@@ -63,10 +63,15 @@ jobs:
             !.git
             !.github
           # zip the bundle
+      - name: Download Artifacts
+        uses: actions/download-artifact@v3
+        with: 
+          name: braftonium
+          path: ./dist
       - name: zip bundle
         uses: vimtor/action-zip@v1
         with:
-          files: ./
+          files: ./dist
           dest: braftonium.zip
       # Get latest release notes, so we can attach assets and pull text
       - name: Fetch Latest Release
