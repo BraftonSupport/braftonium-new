@@ -59,6 +59,7 @@ jobs:
           path: |
             ./
             !node_modules
+            !blocks/node_modules
             !gutenberg-addon/node_modules
             !.git
             !.github
