@@ -50,6 +50,11 @@
 
 .braftonium-slider {
 
+    .slick-next, 
+    .slick-prev {
+        top: 50%;
+    }
+
     &.slick-dots-top {
         .slick-dots {
             top: -50px;
