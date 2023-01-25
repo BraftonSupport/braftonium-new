@@ -125,7 +125,7 @@
     if(array_key_exists('textColor',$block)){
         $textColorClass = 'has-'.$block['textColor'].'-color';
     }
-
+    
 ?>
 <div 
     id="<?php echo esc_attr($blockId); ?>"
@@ -134,7 +134,7 @@
 
         <?php
             $items = contentlist_query($post_type, $taxonomy, $term, $post_count, $word_count);
-
+            
             if($items){
                 foreach($items as $item){ 
                     $post_id = $item->ID;
@@ -143,6 +143,16 @@
                     $link    = $is_preview ? '#' : get_the_permalink($post_id);
                     $image   = get_the_post_thumbnail_url($post_id, 'full');
                     $readingTime = '';
+                    $category = null;
+                    $author = null;
+                    
+                    if(get_field('contentlist_item_display_author')){
+                        $author_id = get_post_field( 'post_author', $post_id );
+                        $author = get_the_author_meta( 'display_name', $author_id );
+                    }
+                    if(get_field('contentlist_item_display_cat')){
+                        $category = join(',',wp_get_post_categories( $post_id, array( 'fields' => 'names' ) ));
+                    }
                     if(function_exists('readingTime')){
                         $readingTime = readingTime($post_id);
                     }
@@ -161,7 +171,8 @@
                             <a <?php if($textColorClass){ echo "class='$textColorClass' "; } ?> href='<?php echo $link; ?>'><?php echo $title; ?></a>
                         </h3>
                         <div class='list-item-meta <?php echo $textColorClass; ?>'>
-                            <?php if($show_read_time){ echo $readingTime; } ?>
+                            <?php echo output_article_meta($show_read_time? $readingTime: null, $author? $author: null, $category? $category : null); ?>
+                          
                         </div>
                         <div class='list-item-excerpt <?php echo $textColorClass; ?>'>
                             <?php echo $excerpt; ?>
