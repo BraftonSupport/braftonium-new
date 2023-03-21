@@ -1,0 +1,554 @@
+[
+    {
+        "key": "group_64146e317ccd5",
+        "title": "Swiper Configuration",
+        "fields": [
+            {
+                "key": "field_6419c8f4bfde8",
+                "label": "Preview Mode",
+                "name": "preview_mode",
+                "aria-label": "",
+                "type": "true_false",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0,
+                "ui_on_text": "Enable",
+                "ui_off_text": "Disable",
+                "ui": 1
+            },
+            {
+                "key": "field_64146e3181f3b",
+                "label": "",
+                "name": "",
+                "aria-label": "",
+                "type": "message",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "<strong>Dot Options<\/strong>\r\n<hr>",
+                "new_lines": "wpautop",
+                "esc_html": 0
+            },
+            {
+                "key": "field_64146e3181f84",
+                "label": "Visibility",
+                "name": "dots_visibility",
+                "aria-label": "",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "visible": "Visible",
+                    "hidden": "Hidden"
+                },
+                "allow_null": 0,
+                "other_choice": 0,
+                "default_value": "visible",
+                "layout": "horizontal",
+                "return_format": "value",
+                "save_other_choice": 0
+            },
+            {
+                "key": "field_64146e3181ff8",
+                "label": "Placement",
+                "name": "dots_placement",
+                "aria-label": "",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_64146e3181f84",
+                            "operator": "==",
+                            "value": "visible"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "top": "Top",
+                    "bottom": "Bottom"
+                },
+                "allow_null": 0,
+                "other_choice": 0,
+                "default_value": "bottom",
+                "layout": "horizontal",
+                "return_format": "value",
+                "save_other_choice": 0
+            },
+            {
+                "key": "field_64146e3182067",
+                "label": "Active Color",
+                "name": "dots_active_color",
+                "aria-label": "",
+                "type": "color_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "rgba(255, 255, 255, 1)",
+                "enable_opacity": 1,
+                "return_format": "string"
+            },
+            {
+                "key": "field_64146e31820d2",
+                "label": "Inactive Color",
+                "name": "dots_inactive_color",
+                "aria-label": "",
+                "type": "color_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "rgba(0, 0, 0, 0.5)",
+                "enable_opacity": 1,
+                "return_format": "string"
+            },
+            {
+                "key": "field_64146e3182141",
+                "label": "",
+                "name": "",
+                "aria-label": "",
+                "type": "message",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "<strong>Arrow Options<\/strong>\r\n<hr>",
+                "new_lines": "wpautop",
+                "esc_html": 0
+            },
+            {
+                "key": "field_64146e31821a6",
+                "label": "Visibility",
+                "name": "arrows_visibility",
+                "aria-label": "",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "visible": "Visible",
+                    "hidden": "Hidden"
+                },
+                "allow_null": 0,
+                "other_choice": 0,
+                "default_value": "visible",
+                "layout": "horizontal",
+                "return_format": "value",
+                "save_other_choice": 0
+            },
+            {
+                "key": "field_64181dd0e566a",
+                "label": "Color",
+                "name": "arrows_color",
+                "aria-label": "",
+                "type": "color_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_64146e3182211",
+                            "operator": "==",
+                            "value": "text"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_64146e3182211",
+                            "operator": "==",
+                            "value": "default"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "rgba(255, 255, 255, 1)",
+                "enable_opacity": 1,
+                "return_format": "string"
+            },
+            {
+                "key": "field_64146e3182211",
+                "label": "Type",
+                "name": "arrows_type",
+                "aria-label": "",
+                "type": "radio",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_64146e31821a6",
+                            "operator": "==",
+                            "value": "visible"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "choices": {
+                    "default": "Default",
+                    "image": "Image",
+                    "text": "Text"
+                },
+                "allow_null": 0,
+                "other_choice": 0,
+                "default_value": "default",
+                "layout": "horizontal",
+                "return_format": "value",
+                "save_other_choice": 0
+            },
+            {
+                "key": "field_64146e3182280",
+                "label": "Left Image",
+                "name": "arrows_left_image",
+                "aria-label": "",
+                "type": "image",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_64146e31821a6",
+                            "operator": "==",
+                            "value": "visible"
+                        },
+                        {
+                            "field": "field_64146e3182211",
+                            "operator": "==",
+                            "value": "image"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "url",
+                "preview_size": "medium",
+                "library": "all",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": ""
+            },
+            {
+                "key": "field_64146e31822f2",
+                "label": "Right Image",
+                "name": "arrows_right_image",
+                "aria-label": "",
+                "type": "image",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_64146e31821a6",
+                            "operator": "==",
+                            "value": "visible"
+                        },
+                        {
+                            "field": "field_64146e3182211",
+                            "operator": "==",
+                            "value": "image"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "return_format": "url",
+                "preview_size": "medium",
+                "library": "all",
+                "min_width": "",
+                "min_height": "",
+                "min_size": "",
+                "max_width": "",
+                "max_height": "",
+                "max_size": "",
+                "mime_types": ""
+            },
+            {
+                "key": "field_64146e318235d",
+                "label": "Left Text",
+                "name": "arrows_left_text",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_64146e31821a6",
+                            "operator": "==",
+                            "value": "visible"
+                        },
+                        {
+                            "field": "field_64146e3182211",
+                            "operator": "==",
+                            "value": "text"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_64146e31823c9",
+                "label": "Right Text",
+                "name": "arrows_right_text",
+                "aria-label": "",
+                "type": "text",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_64146e31821a6",
+                            "operator": "==",
+                            "value": "visible"
+                        },
+                        {
+                            "field": "field_64146e3182211",
+                            "operator": "==",
+                            "value": "text"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "",
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "maxlength": ""
+            },
+            {
+                "key": "field_64146e318242c",
+                "label": "",
+                "name": "",
+                "aria-label": "",
+                "type": "message",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "<strong>Playback Options<\/strong>\r\n<hr>",
+                "new_lines": "wpautop",
+                "esc_html": 0
+            },
+            {
+                "key": "field_64146e318247a",
+                "label": "Autoplay Speed",
+                "name": "playback_autoplay_speed",
+                "aria-label": "",
+                "type": "number",
+                "instructions": "How long to wait before transitioning to the next slide (milliseconds).",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": 3000,
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "min": 0,
+                "max": "",
+                "step": 1
+            },
+            {
+                "key": "field_64146e31824ea",
+                "label": "Slide Speed",
+                "name": "playback_slide_speed",
+                "aria-label": "",
+                "type": "number",
+                "instructions": "How fast to transition to the next slide (milliseconds).",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": 3000,
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "min": 0,
+                "max": "",
+                "step": 1
+            },
+            {
+                "key": "field_64146e3182557",
+                "label": "",
+                "name": "",
+                "aria-label": "",
+                "type": "message",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "<strong>Presentation Options<\/strong>\r\n<hr>",
+                "new_lines": "wpautop",
+                "esc_html": 0
+            },
+            {
+                "key": "field_64146e31825c6",
+                "label": "Slides to Show",
+                "name": "presentation_slides_to_show",
+                "aria-label": "",
+                "type": "number",
+                "instructions": "The number of slides to show at a time.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": 1,
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "min": 1,
+                "max": "",
+                "step": 1
+            },
+            {
+                "key": "field_64146e3182631",
+                "label": "Slides to Scroll",
+                "name": "presentation_slides_to_scroll",
+                "aria-label": "",
+                "type": "number",
+                "instructions": "The number of slides to scroll at a time.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": 1,
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "min": 1,
+                "max": "",
+                "step": 1
+            },
+            {
+                "key": "field_64146e3182695",
+                "label": "Infinite Slides",
+                "name": "presentation_infinite",
+                "aria-label": "",
+                "type": "true_false",
+                "instructions": "Whether to loop back to the first slide when the last slide was transitioned.",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "message": "",
+                "default_value": 0,
+                "ui": 1,
+                "ui_on_text": "",
+                "ui_off_text": ""
+            }
+        ],
+        "location": [
+            [
+                {
+                    "param": "block",
+                    "operator": "==",
+                    "value": "acf\/swiper"
+                }
+            ]
+        ],
+        "menu_order": 0,
+        "position": "normal",
+        "style": "default",
+        "label_placement": "top",
+        "instruction_placement": "label",
+        "hide_on_screen": "",
+        "active": true,
+        "description": "",
+        "show_in_rest": 0
+    }
+]
