@@ -74,7 +74,7 @@
     $arrows_type         = get_field('arrows_type');
 
     // Arow Color
-    $arrows_color   = get_field('arrows_active_color');
+    $arrows_color   = get_field('arrows_color');
     if($arrows_color === null){
         $arrows_color = 'rgba(255, 255, 255, 1)';
     }
@@ -194,18 +194,16 @@
                     delay: <?php echo $playback_autoplay_speed; ?>,
                     pauseOnMouseEnter: true
                 },
-                <?php if($dots_visibility == 'visible'){ ?>
                 pagination: {
-                    enabled: true,
+                    enabled: <?php echo $dots_visibility == 'visible' ? 'true' : 'false'; ?>,
                     el: '.swiper-pagination',
                     type: 'bullets',
                     clickable: true
                 },
-                <?php } ?>
                 navigation: {
                     enabled: <?php echo $arrows_visibility == 'visible' ? 'true' : 'false'; ?>,
-                    <?php if($prev_arrow){ ?>prevEl: "<?php echo $prev_arrow_class; ?>", <?php } ?>
-                    <?php if($next_arrow){ ?>nextEl: "<?php echo $next_arrow_class; ?>", <?php } ?>
+                    prevEl: "<?php echo $prev_arrow ? $prev_arrow_class : ''; ?>",
+                    nextEl: "<?php echo $next_arrow ? $next_arrow_class : ''; ?>",
                 },
                 loop: <?php echo $presentation_infinite && !$is_preview ? 'true' : 'false'; ?>,
                 speed: <?php echo $playback_slide_speed; ?>,
@@ -223,8 +221,6 @@
         }
 
         if(document.body.classList.contains("block-editor-page")){
-            var _swiper = null;
-            console.log("Run");
             <?php if($preview_mode == 'true'){ ?>
             setTimeout(function(){
                 _swiper = swiper_setup("wp-block-acf-swiper-slide");
