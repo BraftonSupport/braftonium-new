@@ -100,7 +100,39 @@
 
     // Block ID
     $blockId = !empty($block['anchor']) ? $block['anchor'] : $block['id'];
-
+    $responsive = [];
+    if($presentation_slides_to_show > 1){
+        $one = new stdClass;
+        $one->breakpoint = 360;
+        $one->settings = new stdClass;
+        $one->settings->slidesToShow = 1;
+        $one->settings->slidesToScroll = 1;
+        $responsive[] = $one;
+    }
+    if($presentation_slides_to_show > 3){
+        $three = new stdClass;
+        $three->breakpoint = 768;
+        $three->settings = new stdClass;
+        $three->settings->slidesToShow = 2;
+        $three->settings->slidesToScroll = 1;
+        $responsive[] = $three;
+    }
+    if($presentation_slides_to_show > 5){
+        $five = new stdClass;
+        $five->breakpoint = 1030;
+        $five->settings = new stdClass;
+        $five->settings->slidesToShow = 3;
+        $five->settings->slidesToScroll = (int)$scroll;
+        $responsive[] = $five;
+    }
+    if($show > 7){
+        $presentation_slides_to_show = new stdClass;
+        $seven->breakpoint = 1200;
+        $seven->settings = new stdClass;
+        $seven->settings->slidesToShow = 5;
+        $seven->settings->slidesToScroll = (int)$scroll;
+        $responsive[] = $seven;
+    }
 ?>
 
 <div 
@@ -121,7 +153,10 @@
         swipeToSlide: <?php echo $is_preview ? "false" : "true"; ?>,
         infinite: <?php echo $presentation_infinite ? "true" : "false"; ?>,
         slidesToShow: <?php echo $presentation_slides_to_show; ?>,
-        slidesToScroll: <?php echo $presentation_slides_to_scroll; ?>
+        slidesToScroll: <?php echo $presentation_slides_to_scroll; ?>,
+        <?php if($responsive){ ?>
+            responsive: <?php echo json_encode($responsive); ?>
+            <?php } ?>
     };
 
     jQuery(document).ready(function(){
