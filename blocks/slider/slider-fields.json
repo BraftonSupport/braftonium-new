@@ -329,7 +329,7 @@
                 "label": "Autoplay Speed",
                 "name": "playback_autoplay_speed",
                 "type": "number",
-                "instructions": "How long to wait before transitioning to the next slide (milliseconds).",
+                "instructions": "How long to wait before transitioning to the next slide (milliseconds). Leave empty to turn off autoplay. Set to 0 for continous smooth scrolling.",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {

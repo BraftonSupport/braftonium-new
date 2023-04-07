@@ -101,6 +101,7 @@
     // Block ID
     $blockId = !empty($block['anchor']) ? $block['anchor'] : $block['id'];
     $sliderId = str_replace('-','_',$blockId);
+    
 ?>
 
 <div 
@@ -116,12 +117,17 @@
         <?php if($prev_arrow){ ?>prevArrow: "<?php echo $prev_arrow; ?>",<?php } ?>
         <?php if($next_arrow){ ?>nextArrow: "<?php echo $next_arrow; ?>",<?php } ?>
         speed: <?php echo $playback_slide_speed; ?>,
-        autoplay: <?php echo $playback_autoplay_speed ? 'true' : 'false'; ?>,
-        autoplaySpeed: <?php echo $playback_autoplay_speed; ?>,
+        autoplay: <?php echo $playback_autoplay_speed > -1 ? 'true' : 'false'; ?>,
+        <?php if($playback_autoplay_speed > -1){ ?>
+            autoplaySpeed: <?php echo $playback_autoplay_speed; ?>,
+        <?php } ?>
         swipeToSlide: <?php echo $is_preview ? "false" : "true"; ?>,
         infinite: <?php echo $presentation_infinite ? "true" : "false"; ?>,
         slidesToShow: <?php echo $presentation_slides_to_show; ?>,
-        slidesToScroll: <?php echo $presentation_slides_to_scroll; ?>
+        slidesToScroll: <?php echo $presentation_slides_to_scroll; ?>,
+        <?php if($playback_autoplay_speed === '0'){ ?>
+        cssEase: 'linear'
+        <?php } ?>
     };
 
     jQuery(document).ready(function(){
