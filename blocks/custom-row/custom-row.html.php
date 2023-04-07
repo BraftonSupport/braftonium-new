@@ -54,7 +54,6 @@
     //Block Styles
         if(array_key_exists('style',$block)){
             $styles=$block['style'];
-
             //Margins & Padding
             if(array_key_exists('spacing',$styles)){
                 foreach($styles['spacing'] as $type => $values){
@@ -81,6 +80,7 @@
             array_push($classes,'full-width');
         }
        
+        // var_dump($inlineStyles);
 ?>
 
 <div <?php echo $blockId;?> class="<?php echo implode(' ',$classes); ?>" style="<?php echo implode('',$inlineStyles); ?>">

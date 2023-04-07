@@ -100,7 +100,7 @@
 
     // Block ID
     $blockId = !empty($block['anchor']) ? $block['anchor'] : $block['id'];
-
+    $sliderId = str_replace('-','_',$blockId);
 ?>
 
 <div 
@@ -110,7 +110,7 @@
     <InnerBlocks/>
 </div>
 <script>
-    var <?php echo "$blockId"; ?>_slider_args = {
+    var <?php echo "$sliderId"; ?>_slider_args = {
         dots: <?php echo $dots_visibility == 'visible' ? 'true' : 'false'; ?>,
         arrows: <?php echo $arrows_visibility == 'visible' ? 'true' : 'false'; ?>,
         <?php if($prev_arrow){ ?>prevArrow: "<?php echo $prev_arrow; ?>",<?php } ?>
@@ -146,7 +146,7 @@
             var slider = jQuery(
                 "<?php echo "#{$blockId} > .block-editor-inner-blocks > .block-editor-block-list__layout"; ?>"
             ).not('.slick-initialized');
-            slider.slick(<?php echo "$blockId"; ?>_slider_args, '.braftonium-block.slide');
+            slider.slick(<?php echo "$sliderId"; ?>_slider_args, '.braftonium-block.slide');
 
             <?php if(!$preview_mode){ ?>
                 jQuery(
@@ -158,7 +158,7 @@
         } else { 
         ?>
             var slider = jQuery("<?php echo "#{$blockId}"; ?>");
-            slider.not('.slick-initialized').slick(<?php echo "$blockId"; ?>_slider_args);
+            slider.not('.slick-initialized').slick(<?php echo "$sliderId"; ?>_slider_args);
         <?php 
         } // end if
         ?>
