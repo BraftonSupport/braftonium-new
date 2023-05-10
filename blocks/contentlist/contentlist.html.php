@@ -68,6 +68,7 @@
     // Layout
     // ------
 
+    $container_div = get_field('contentlist_layout_container');
     $columns_mobile  = get_field('contentlist_layout_columns_mobile');
     if($columns_mobile === null){ $columns_mobile = 1; }
     $col_class_mobile = "col-sm-{$columns_mobile}";
@@ -125,7 +126,7 @@
     if(array_key_exists('textColor',$block)){
         $textColorClass = 'has-'.$block['textColor'].'-color';
     }
-    
+if($container_div !== null && $container_div !== true){
 ?>
 <div 
     id="<?php echo esc_attr($blockId); ?>"
@@ -133,6 +134,7 @@
     <?php if($blockInlineStyles){ ?> style="<?php echo implode('',$blockInlineStyles); ?>" <?php } ?> >
 
         <?php
+}
             $items = contentlist_query($post_type, $taxonomy, $term, $post_count, $word_count);
             
             if($items){
@@ -187,9 +189,11 @@
                 <?php
                 }
             }
-        ?>
+            if($container_div !== null && $container_div !== true){       ?>
 </div>
-<?php if($is_preview){ ?>
+<?php
+}
+ if($is_preview){ ?>
 <script>
 
 jQuery(document).ready(function($){
