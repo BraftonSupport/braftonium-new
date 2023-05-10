@@ -367,6 +367,44 @@
                         "ui_off_text": ""
                     },
                     {
+                        "key": "field_63563d7c38fd7cat",
+                        "label": "Display Category",
+                        "name": "display_cat",
+                        "type": "true_false",
+                        "instructions": "Whether to display the category if category is used for this post type.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "message": "",
+                        "default_value": 0,
+                        "ui": 1,
+                        "ui_on_text": "",
+                        "ui_off_text": ""
+                    },
+                    {
+                        "key": "field_63563d7c38fd7author",
+                        "label": "Display Author",
+                        "name": "display_author",
+                        "type": "true_false",
+                        "instructions": "Whether to display the author if this content.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "message": "",
+                        "default_value": 0,
+                        "ui": 1,
+                        "ui_on_text": "",
+                        "ui_off_text": ""
+                    },
+                    {
                         "key": "field_632d9d280e14a",
                         "label": "Content Alignment",
                         "name": "content_alignment",
