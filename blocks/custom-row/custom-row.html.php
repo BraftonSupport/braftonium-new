@@ -73,6 +73,7 @@
             }
             
         } 
+        
 
     //Alignment
     $full_width = get_field('full_width');

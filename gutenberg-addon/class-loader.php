@@ -41,7 +41,7 @@ class BraftoniumClassLoader {
     public function get_class_list($request) {
         $blockType = $request['blockType']?? null;
         $classList = [
-
+    
         ];
         /**
          * 

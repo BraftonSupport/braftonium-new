@@ -16,12 +16,9 @@ CSS files will be created/edited automatically as you save.
   background-repeat: none;
   color: black;
 }
-
 .example-class .wrap {
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
   padding: 50px 100px;
-}
-
-/*# sourceMappingURL=../maps/example/example.css.map */
+}/*# sourceMappingURL=example.css.map */
