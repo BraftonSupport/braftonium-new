@@ -100,6 +100,8 @@
 
     // Block ID
     $blockId = !empty($block['anchor']) ? $block['anchor'] : $block['id'];
+    $sliderId = str_replace('-','_',$blockId);
+    
     $responsive = [];
     if($presentation_slides_to_show > 1){
         $one = new stdClass;
@@ -142,21 +144,29 @@
     <InnerBlocks/>
 </div>
 <script>
-    var <?php echo "$blockId"; ?>_slider_args = {
+    var <?php echo "$sliderId"; ?>_slider_args = {
         dots: <?php echo $dots_visibility == 'visible' ? 'true' : 'false'; ?>,
         arrows: <?php echo $arrows_visibility == 'visible' ? 'true' : 'false'; ?>,
         <?php if($prev_arrow){ ?>prevArrow: "<?php echo $prev_arrow; ?>",<?php } ?>
         <?php if($next_arrow){ ?>nextArrow: "<?php echo $next_arrow; ?>",<?php } ?>
         speed: <?php echo $playback_slide_speed; ?>,
-        autoplay: <?php echo $playback_autoplay_speed ? 'true' : 'false'; ?>,
-        autoplaySpeed: <?php echo $playback_autoplay_speed; ?>,
+        autoplay: <?php echo $playback_autoplay_speed > -1 ? 'true' : 'false'; ?>,
+        <?php if($playback_autoplay_speed > -1){ ?>
+            autoplaySpeed: <?php echo $playback_autoplay_speed; ?>,
+        <?php } ?>
         swipeToSlide: <?php echo $is_preview ? "false" : "true"; ?>,
         infinite: <?php echo $presentation_infinite ? "true" : "false"; ?>,
         slidesToShow: <?php echo $presentation_slides_to_show; ?>,
         slidesToScroll: <?php echo $presentation_slides_to_scroll; ?>,
+
+        <?php if($playback_autoplay_speed === '0'){ ?>
+        cssEase: 'linear'
+        <?php } ?>
+
         <?php if($responsive){ ?>
             responsive: <?php echo json_encode($responsive); ?>
             <?php } ?>
+
     };
 
     jQuery(document).ready(function(){
@@ -181,7 +191,7 @@
             var slider = jQuery(
                 "<?php echo "#{$blockId} > .block-editor-inner-blocks > .block-editor-block-list__layout"; ?>"
             ).not('.slick-initialized');
-            slider.slick(<?php echo "$blockId"; ?>_slider_args, '.braftonium-block.slide');
+            slider.slick(<?php echo "$sliderId"; ?>_slider_args, '.braftonium-block.slide');
 
             <?php if(!$preview_mode){ ?>
                 jQuery(
@@ -193,7 +203,7 @@
         } else { 
         ?>
             var slider = jQuery("<?php echo "#{$blockId}"; ?>");
-            slider.not('.slick-initialized').slick(<?php echo "$blockId"; ?>_slider_args);
+            slider.not('.slick-initialized').slick(<?php echo "$sliderId"; ?>_slider_args);
         <?php 
         } // end if
         ?>
