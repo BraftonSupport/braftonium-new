@@ -148,6 +148,25 @@
                 "layout": "block",
                 "sub_fields": [
                     {
+                        "key": "field_634e57520ce66container",
+                        "label": "Remove Container",
+                        "name": "container",
+                        "type": "true_false",
+                        "instructions": "Mark this true if you do not want the group of items wrapped in a containing div element. If set to true many inline style rules will not apply.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "message": "",
+                        "default_value": 0,
+                        "ui": 1,
+                        "ui_on_text": "",
+                        "ui_off_text": ""
+                    },
+                    {
                         "key": "field_632d9c26bd85c",
                         "label": "Columns (Desktop)",
                         "name": "columns_desktop",
@@ -334,6 +353,44 @@
                         "name": "read_time",
                         "type": "true_false",
                         "instructions": "Whether to display the time it takes to read the article.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "message": "",
+                        "default_value": 0,
+                        "ui": 1,
+                        "ui_on_text": "",
+                        "ui_off_text": ""
+                    },
+                    {
+                        "key": "field_63563d7c38fd7cat",
+                        "label": "Display Category",
+                        "name": "display_cat",
+                        "type": "true_false",
+                        "instructions": "Whether to display the category if category is used for this post type.",
+                        "required": 0,
+                        "conditional_logic": 0,
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "message": "",
+                        "default_value": 0,
+                        "ui": 1,
+                        "ui_on_text": "",
+                        "ui_off_text": ""
+                    },
+                    {
+                        "key": "field_63563d7c38fd7author",
+                        "label": "Display Author",
+                        "name": "display_author",
+                        "type": "true_false",
+                        "instructions": "Whether to display the author if this content.",
                         "required": 0,
                         "conditional_logic": 0,
                         "wrapper": {

@@ -160,3 +160,11 @@ function contentlist_query($post_type, $taxonomy, $term, $post_count, $word_coun
     return $items;
 
 }
+
+function output_article_meta($readTime = "", $categories = "", $author = "", $seperator = " | "){
+    
+    $meta_array = array($readTime, $categories, $author);
+    $meta_array = array_filter($meta_array);
+    $meta_array = apply_filters('braftonium_list_article_meta_array', $meta_array, $seperator );
+    return join($seperator, $meta_array);
+}
