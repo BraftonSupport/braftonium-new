@@ -1,12 +1,9 @@
 <!-- Main block layout - Must be have the name.html.php (example.html.php) -->
 <?php 
-if(!is_admin()) { 
-    include_once ('util/maputility.php');
+
     global $post;
     $classes = array('brafton-google-map');  
     $map = get_field('google_map');
-    
-    $lastMapBlockID = MapUtility::getLastMapBlockID( $post->post_content );
 
 
     //Block ID
@@ -112,4 +109,3 @@ if(!is_admin()) {
                 ?>
                 </div>
     </div>
-<?php }       ?>

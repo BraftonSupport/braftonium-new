@@ -147,6 +147,16 @@ No code updates are required in the plugin. You can register micro style classes
  */
 apply_filters('braftonium_class_list',$classList, $blockType);
 ```
+
+```php
+function modify_classes($classList, $blockType){
+    /**
+     * $classList[] = array('label' => 'your readable name', 'value' => 'your classname');
+     */
+    return $classList;
+}
+add_filter('braftonium_class_list', 'modify_classes', 10,2);
+```
 By checking the current block type you can add classes only for specific blocks.
 
 ## More Coming soon!
