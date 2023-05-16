@@ -72,17 +72,15 @@
             array_push($classes,'full-width');
         }
        
-        $allowed_blocks = array( 'core/heading', 'core/paragraph', 'core/button' );
+        $allowed_blocks = array( 'core/heading', 'core/paragraph', 'core/button', 'core/image' );
 ?>
 
 <div <?php echo $blockId;?> class="<?php echo implode(' ',$classes); ?>" style="<?php echo implode('',$inlineStyles); ?>">
     <?php if($bannerImage){
         printf('<img src="%s" class="background-image" loading="lazy" style="%s">', $bannerImage['url'], $bg_style);
     }?>    
-    <div class="cta-rows cta-left wrap">
-        <div class="cta-row">
-                <InnerBlocks allowedBlocks="<?php esc_attr( wp_json_encode( $allowed_blocks ) ) ?>"  ?>" />
-        </div>
+    <div class="cta-row wrap">
+        <InnerBlocks allowedBlocks="<?php esc_attr( wp_json_encode( $allowed_blocks ) ) ?>"  ?>" />
     </div>
 
 </div>
