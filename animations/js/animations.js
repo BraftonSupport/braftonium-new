@@ -70,20 +70,26 @@ document.addEventListener("DOMContentLoaded",() => {
         })
     }
 
-    /** Slide title in banner */
-    let banner = document.querySelectorAll('.braftonium-banner.title-slide-right');
+    /** Banner Title Animations */
+    let bannerSlide = document.querySelectorAll('.braftonium-banner.title-slide-right');
+    let bannerFade = document.querySelectorAll('.braftonium-banner.title-fade-in');
 
-    const bannerTitleObserver = new IntersectionObserver(entries => {
+    const bannerObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
         const intersecting = entry.isIntersecting;
         if(intersecting && entry) { 
             entry.target.classList.add('trigger-slide');
         } 
     }) }, {threshold: 0.75})
-
-    if(banner) {
-        banner.forEach(item => {
-            bannerTitleObserver.observe(item);
+    
+    if(bannerSlide) {
+        bannerSlide.forEach(item => {
+            bannerObserver.observe(item);
+        })
+    }
+    if(bannerFade) {
+        bannerFade.forEach(item => {
+            bannerObserver.observe(item);
         })
     }
 });

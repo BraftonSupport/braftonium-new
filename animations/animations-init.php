@@ -16,6 +16,7 @@ function animation_microstyles($classList, $blockType) {
     }
     if($blockType == 'acf/banner') {
         $classList[] = array('label' => 'Title Slide Right', 'value'=> 'title-slide-right');
+        $classList[] = array('label' => 'Title Fade In', 'value'=> 'title-fade-in');
     }
     return $classList;
 }
