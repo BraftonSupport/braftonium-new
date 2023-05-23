@@ -25,7 +25,8 @@ document.addEventListener("DOMContentLoaded",() => {
     const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
             const intersecting = entry.isIntersecting;
-            if(intersecting) {
+            if(intersecting && entry.target.classList.contains('activated') == false) {
+                entry.target.classList.add('activated');
                 increment();
             }
         })

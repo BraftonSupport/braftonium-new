@@ -71,7 +71,8 @@ document.addEventListener("DOMContentLoaded",() => {
     }
 
     /** Banner Title Animations */
-    let bannerSlide = document.querySelectorAll('.braftonium-banner.title-slide-right');
+    let bannerSlideRight = document.querySelectorAll('.braftonium-banner.title-slide-right');
+    let bannerSlideLeft = document.querySelectorAll('.braftonium-banner.title-slide-left');
     let bannerFade = document.querySelectorAll('.braftonium-banner.title-fade-in');
 
     const bannerObserver = new IntersectionObserver(entries => {
@@ -82,8 +83,13 @@ document.addEventListener("DOMContentLoaded",() => {
         } 
     }) }, {threshold: 0.75})
     
-    if(bannerSlide) {
-        bannerSlide.forEach(item => {
+    if(bannerSlideRight) {
+        bannerSlideRight.forEach(item => {
+            bannerObserver.observe(item);
+        })
+    }
+    if(bannerSlideLeft) {
+        bannerSlideLeft.forEach(item => {
             bannerObserver.observe(item);
         })
     }

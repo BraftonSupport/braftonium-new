@@ -15,8 +15,9 @@ function animation_microstyles($classList, $blockType) {
         $classList[] = array('label' => 'Columns Slide Left', 'value'=> 'columns-slide-left');
     }
     if($blockType == 'acf/banner') {
-        $classList[] = array('label' => 'Title Slide Right', 'value'=> 'title-slide-right');
-        $classList[] = array('label' => 'Title Fade In', 'value'=> 'title-fade-in');
+        $classList[] = array('label' => 'Banner Content Slide Right', 'value'=> 'title-slide-right');
+        $classList[] = array('label' => 'Banner Content Left', 'value'=> 'title-slide-left');
+        $classList[] = array('label' => 'Banner Content Fade In', 'value'=> 'title-fade-in');
     }
     return $classList;
 }
