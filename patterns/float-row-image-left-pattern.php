@@ -5,7 +5,7 @@
     register_block_pattern(
       'braftonium/'.str_replace('.php','',basename(__FILE__)),  //braftonium/example-pattern
       [
-        'title' => __('Example Pattern', 'textdomain'),         //rename title
+        'title' => __('Float Row Image Left', 'textdomain'),         //rename title
         'description' => _x(                                    //customize descripiton
           'Your pattern description',
           'Block pattern description',

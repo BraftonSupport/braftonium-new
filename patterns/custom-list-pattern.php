@@ -5,7 +5,7 @@
     register_block_pattern(
       'braftonium/'.str_replace('.php','',basename(__FILE__)),  //braftonium/example-pattern
       [
-        'title' => __('Content List Grid', 'textdomain'),         //rename title
+        'title' => __('Custom List', 'textdomain'),         //rename title
         'description' => _x(                                    //customize descripiton
           'Your pattern description',
           'Block pattern description',
