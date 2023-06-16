@@ -1,12 +1,13 @@
 [
     {
-        "key": "group_6319adf84e66a",
-        "title": "Slider Configuration",
+        "key": "group_64146e317ccd5",
+        "title": "Swiper Configuration",
         "fields": [
             {
-                "key": "field_6336abc8de37f",
-                "label": "Preview Slider?",
-                "name": "preview",
+                "key": "field_6419c8f4bfde8",
+                "label": "Preview Mode",
+                "name": "preview_mode",
+                "aria-label": "",
                 "type": "true_false",
                 "instructions": "",
                 "required": 0,
@@ -18,14 +19,15 @@
                 },
                 "message": "",
                 "default_value": 0,
-                "ui": 1,
-                "ui_on_text": "",
-                "ui_off_text": ""
+                "ui_on_text": "Enable",
+                "ui_off_text": "Disable",
+                "ui": 1
             },
             {
-                "key": "field_6347ebea19371",
+                "key": "field_64146e3181f3b",
                 "label": "",
                 "name": "",
+                "aria-label": "",
                 "type": "message",
                 "instructions": "",
                 "required": 0,
@@ -40,9 +42,10 @@
                 "esc_html": 0
             },
             {
-                "key": "field_6319af7160107",
+                "key": "field_64146e3181f84",
                 "label": "Visibility",
                 "name": "dots_visibility",
+                "aria-label": "",
                 "type": "radio",
                 "instructions": "",
                 "required": 0,
@@ -64,16 +67,17 @@
                 "save_other_choice": 0
             },
             {
-                "key": "field_6319c086551a6",
+                "key": "field_64146e3181ff8",
                 "label": "Placement",
                 "name": "dots_placement",
+                "aria-label": "",
                 "type": "radio",
                 "instructions": "",
                 "required": 0,
                 "conditional_logic": [
                     [
                         {
-                            "field": "field_6319af7160107",
+                            "field": "field_64146e3181f84",
                             "operator": "==",
                             "value": "visible"
                         }
@@ -96,9 +100,46 @@
                 "save_other_choice": 0
             },
             {
-                "key": "field_6347ebf819372",
+                "key": "field_64146e3182067",
+                "label": "Active Color",
+                "name": "dots_active_color",
+                "aria-label": "",
+                "type": "color_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "rgba(255, 255, 255, 1)",
+                "enable_opacity": 1,
+                "return_format": "string"
+            },
+            {
+                "key": "field_64146e31820d2",
+                "label": "Inactive Color",
+                "name": "dots_inactive_color",
+                "aria-label": "",
+                "type": "color_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "rgba(0, 0, 0, 0.5)",
+                "enable_opacity": 1,
+                "return_format": "string"
+            },
+            {
+                "key": "field_64146e3182141",
                 "label": "",
                 "name": "",
+                "aria-label": "",
                 "type": "message",
                 "instructions": "",
                 "required": 0,
@@ -113,9 +154,10 @@
                 "esc_html": 0
             },
             {
-                "key": "field_6319afce6010b",
+                "key": "field_64146e31821a6",
                 "label": "Visibility",
                 "name": "arrows_visibility",
+                "aria-label": "",
                 "type": "radio",
                 "instructions": "",
                 "required": 0,
@@ -137,16 +179,50 @@
                 "save_other_choice": 0
             },
             {
-                "key": "field_631af66d727d6",
+                "key": "field_64181dd0e566a",
+                "label": "Color",
+                "name": "arrows_color",
+                "aria-label": "",
+                "type": "color_picker",
+                "instructions": "",
+                "required": 0,
+                "conditional_logic": [
+                    [
+                        {
+                            "field": "field_64146e3182211",
+                            "operator": "==",
+                            "value": "text"
+                        }
+                    ],
+                    [
+                        {
+                            "field": "field_64146e3182211",
+                            "operator": "==",
+                            "value": "default"
+                        }
+                    ]
+                ],
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": "rgba(255, 255, 255, 1)",
+                "enable_opacity": 1,
+                "return_format": "string"
+            },
+            {
+                "key": "field_64146e3182211",
                 "label": "Type",
                 "name": "arrows_type",
+                "aria-label": "",
                 "type": "radio",
                 "instructions": "",
                 "required": 0,
                 "conditional_logic": [
                     [
                         {
-                            "field": "field_6319afce6010b",
+                            "field": "field_64146e31821a6",
                             "operator": "==",
                             "value": "visible"
                         }
@@ -170,21 +246,22 @@
                 "save_other_choice": 0
             },
             {
-                "key": "field_6319b0476010d",
+                "key": "field_64146e3182280",
                 "label": "Left Image",
                 "name": "arrows_left_image",
+                "aria-label": "",
                 "type": "image",
                 "instructions": "",
                 "required": 0,
                 "conditional_logic": [
                     [
                         {
-                            "field": "field_6319afce6010b",
+                            "field": "field_64146e31821a6",
                             "operator": "==",
                             "value": "visible"
                         },
                         {
-                            "field": "field_631af66d727d6",
+                            "field": "field_64146e3182211",
                             "operator": "==",
                             "value": "image"
                         }
@@ -207,21 +284,22 @@
                 "mime_types": ""
             },
             {
-                "key": "field_6319b0636010e",
+                "key": "field_64146e31822f2",
                 "label": "Right Image",
                 "name": "arrows_right_image",
+                "aria-label": "",
                 "type": "image",
                 "instructions": "",
                 "required": 0,
                 "conditional_logic": [
                     [
                         {
-                            "field": "field_6319afce6010b",
+                            "field": "field_64146e31821a6",
                             "operator": "==",
                             "value": "visible"
                         },
                         {
-                            "field": "field_631af66d727d6",
+                            "field": "field_64146e3182211",
                             "operator": "==",
                             "value": "image"
                         }
@@ -244,21 +322,22 @@
                 "mime_types": ""
             },
             {
-                "key": "field_6319b09460110",
+                "key": "field_64146e318235d",
                 "label": "Left Text",
                 "name": "arrows_left_text",
+                "aria-label": "",
                 "type": "text",
                 "instructions": "",
                 "required": 0,
                 "conditional_logic": [
                     [
                         {
-                            "field": "field_6319afce6010b",
+                            "field": "field_64146e31821a6",
                             "operator": "==",
                             "value": "visible"
                         },
                         {
-                            "field": "field_631af66d727d6",
+                            "field": "field_64146e3182211",
                             "operator": "==",
                             "value": "text"
                         }
@@ -276,21 +355,22 @@
                 "maxlength": ""
             },
             {
-                "key": "field_6319b0b260112",
+                "key": "field_64146e31823c9",
                 "label": "Right Text",
                 "name": "arrows_right_text",
+                "aria-label": "",
                 "type": "text",
                 "instructions": "",
                 "required": 0,
                 "conditional_logic": [
                     [
                         {
-                            "field": "field_6319afce6010b",
+                            "field": "field_64146e31821a6",
                             "operator": "==",
                             "value": "visible"
                         },
                         {
-                            "field": "field_631af66d727d6",
+                            "field": "field_64146e3182211",
                             "operator": "==",
                             "value": "text"
                         }
@@ -308,9 +388,10 @@
                 "maxlength": ""
             },
             {
-                "key": "field_6347ec0c19373",
+                "key": "field_64146e318242c",
                 "label": "",
                 "name": "",
+                "aria-label": "",
                 "type": "message",
                 "instructions": "",
                 "required": 0,
@@ -325,11 +406,12 @@
                 "esc_html": 0
             },
             {
-                "key": "field_6319b15d60118",
+                "key": "field_64146e318247a",
                 "label": "Autoplay Speed",
                 "name": "playback_autoplay_speed",
+                "aria-label": "",
                 "type": "number",
-                "instructions": "How long to wait before transitioning to the next slide (milliseconds). Leave empty to turn off autoplay. Set to 0 for continous smooth scrolling.",
+                "instructions": "How long to wait before transitioning to the next slide (milliseconds).",
                 "required": 0,
                 "conditional_logic": 0,
                 "wrapper": {
@@ -346,9 +428,10 @@
                 "step": 1
             },
             {
-                "key": "field_6319b18f60119",
+                "key": "field_64146e31824ea",
                 "label": "Slide Speed",
                 "name": "playback_slide_speed",
+                "aria-label": "",
                 "type": "number",
                 "instructions": "How fast to transition to the next slide (milliseconds).",
                 "required": 0,
@@ -367,9 +450,10 @@
                 "step": 1
             },
             {
-                "key": "field_6347ec1719374",
+                "key": "field_64146e3182557",
                 "label": "",
                 "name": "",
+                "aria-label": "",
                 "type": "message",
                 "instructions": "",
                 "required": 0,
@@ -384,9 +468,10 @@
                 "esc_html": 0
             },
             {
-                "key": "field_6319b1db6011b",
+                "key": "field_64146e31825c6",
                 "label": "Slides to Show",
                 "name": "presentation_slides_to_show",
+                "aria-label": "",
                 "type": "number",
                 "instructions": "The number of slides to show at a time.",
                 "required": 0,
@@ -405,9 +490,10 @@
                 "step": 1
             },
             {
-                "key": "field_6319bd546a366",
+                "key": "field_64146e3182631",
                 "label": "Slides to Scroll",
                 "name": "presentation_slides_to_scroll",
+                "aria-label": "",
                 "type": "number",
                 "instructions": "The number of slides to scroll at a time.",
                 "required": 0,
@@ -426,9 +512,10 @@
                 "step": 1
             },
             {
-                "key": "field_634e57520ce66",
+                "key": "field_64146e3182695",
                 "label": "Infinite Slides",
                 "name": "presentation_infinite",
+                "aria-label": "",
                 "type": "true_false",
                 "instructions": "Whether to loop back to the first slide when the last slide was transitioned.",
                 "required": 0,
@@ -450,7 +537,7 @@
                 {
                     "param": "block",
                     "operator": "==",
-                    "value": "acf\/slider"
+                    "value": "acf\/swiper"
                 }
             ]
         ],
