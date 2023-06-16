@@ -100,8 +100,8 @@
 
     // Block ID
     $blockId = !empty($block['anchor']) ? $block['anchor'] : $block['id'];
+
     $sliderId = str_replace('-','_',$blockId);
-    
     $responsive = [];
     if($presentation_slides_to_show > 1){
         $one = new stdClass;
@@ -158,6 +158,7 @@
         infinite: <?php echo $presentation_infinite ? "true" : "false"; ?>,
         slidesToShow: <?php echo $presentation_slides_to_show; ?>,
         slidesToScroll: <?php echo $presentation_slides_to_scroll; ?>,
+
 
         <?php if($playback_autoplay_speed === '0'){ ?>
         cssEase: 'linear'
