@@ -50,7 +50,10 @@
             }
             // array_push($inlineStyles,$img);
         }
-
+        if(array_key_exists('gradient', $block)){
+            $gradient = $block['gradient'];
+            array_push($inlineStyles, sprintf("background: %s", 'var(--wp--preset--gradient--'.$gradient));
+        }
     //Block Styles
         if(array_key_exists('style',$block)){
             $styles=$block['style'];
@@ -62,7 +65,9 @@
                     }
                 }
             }
+            
             if(array_key_exists('color', $styles)){
+                
                 if(array_key_exists('background', $styles['color'])){
                     array_push($inlineStyles, sprintf("background-color: %s;", $styles['color']['background']) );
                 }
