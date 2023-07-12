@@ -29,6 +29,10 @@
             'anchor'          => true,
             'customClassName' => true,
             'jsx'             => true,
+            'color'             => [                                //COLORS
+              'background'            => true,      
+              'gradients'             => true,
+      ],
             'spacing'         => [
                 'margin'      => ['top','bottom','left','right'],
                 'padding'     => ['top','bottom','left','right']
