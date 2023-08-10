@@ -283,7 +283,7 @@
                 array(
                     array(
                         'param' => 'options_page',
-                        'operator' => '!=',
+                        'operator' => '==',
                         'value' => 'braftonium-injector',
                     ),
                 ),
@@ -292,18 +292,32 @@
 				array(
 					array(
 						'field' => 'braftonium_injector_method',
-						'operator' => '!=',
-						'value' => 'css',
+						'operator' => '==',
+						'value' => 'js_script_defer',
 					),
 				),
                 array(
 					array(
 						'field' => 'braftonium_injector_method',
 						'operator' => '==',
-						'value' => 'js',
+						'value' => 'js_script_async',
 					),
 				),
-			),
+                array(
+					array(
+						'field' => 'braftonium_injector_method',
+						'operator' => '==',
+						'value' => 'js_script',
+					),
+				),
+                array(
+					array(
+						'field' => 'braftonium_injector_method',
+						'operator' => '==',
+						'value' => 'stylesheet',
+					),
+				),
+			),            
             'menu_order' => 0,
             'position' => 'normal',
             'style' => 'default',
