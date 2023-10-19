@@ -15,7 +15,13 @@
     if(!empty($block['className'])){
         array_push($classes, $block['className']);
     }
-
+    if(array_key_exists('backgroundColor',$block)){
+        array_push($classes,'has-'.$block['backgroundColor'].'-background-color');
+    }
+    if(array_key_exists('gradient', $block)){
+        $gradient = $block['gradient'];
+        array_push($inlineStyles, sprintf("background: %s", 'var(--wp--preset--gradient--'.$gradient));
+    }
     //Block Styles
     if(!empty($block['style'])){
         $styles = $block['style'];
@@ -26,6 +32,15 @@
                 foreach($values as $key => $value){
                     array_push($inlineStyles, $type.'-'.$key.':'.$value.';');
                 }
+            }
+        }
+        if(array_key_exists('color', $styles)){
+                
+            if(array_key_exists('background', $styles['color'])){
+                array_push($inlineStyles, sprintf("background-color: %s;", $styles['color']['background']) );
+            }
+            if(array_key_exists('gradient', $styles['color'])){
+                array_push($inlineStyles, sprintf("background: %s;", $styles['color']['gradient']) );
             }
         }
     }

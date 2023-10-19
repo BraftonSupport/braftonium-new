@@ -19,6 +19,12 @@
 		},
 		"_postType": {
 			"type": "string"
+		},
+		"availableClasses": {
+			"type": "array"
+		},
+		"classesFetched": {
+			"type": "boolean"
 		}
 	},
 	"example": {

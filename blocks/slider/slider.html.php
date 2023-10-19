@@ -105,7 +105,7 @@
     $responsive = [];
     if($presentation_slides_to_show > 1){
         $one = new stdClass;
-        $one->breakpoint = 360;
+        $one->breakpoint = 540;
         $one->settings = new stdClass;
         $one->settings->slidesToShow = 1;
         $one->settings->slidesToScroll = 1;
