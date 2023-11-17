@@ -1,25 +1,19 @@
 {
-  "name": "blocks",
+  "name": "bones",
   "version": "1.0.0",
-  "description": "plugin gulp",
-  "main": "gulp.js",
+  "description": "A Lightweight Wordpress Development Theme",
+  "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "sass-watch": "gulp",
-    "sass-compile": "gulp sass"
+    "sass-watch": "sass --watch --update --style=expanded ./",
+    "sass-compile-dev": "sass --style=expanded library/scss:./library/css",
+    "sass-compile-prd": "sass --no-source-map --style=compressed library/scss:./library/css"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "autoprefixer": "^10.2.5",
-    "gulp": "^4.0.2",
-    "gulp-notify": "^3.2.0",
-    "gulp-postcss": "^9.0.0",
-    "gulp-sass": "^4.1.0",
-    "gulp-sourcemaps": "^3.0.0",
-    "gulp-util": "^3.0.8",
-    "notify-send": "^0.1.2",
-    "postcss": "^8.3.5"
+    "postcss": "^8.3.5",
+    "sass": "^1.69.0"
   },
   "browserslist": [
     "last 2 versions",
