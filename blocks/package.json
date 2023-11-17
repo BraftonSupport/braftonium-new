@@ -6,8 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "sass-watch": "sass --watch --update --style=expanded ./",
-    "sass-compile-dev": "sass --style=expanded library/scss:./library/css",
-    "sass-compile-prd": "sass --no-source-map --style=compressed library/scss:./library/css"
+    "sass-compile": "sass --style=expanded ./",
+    "sass-compile-prd": "sass --no-source-map --style=compressed ./"
   },
   "author": "",
   "license": "ISC",
