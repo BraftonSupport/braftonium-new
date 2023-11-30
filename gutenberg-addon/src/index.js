@@ -53,7 +53,9 @@ import Select from 'react-select';
 	return settings;
 }
 async function getClassList(setAttributes, blockType){
-	console.log(blockType);
+	if(typeof debugblock !== 'undefined' && debugblocks == true){
+		console.log(blockType);
+	}
 	if(blockType == 'gravityforms/form'){
 		return [];
 	}
