@@ -41,7 +41,7 @@ function contentlist_get_terms($taxonomy) {
 // Load Post Types
 function contentlist_load_post_types( $field ) {
 
-    $field['choices'] = array();
+    $field['choices'] = array('manual-choice' => "Manual Choice");
 
     $post_types = get_post_types(array(
         'public' => true
@@ -122,6 +122,11 @@ add_action("wp_ajax_contentlist_query", 'contentlist_field_populator');
 // Perform Parameterized Query
 function contentlist_query($post_type, $taxonomy, $term, $post_count, $word_count)
 {
+    
+    if($post_type == 'manual-choice'){
+        // var_dump(get_field('content_items'));
+        return get_field('contentlist_query_content_items');
+    }
     $items = [];
 
     $args = [
