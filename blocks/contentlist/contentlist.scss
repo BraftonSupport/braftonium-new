@@ -8,7 +8,7 @@ $columns:6;
 @mixin generate-column-classes($size){
     @for $i from 1 through $columns {
         &.col-#{$size}-#{$i} {
-            flex-basis: calc(#{get-col-pct($i)}% - var(--col-gap));
+            flex-basis: calc(#{get-col-pct($i)}#{'%'} - var(--col-gap));
         }
     }
 }
