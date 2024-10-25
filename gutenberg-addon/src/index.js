@@ -21,7 +21,7 @@ import Select from 'react-select';
  function addAttributes( settings ) {
 	
 	//check if object exists for old Gutenberg version compatibility
-	if( typeof settings.attributes !== 'undefined' ){
+	if( typeof settings.attributes !== 'undefined' && settings.name !== 'gravityforms/form' ){
 	
 		settings.attributes = Object.assign( settings.attributes, {
 			braftoniumClasses:{ 
@@ -54,19 +54,22 @@ import Select from 'react-select';
 }
 async function getClassList(setAttributes, blockType){
 	console.log(blockType);
-	const data = await apiFetch(
-		{
-			method: 'post',
-			path: '/braftonium/v1/braftonium-class-list',
-			data: {
-				blockType
+	if(blockType == 'gravityforms/form'){
+		return [];
+	}
+		const data = await apiFetch(
+			{
+				method: 'post',
+				path: '/braftonium/v1/braftonium-class-list',
+				data: {
+					blockType
+				}
 			}
-		}
-	);
-	console.log(data);
-	setAttributes({availableClasses: data});
-	setAttributes({loading: false});
-	return data;
+		);
+		console.log(data);
+		setAttributes({availableClasses: data});
+		setAttributes({loading: false});
+		return data;
 }
 addFilter(
 	'blocks.registerBlockType',
@@ -94,24 +97,27 @@ addFilter(
 			classList
 		} = props;
 		console.log(props);
+
 		const {
 			braftoniumClasses,
 			availableClasses,
 			classesFetched,
 			loading
 		} = attributes;
-		if(isSelected && !classesFetched){
-			setAttributes({classesFetched: true});
-			setAttributes({loading: true});
-			useSelect((select)=>{
-				getClassList(setAttributes, props.name);
-			})
-			
-		}
-		if(!isSelected){
-			setAttributes({classesFetched: false});
-			setAttributes({loading: false});
-		}
+
+			if(isSelected && !classesFetched){
+				setAttributes({classesFetched: true});
+				setAttributes({loading: true});
+				useSelect((select)=>{
+					getClassList(setAttributes, props.name);
+				})
+				
+			}
+			if(!isSelected){
+				setAttributes({classesFetched: false});
+				setAttributes({loading: false});
+			}
+		
 		function handleClassSelection(newClasses){
 			
 			var ClassValues = Array.from(newClasses, x=>x.value);
@@ -164,7 +170,7 @@ addFilter(
 			<Fragment>
 				<BlockEdit {...props} />
 
-				{ isSelected && 
+				{ isSelected &&
 					<InspectorAdvancedControls>
 						<div class="special">
 							<lable>Braftonium Microstyles</lable>
