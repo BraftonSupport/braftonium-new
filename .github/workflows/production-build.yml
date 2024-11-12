@@ -46,7 +46,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
+          node-version: '15.x'
       - name: Compile Sass
         run: cd ./blocks && npm install && npm run sass-compile
       - name: Build React Addon
@@ -93,12 +93,3 @@ jobs:
           asset_name: braftonium.zip
           asset_content_type: application/zip
           # send staging release email notification
-      - name: Email Release Notification
-        uses: brafton/email-release-notes-action@v1.1.1
-        with:
-          github_token: ${{ github.token }}
-          repo_name: platform-app
-          product_name: Braftonium Plugin
-          email_recipient: pass.shack@brafton.com
-          email_password: ${{secrets.EMAIL_PASSWORD}}
-          email_username: stewart.snow@brafton.com
