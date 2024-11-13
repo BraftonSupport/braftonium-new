@@ -1,8 +1,8 @@
-
+@use "sass:math";
 $columns:6;
 
 @function get-col-pct($column){
-    @return 100 / $column;
+    @return math.div(100, $column);
 }
 
 @mixin generate-column-classes($size){
