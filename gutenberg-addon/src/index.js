@@ -53,7 +53,9 @@ import Select from 'react-select';
 	return settings;
 }
 async function getClassList(setAttributes, blockType){
-	console.log(blockType);
+	if(typeof debugblock !== 'undefined' && debugblocks == true){
+		console.log(blockType);
+	}
 	if(blockType == 'gravityforms/form'){
 		return [];
 	}
@@ -66,7 +68,7 @@ async function getClassList(setAttributes, blockType){
 				}
 			}
 		);
-		console.log(data);
+		// console.log(data);
 		setAttributes({availableClasses: data});
 		setAttributes({loading: false});
 		return data;
@@ -96,7 +98,7 @@ addFilter(
 			isSelected,
 			classList
 		} = props;
-		console.log(props);
+		// console.log(props);
 
 		const {
 			braftoniumClasses,

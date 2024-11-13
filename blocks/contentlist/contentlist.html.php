@@ -119,13 +119,14 @@
     $word_count = get_field('contentlist_item_word_count');
 
     // Read Time
-    $show_read_time = get_fielD('contentlist_item_read_time');
+    $show_read_time = get_field('contentlist_item_read_time');
 
     // Text Color
     $textColorClass = '';
     if(array_key_exists('textColor',$block)){
         $textColorClass = 'has-'.$block['textColor'].'-color';
     }
+    
 if($container_div !== null && $container_div !== true){
 ?>
 <div 
@@ -134,7 +135,7 @@ if($container_div !== null && $container_div !== true){
     <?php if($blockInlineStyles){ ?> style="<?php echo implode('',$blockInlineStyles); ?>" <?php } ?> >
 
         <?php
-}
+}          
             $items = contentlist_query($post_type, $taxonomy, $term, $post_count, $word_count);
             
             if($items){

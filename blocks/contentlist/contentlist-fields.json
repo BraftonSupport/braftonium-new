@@ -45,6 +45,38 @@
                         "placeholder": ""
                     },
                     {
+                        "key": "field_6582514b79e76",
+                        "label": "Content Items",
+                        "name": "content_items",
+                        "aria-label": "",
+                        "type": "post_object",
+                        "instructions": "",
+                        "required": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_632b2cf65729b",
+                                    "operator": "==",
+                                    "value": "manual-choice"
+                                }
+                            ]
+                        ],
+                        "wrapper": {
+                            "width": "",
+                            "class": "",
+                            "id": ""
+                        },
+                        "post_type": "",
+                        "post_status": "",
+                        "taxonomy": "",
+                        "return_format": "object",
+                        "multiple": 1,
+                        "allow_null": 0,
+                        "bidirectional": 0,
+                        "ui": 1,
+                        "bidirectional_target": []
+                    },
+                    {
                         "key": "field_632b30575729c",
                         "label": "Taxonomy",
                         "name": "taxonomies",
@@ -57,6 +89,11 @@
                                     "field": "field_632b2cf65729b",
                                     "operator": "!=",
                                     "value": ""
+                                },
+                                {
+                                    "field": "field_632b2cf65729b",
+                                    "operator": "!=",
+                                    "value": "manual-choice"
                                 }
                             ]
                         ],
@@ -89,9 +126,9 @@
                                     "value": ""
                                 },
                                 {
-                                    "field": "field_632b30575729c",
+                                    "field": "field_632b2cf65729b",
                                     "operator": "!=",
-                                    "value": ""
+                                    "value": "manual-choice"
                                 }
                             ]
                         ],
@@ -116,7 +153,20 @@
                         "type": "number",
                         "instructions": "",
                         "required": 0,
-                        "conditional_logic": 0,
+                        "conditional_logic": [
+                            [
+                                {
+                                    "field": "field_632b2cf65729b",
+                                    "operator": "!=",
+                                    "value": ""
+                                },
+                                {
+                                    "field": "field_632b2cf65729b",
+                                    "operator": "!=",
+                                    "value": "manual-choice"
+                                }
+                            ]
+                        ],
                         "wrapper": {
                             "width": "",
                             "class": "",
