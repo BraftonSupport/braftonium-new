@@ -332,7 +332,10 @@
     function injectionsList(){
         $injections=get_field('field_braftonium_injectors', 'option') ? get_field('field_braftonium_injectors', 'option') : array();
         global $post;
-        $localInjections=get_field('field_braftonium_injectors', $post->ID);
+        if($post){
+            $localInjections=get_field('field_braftonium_injectors', $post->ID); //@todo Joni this seems to do nothing as there is no return for these local injections.
+        }
+        
         if(get_field('field_braftonium_injectors', 'option')){
             $injections=array_merge(get_field('field_braftonium_injectors', 'option'),$injections);
         }
