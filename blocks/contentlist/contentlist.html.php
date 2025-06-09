@@ -198,10 +198,12 @@ if($container_div !== null && $container_div !== true){
 <script>
 
 jQuery(document).ready(function($){
+    console.log('doc ready');
     if(acf){
-
+        console.log(acf, 'acf is defined');
         $.extend({
             sendAdminAJAXCommand: function(command, options) {
+                console.log('sendAdminAJAXCommand', command, options);
                 var action = 'contentlist_query';
                 var nonce = '<?php echo wp_create_nonce('contentlist_query'); ?>';
                 var resp = null;
@@ -233,14 +235,14 @@ jQuery(document).ready(function($){
             pt_select_field = f.$el.find('select');
 
             $(pt_select_field).on('change', function(e){
-
+                console.log('Post Type changed:', e.target.value);
                 var resp = $.sendAdminAJAXCommand(
                     "get_taxonomies", 
                     { 
                         "post_type": e.target.value 
                     }
                 );
-
+                console.log(resp);
                 if(resp && resp.success && resp.data){
                     
                     $(tax_select_field).find('option').remove();
