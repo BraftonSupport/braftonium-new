@@ -129,7 +129,7 @@
 
 
         <?php if ($playback_autoplay_speed === '0') : ?>
-        cssEase: 'linear'
+        cssEase: 'linear',
         <?php endif; ?>
 
         <?php if ($responsive) : ?>
