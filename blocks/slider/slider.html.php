@@ -87,6 +87,7 @@
 
     $sliderId = str_replace('-','_',$blockId);
     $responsive = array();
+    $mobile_slides = get_field('presentation_slides_to_show_mobile') ?? 1;
     $breakpoint_map = array(
         1 => 540,
         3 => 768,
@@ -98,7 +99,7 @@
             $obj = new stdClass;
             $obj->breakpoint = $breakpoint;
             $obj->settings = new stdClass;
-            $obj->settings->slidesToShow = $num;
+            $obj->settings->slidesToShow = $breakpoint == 540? $mobile_slides : $num;
             $obj->settings->slidesToScroll = $presentation_slides_to_scroll;
             $responsive[] = $obj;
         }
