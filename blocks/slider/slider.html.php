@@ -98,7 +98,7 @@
             $obj = new stdClass;
             $obj->breakpoint = $breakpoint;
             $obj->settings = new stdClass;
-            $obj->settings->slidesToShow = $presentation_slides_to_show;
+            $obj->settings->slidesToShow = $num;
             $obj->settings->slidesToScroll = $presentation_slides_to_scroll;
             $responsive[] = $obj;
         }
