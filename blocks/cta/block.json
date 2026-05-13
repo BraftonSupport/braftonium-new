@@ -1,0 +1,36 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "braftonium/cta",
+    "version": "2.0.0",
+    "title": "CTA",
+    "category": "braftonium",
+    "icon": "megaphone",
+    "description": "Call to action block with background image",
+    "keywords": ["cta", "call to action", "button"],
+    "textdomain": "braftonium",
+    "supports": {
+        "anchor": true,
+        "customClassName": true,
+        "align": ["wide", "full"],
+        "spacing": {
+            "margin": ["top", "bottom", "left", "right"],
+            "padding": ["top", "bottom", "left", "right"]
+        },
+        "color": { "background": true },
+        "html": false
+    },
+    "attributes": {
+        "backgroundImage": { "type": "number", "default": 0 },
+        "backgroundImageUrl": { "type": "string", "default": "" },
+        "backgroundImageAlt": { "type": "string", "default": "" },
+        "backgroundPosition": {
+            "type": "object",
+            "default": { "top": 0, "left": 0, "right": 0, "bottom": 0 }
+        },
+        "fullWidth": { "type": "boolean", "default": false }
+    },
+    "editorScript": "file:./build/index.js",
+    "style": "file:./build/index.css",
+    "render": "file:./render.php"
+}

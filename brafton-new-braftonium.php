@@ -13,25 +13,36 @@
  //stop direct access
 if ( ! defined( 'ABSPATH' ) )  exit;
 
-// get acf, see if plugin exists
-require_once ABSPATH . 'wp-content/plugins/advanced-custom-fields-pro/acf.php';
+// Optionally load ACF Pro if it is present (no longer a hard requirement).
+$braftonium_acf_path = ABSPATH . 'wp-content/plugins/advanced-custom-fields-pro/acf.php';
+if ( file_exists( $braftonium_acf_path ) ) {
+    require_once $braftonium_acf_path;
+}
+
 require_once dirname(__FILE__).'/gutenberg-addon/class-loader.php';
 add_action('enqueue_block_editor_assets', function() {
 	wp_enqueue_script('braftonium-gutenberg-filters', plugin_dir_url(__FILE__) . '/gutenberg-addon/build/index.js', ['wp-edit-post']);
 });
-// make acf options
-if(!function_exists("acf_add_local_field_group")){
-	_e( "Hey, do you have the ACF plugin? You don\'t need to activate it but it\'ll be nice if it was there.", "braftonium" );
+
+// Register all native Braftonium blocks (no ACF required).
+include __DIR__ . '/blocks/blocks.php';
+
+// Include useful functions (safe without ACF).
+include __DIR__ . '/general-settings/useful-functions.php';
+
+// Include patterns.
+include __DIR__ . '/patterns/include-patterns.php';
+
+// ACF-dependent settings only load when ACF is available.
+if ( function_exists( 'acf_add_local_field_group' ) ) {
+    include __DIR__ . '/general-settings/settings.php';
 } else {
-    //Register all acf blocks
-    include ("blocks/blocks.php");
-
-    //Include General Settings - (General, Custom Posts, Template Swopper, Style/Script Injection)
-    include ("general-settings/settings.php");
-
-    //Include useful functions
-    include("general-settings/useful-functions.php");
-
-    //Include patterns
-    include("patterns/include-patterns.php");
+    add_action( 'admin_notices', function () {
+        if ( ! current_user_can( 'activate_plugins' ) ) {
+            return;
+        }
+        echo '<div class="notice notice-info"><p>'
+            . esc_html__( 'Braftonium: ACF Pro is not installed. Native blocks are active; legacy ACF settings pages are disabled.', 'braftonium' )
+            . '</p></div>';
+    } );
 }

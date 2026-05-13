@@ -1,0 +1,28 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "braftonium/slide",
+    "version": "2.0.0",
+    "title": "Slide",
+    "category": "braftonium",
+    "icon": "slides",
+    "description": "Individual slide for slider block",
+    "keywords": ["slide", "slider"],
+    "parent": ["braftonium/slider"],
+    "textdomain": "braftonium",
+    "supports": {
+        "anchor": true,
+        "customClassName": true,
+        "spacing": {
+            "margin": ["top", "bottom", "left", "right"],
+            "padding": ["top", "bottom", "left", "right"]
+        },
+        "color": { "background": true, "gradient": true },
+        "html": false,
+        "reusable": false
+    },
+    "attributes": {},
+    "editorScript": "file:./build/index.js",
+    "style": "file:./build/index.css",
+    "render": "file:./render.php"
+}
