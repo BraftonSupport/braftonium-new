@@ -1,1 +1,106 @@
-!function(){"use strict";function e(t){return e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e(t)}function t(t,r,o){return(r=function(t){var r=function(t){if("object"!=e(t)||!t)return t;var r=t[Symbol.toPrimitive];if(void 0!==r){var o=r.call(t,"string");if("object"!=e(o))return o;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(t)}(t);return"symbol"==e(r)?r:r+""}(r))in t?Object.defineProperty(t,r,{value:o,enumerable:!0,configurable:!0,writable:!0}):t[r]=o,t}var r=window.wp.blocks,o=window.React,n=window.wp.i18n,i=window.wp.blockEditor;function c(e,t){var r=Object.keys(e);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(e);t&&(o=o.filter(function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable})),r.push.apply(r,o)}return r}var u=JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"braftonium/slide","version":"2.0.0","title":"Slide","category":"braftonium","icon":"slides","description":"Individual slide for slider block","keywords":["slide","slider"],"parent":["braftonium/slider"],"textdomain":"braftonium","supports":{"anchor":true,"customClassName":true,"spacing":{"margin":["top","bottom","left","right"],"padding":["top","bottom","left","right"]},"color":{"background":true,"gradient":true},"html":false,"reusable":false},"attributes":{},"editorScript":"file:./build/index.js"}');function a(e,t){var r=Object.keys(e);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(e);t&&(o=o.filter(function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable})),r.push.apply(r,o)}return r}function l(e){for(var r=1;r<arguments.length;r++){var o=null!=arguments[r]?arguments[r]:{};r%2?a(Object(o),!0).forEach(function(r){t(e,r,o[r])}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(o)):a(Object(o)).forEach(function(t){Object.defineProperty(e,t,Object.getOwnPropertyDescriptor(o,t))})}return e}(0,r.registerBlockType)(u.name,l(l({},u),{},{edit:function(){var e=(0,i.useBlockProps)({className:"braftonium-slide"});return(0,o.createElement)("div",function(e){for(var r=1;r<arguments.length;r++){var o=null!=arguments[r]?arguments[r]:{};r%2?c(Object(o),!0).forEach(function(r){t(e,r,o[r])}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(o)):c(Object(o)).forEach(function(t){Object.defineProperty(e,t,Object.getOwnPropertyDescriptor(o,t))})}return e}({},e),(0,o.createElement)(i.InnerBlocks,{template:[["core/paragraph",{placeholder:(0,n.__)("Add slide content...","braftonium")}]]}))},save:function(){return null}}))}();
+/**
+ * Editor script: braftonium/slide  (a card inside braftonium/slider)
+ *
+ * - Holds a free InnerBlocks area (paragraph by default).
+ * - "Background Color" sets the card background (rgba, alpha enabled).
+ *
+ * IMPORTANT (inner block saving): `save` returns InnerBlocks.Content so the
+ * slide's inner blocks are serialized into post content and reach render.php as
+ * $content. Returning null dropped them — the previous bug.
+ */
+( function () {
+    'use strict';
+
+    var blocks = window.wp.blocks;
+    var React = window.React;
+    var i18n = window.wp.i18n;
+    var blockEditor = window.wp.blockEditor;
+    var components = window.wp.components;
+
+    var __ = i18n.__;
+    var el = React.createElement;
+    var Fragment = React.Fragment;
+
+    var InspectorControls = blockEditor.InspectorControls;
+    var InnerBlocks = blockEditor.InnerBlocks;
+    var useBlockProps = blockEditor.useBlockProps;
+
+    var PanelBody = components.PanelBody;
+    var ColorPicker = components.ColorPicker;
+
+    function toRgba( value ) {
+        if ( value && typeof value === 'object' ) {
+            var o = value.rgb || value;
+            return { r: +o.r || 0, g: +o.g || 0, b: +o.b || 0, a: o.a == null ? 1 : +o.a };
+        }
+        var s = String( value ).trim();
+        var m;
+        if ( ( m = s.match( /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})?$/i ) ) ) {
+            return {
+                r: parseInt( m[ 1 ], 16 ),
+                g: parseInt( m[ 2 ], 16 ),
+                b: parseInt( m[ 3 ], 16 ),
+                a: m[ 4 ] == null ? 1 : +( parseInt( m[ 4 ], 16 ) / 255 ).toFixed( 3 ),
+            };
+        }
+        if ( ( m = s.match( /rgba?\(([^)]+)\)/i ) ) ) {
+            var p = m[ 1 ].split( ',' );
+            return { r: +p[ 0 ] || 0, g: +p[ 1 ] || 0, b: +p[ 2 ] || 0, a: p[ 3 ] == null ? 1 : +p[ 3 ] };
+        }
+        return { r: 0, g: 0, b: 0, a: 1 };
+    }
+
+    function rgbaString( c ) {
+        c = c || {};
+        return 'rgba(' + ( +c.r || 0 ) + ', ' + ( +c.g || 0 ) + ', ' + ( +c.b || 0 ) + ', ' + ( c.a == null ? 1 : c.a ) + ')';
+    }
+
+    blocks.registerBlockType( 'braftonium/slide', {
+        edit: function ( props ) {
+            var attributes = props.attributes;
+            var setAttributes = props.setAttributes;
+
+            var bgColor = attributes.bgColor || { r: 0, g: 0, b: 0, a: 0 };
+            var hasBgColor = ( bgColor.a == null ? 0 : bgColor.a ) > 0;
+
+            var blockProps = useBlockProps( { className: 'braftonium-slide' } );
+
+            return el(
+                Fragment,
+                null,
+                el(
+                    InspectorControls,
+                    null,
+                    el(
+                        PanelBody,
+                        { title: __( 'Background Color', 'braftonium' ), initialOpen: true },
+                        el( ColorPicker, {
+                            color: rgbaString( bgColor ),
+                            onChange: function ( value ) {
+                                setAttributes( { bgColor: toRgba( value ) } );
+                            },
+                            enableAlpha: true,
+                        } )
+                    )
+                ),
+                el(
+                    'div',
+                    blockProps,
+                    el(
+                        'div',
+                        {
+                            className: 'braftonium-slide__inner',
+                            style: hasBgColor ? { backgroundColor: rgbaString( bgColor ) } : undefined,
+                        },
+                        el( InnerBlocks, {
+                            template: [ [ 'core/paragraph', { placeholder: __( 'Add slide content...', 'braftonium' ) } ] ],
+                        } )
+                    )
+                )
+            );
+        },
+        save: function () {
+            return el( InnerBlocks.Content, null );
+        },
+    } );
+} )();

@@ -1,0 +1,113 @@
+// =============================================================================
+// CTA block — braftonium/cta
+//
+// Scaffolded from the Banner block (blocks/banner/banner.scss). Same
+// full-bleed background + constrained content model, tuned for a call-to-action.
+//
+// Source SCSS. Compiles in place to cta.css via the blocks sass workflow:
+//   cd blocks && npm run sass-watch   (dev)  |  npm run sass-compile  (build)
+// cta.css is the stylesheet enqueued by block.json ("style": "file:./cta.css").
+//
+// Markup (see render.php):
+//   .braftonium-cta
+//     > img.background-image      ← full-bleed (viewport-width) background
+//     > .overlay                  ← tint above the image, below the content
+//     > .cta-content.align-wrap-{left|center|right}
+//         > [ InnerBlocks output ]   ← heading, paragraph, buttons, …
+//
+// NOTE: text is NOT centered by default. Alignment is driven entirely by the
+// "Content Alignment" setting (default: left) via the .align-wrap-* class.
+// =============================================================================
+
+// --- Tunables --------------------------------------------------------------
+$cta-min-height:    300px;            // height of the CTA area
+$cta-content-width: 1200px;           // target content width (matches Banner)
+$cta-content-max:   90vw;             // never wider than this (matches Banner)
+$cta-padding:       clamp(24px, 5vw, 64px);
+$cta-text-color:    #fff;             // skeleton default — readable over a dark overlay
+
+.braftonium-cta {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: $cta-min-height;
+
+    // -- 1. Background image: full screen (viewport) width ------------------
+    // Breaks out to 100vw even when the block sits inside a constrained
+    // container, then covers the area without distortion.
+    .background-image {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100vw;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+    }
+
+    // Overlay matches the full-width image and sits beneath the content.
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100vw;
+        height: 100%;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    // -- 2. Content container: 1200px, capped at 90vw ----------------------
+    // -- 3. Sits above image + overlay so InnerBlocks are always visible ----
+    .cta-content {
+        position: relative;
+        z-index: 2;
+        box-sizing: border-box;
+        width: $cta-content-width;
+        max-width: $cta-content-max;
+        margin-inline: auto;
+        padding: $cta-padding;
+        color: $cta-text-color;
+
+        // InnerBlocks output. The skeleton just guarantees visibility and
+        // sensible spacing — restyle headings/paragraphs/buttons to taste.
+        > * {
+            position: relative;
+            z-index: 1;
+            margin-block: 0 0.75em;
+
+            &:last-child {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    // -- Horizontal placement of the (constrained) content box --------------
+    // No auto-centering: each modifier is explicit and set from the editor.
+    .cta-content.align-wrap-left {
+        margin-inline: 0 auto;
+        text-align: left;
+    }
+
+    .cta-content.align-wrap-center {
+        margin-inline: auto;
+        text-align: center;
+    }
+
+    .cta-content.align-wrap-right {
+        margin-inline: auto 0;
+        text-align: right;
+    }
+
+    // -- Empty state: no image chosen yet -----------------------------------
+    &:not(:has(.background-image)) {
+        background: #f5f5f5;
+        border: 2px dashed #ccc;
+
+        .cta-content {
+            color: inherit; // dark text on the light placeholder
+        }
+    }
+}

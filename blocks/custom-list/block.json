@@ -6,8 +6,8 @@
     "title": "Custom List",
     "category": "braftonium",
     "icon": "list-view",
-    "description": "Custom list container with background image support",
-    "keywords": ["list", "container", "layout"],
+    "description": "Custom list container with responsive grid, background image and background color",
+    "keywords": ["list", "container", "layout", "grid"],
     "textdomain": "braftonium",
     "supports": {
         "anchor": true,
@@ -17,7 +17,6 @@
             "margin": ["top", "bottom", "left", "right"],
             "padding": ["top", "bottom", "left", "right"]
         },
-        "color": { "background": true },
         "html": false
     },
     "attributes": {
@@ -27,9 +26,21 @@
         "backgroundPosition": {
             "type": "object",
             "default": { "top": 0, "left": 0, "right": 0, "bottom": 0 }
+        },
+        "bgColor": {
+            "type": "object",
+            "default": { "r": 0, "g": 0, "b": 0, "a": 0 }
+        },
+        "layout": {
+            "type": "object",
+            "default": {
+                "desktop": { "width": 1200, "columns": 3, "gap": 24 },
+                "tablet":  { "width": 0,    "columns": 2, "gap": 20 },
+                "mobile":  { "width": 0,    "columns": 1, "gap": 16 }
+            }
         }
     },
     "editorScript": "file:./build/index.js",
-    "style": "file:./build/index.css",
+    "style": "file:./custom-list.css",
     "render": "file:./render.php"
 }

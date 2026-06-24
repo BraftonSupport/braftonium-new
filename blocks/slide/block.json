@@ -2,7 +2,7 @@
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
     "name": "braftonium/slide",
-    "version": "2.0.0",
+    "version": "2.1.0",
     "title": "Slide",
     "category": "braftonium",
     "icon": "slides",
@@ -17,12 +17,16 @@
             "margin": ["top", "bottom", "left", "right"],
             "padding": ["top", "bottom", "left", "right"]
         },
-        "color": { "background": true, "gradient": true },
         "html": false,
         "reusable": false
     },
-    "attributes": {},
+    "attributes": {
+        "bgColor": {
+            "type": "object",
+            "default": { "r": 0, "g": 0, "b": 0, "a": 0 }
+        }
+    },
     "editorScript": "file:./build/index.js",
-    "style": "file:./build/index.css",
+    "style": "file:./slide.css",
     "render": "file:./render.php"
 }

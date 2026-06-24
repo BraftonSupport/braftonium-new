@@ -6,7 +6,7 @@
     "title": "CTA",
     "category": "braftonium",
     "icon": "megaphone",
-    "description": "Call to action block with background image",
+    "description": "Call to action block with full-width background image and content overlay",
     "keywords": ["cta", "call to action", "button"],
     "textdomain": "braftonium",
     "supports": {
@@ -24,13 +24,17 @@
         "backgroundImage": { "type": "number", "default": 0 },
         "backgroundImageUrl": { "type": "string", "default": "" },
         "backgroundImageAlt": { "type": "string", "default": "" },
-        "backgroundPosition": {
+        "overlayColor": {
             "type": "object",
-            "default": { "top": 0, "left": 0, "right": 0, "bottom": 0 }
+            "default": { "r": 0, "g": 0, "b": 0, "a": 0 }
         },
-        "fullWidth": { "type": "boolean", "default": false }
+        "alignContent": {
+            "type": "string",
+            "enum": ["left", "center", "right"],
+            "default": "left"
+        }
     },
     "editorScript": "file:./build/index.js",
-    "style": "file:./build/index.css",
+    "style": "file:./cta.css",
     "render": "file:./render.php"
 }

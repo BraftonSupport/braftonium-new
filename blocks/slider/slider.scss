@@ -1,0 +1,187 @@
+// =============================================================================
+// Slider block — braftonium/slider  (Slick carousel)
+//
+// Source SCSS. Compiles in place to slider.css via the blocks sass workflow:
+//   cd blocks && npm run sass-watch   (dev)  |  npm run sass-compile  (build)
+// slider.css is the stylesheet enqueued by block.json ("style") — it loads in
+// BOTH the editor and the front end, so the preview matches the live output.
+//
+// Markup (slick runs on .braftonium-slider-track in both contexts):
+//   .braftonium-slider[.slick-dots-{top|bottom}]
+//     > .braftonium-slider-track   ← the slick-initialised element
+//         > .slick-list > .slick-track > .slick-slide > div > .braftonium-slide
+//         > button.slick-prev / button.slick-next   ← side arrows
+//         > ul.slick-dots                            ← centered dots
+//
+// The dashed authoring placeholder + non-preview stacking live in
+// slider-editor.scss (editor only).
+// =============================================================================
+
+// --- Tunables (content width matches banner / cta) -------------------------
+$content-width: 1200px;
+$content-max:   90vw;
+
+.braftonium-slider {
+    position: relative;                 // anchor for the absolutely-placed arrows
+    box-sizing: border-box;
+    width: $content-width;              // same width as banner / cta / list / row
+    max-width: $content-max;
+    margin-inline: auto;
+
+    // The slick-initialised element. Static so the arrows anchor to the slider;
+    // flex column so dots can sit above or below the slides in flow.
+    .braftonium-slider-track {
+        position: static;
+        display: flex;
+        flex-direction: column;
+    }
+
+    // --- Slick structure ---------------------------------------------------
+    .slick-list {
+        order: 1;
+        overflow: hidden;               // clip partial slides -> no overflow
+    }
+
+    .slick-track {
+        display: flex;                  // equal-height slides
+        align-items: stretch;
+    }
+
+    .slick-slide {
+        height: auto;
+        box-sizing: border-box;
+        // The gap between cards is created on .braftonium-slide / its inner card
+        // (see slide.scss) so adjacent cards don't touch.
+
+        > div {
+            height: 100%;
+        }
+    }
+
+    // --- Arrows: vertically centered, overlaying the left/right edges -------
+    // slick-theme forces color/background transparent + a font glyph; override
+    // all of it so OUR text/image arrows stay visible (incl. on hover/focus).
+    .slick-prev,
+    .slick-next {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 5;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        height: auto;
+        min-width: 36px;
+        min-height: 36px;
+        padding: 6px 10px;
+        background: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        color: #333;
+        font-size: 14px;
+        line-height: 1;
+        cursor: pointer;
+
+        &:hover,
+        &:focus {
+            color: #333;
+            background: #fff;
+            border-color: #999;
+            outline: none;
+        }
+
+        img {
+            display: block;
+            width: 20px;
+            height: auto;
+        }
+    }
+
+    // Sit fully OUTSIDE the slider box (in the side margins).
+    .slick-prev {
+        right: 100%;
+        left: auto;
+        margin-right: 8px;
+    }
+
+    .slick-next {
+        left: 100%;
+        right: auto;
+        margin-left: 8px;
+    }
+
+    // On narrow viewports there isn't room beside the slider, so overlay the
+    // arrows at the inner edges instead of letting them run off-screen.
+    @media (max-width: 1024px) {
+        .slick-prev {
+            right: auto;
+            left: 8px;
+            margin-right: 0;
+        }
+
+        .slick-next {
+            left: auto;
+            right: 8px;
+            margin-left: 0;
+        }
+    }
+
+    // We provide our own arrow content; hide slick-theme's injected glyphs.
+    .slick-prev:before,
+    .slick-next:before {
+        display: none;
+        content: none;
+    }
+
+    // --- Dots: in normal flow, centered, never over the slides ------------
+    .slick-dots {
+        order: 2;                       // below the slides by default
+        position: static;               // override slick-theme's absolute dots
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        width: 100%;
+        margin: 16px 0 0;
+        padding: 0;
+        list-style: none;
+
+        li {
+            display: block;
+            width: auto;
+            height: auto;
+            margin: 0;
+            line-height: 0;
+        }
+
+        button {
+            display: block;
+            width: 10px;
+            height: 10px;
+            padding: 0;
+            border: none;
+            border-radius: 50%;
+            background: #ccc;
+            font-size: 0;               // hide slick's numeric dot label
+            line-height: 0;
+            color: transparent;
+            cursor: pointer;
+
+            // slick-theme renders the bullet via a font :before — hide it.
+            &:before {
+                display: none;
+                content: none;
+            }
+        }
+
+        li.slick-active button {
+            background: #333;
+        }
+    }
+
+    // Dots above the slides when "top" placement is selected.
+    &.slick-dots-top .slick-dots {
+        order: 0;
+        margin: 0 0 16px;
+    }
+}

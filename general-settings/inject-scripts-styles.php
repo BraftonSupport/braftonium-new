@@ -1,395 +1,528 @@
 <?php
-    //Enqueue options for scripts include Defer & Async
+if ( ! defined( 'ABSPATH' ) ) {
+    exit;
+}
 
-    //Initialize Global(Settings page) & Local(Every post & Page)
-    add_action('acf/init', 'braftonium_injector_init');
-    function braftonium_injector_init(){
-        acf_add_options_page(array(
-            'page_title' 	=> 'Scripts & Styles',
-            'menu_title'	=> 'Scripts & Styles',
-            'menu_slug' 	=> 'braftonium-injector',
-            'capability'	=> 'edit_posts',
-            'redirect'		=> false,
-            'parent_slug'   => 'braftonium-settings'
-            )
-        );
-        acf_add_local_field_group(array(
-             'key' => 'group_braftonium_injector',
-             'title' => 'Scripts & Styles',             
-             'fields' => array(
-                 array(
-                     'key' => 'field_braftonium_injectors',
-                     'label' => __( "Rules", "braftonium" ),                     
-                     'name' => 'braftonium_injector',
-                     'instructions' => __( 'Use this to inject JS/CSS text or enqueue assets.', 'braftonium' ),
-                     'type' => 'repeater',
-                     'required' => 0,
-                     'conditional_logic' => 0,
-                     'wrapper' => array(
-                         'width' => '',
-                         'class' => '',
-                         'id' => '',
-                     ),
-                     'layout' => 'block'
-                 ),
-             ),
-             'location' => array(
-                 array(
-                    array(
-                         'param' => 'options_page',
-                         'operator' => '==',
-                         'value' => 'braftonium-injector',
-                     ),
-                ),
-                array (
-                    array (
-                       'param' => 'post_type',
-                        'operator' => '==',
-                        'value' => 'page',
-                    ),
-                ),
-                array (
-                    array (
-                        'param' => 'post_type',
-                        'operator' => '==',
-                        'value' => 'post',
-                    ),
-                ),
-             ),
-             'menu_order' => 0,
-             'position' => 'normal',
-             'style' => 'default',
-             'label_placement' => 'top',
-             'instruction_placement' => 'label',
-             'hide_on_screen' => '',
-             'active' => 1,
-             'description' => '',
-         ));        
-        acf_add_local_field( array (
-            'key'            => 'braftonium_injector_location',
-            'label'          => 'Location',
-            'name'           => 'location',
-            'parent'         => 'field_braftonium_injectors',
-            'type'           => 'radio',           
-            'required'       => 1,
-            'wrapper' => array(
-                'width' => '20',
-                'class' => '',
-                'id' => '',
-            ),
-            'choices'   => array(
-                'header'	                => 'Header',
-                'footer'                    => 'Footer',
-            ),
-            'location' => array(
-                array(
-                    array(
-                        'param' => 'options_page',
-                        'operator' => '==',
-                        'value' => 'braftonium-injector',
-                    ),
-                ),
-            ),
-            'menu_order' => 0,
-            'position' => 'normal',
-            'style' => 'default',
-            'label_placement' => 'top',
-            'instruction_placement' => 'label',
-            'hide_on_screen' => '',
-            'active' => 1,
-            'description' => '',
-        ));
-        acf_add_local_field( array (
-            'key'            => 'braftonium_injector_method',
-            'label'          => 'Method',
-            'name'           => 'inject_method',
-            'parent'         => 'field_braftonium_injectors',
-            'type'           => 'select',
-            'placeholder'    => 'Make sure to wrap your content with either: <style> OR <script>',            
-            'required'       => 1,
-            'wrapper' => array(
-                'width' => '40',
-                'class' => '',
-                'id' => '',
-            ),
-            'choices'   => array(
-                'css'                           => 'inline CSS',            //footer
-                'stylesheet'                    => 'Stylesheet',            //footer
-                'js'                            => 'JS (script block)',     //enqueue
-                'js_script'	                    => 'JS (script)',           //enqueue
-                'js_script_async'               => 'JS (async)',            //enqueue
-                'js_script_defer'               => 'JS (defer)',            //enqueue                       
-            ),
-            'location' => array(
-                array(
-                    array(
-                        'param' => 'options_page',
-                        'operator' => '==',
-                        'value' => 'braftonium-injector',
-                    ),
-                ),
-            ),
-            'menu_order' => 0,
-            'position' => 'normal',
-            'style' => 'default',
-            'label_placement' => 'top',
-            'instruction_placement' => 'label',
-            'hide_on_screen' => '',
-            'active' => 1,
-            'description' => '',
-        ));
-        acf_add_local_field( array (
-            'key'            => 'braftonium_injector_disabled',
-            'label'          => 'Disable Rule',
-            'name'           => 'html_disable',
-            'parent'         => 'field_braftonium_injectors',
-            'type'           => 'checkbox',
-            'choices' => array(
-                'disable' => 'Disable',
-            ),
-            'required'       => 0,
-            'wrapper' => array(
-                'width' => '20',
-                'class' => '',
-                'id' => '',
-            ),
-            'location' => array(
-                array(
-                    array(
-                        'param' => 'options_page',
-                        'operator' => '==',
-                        'value' => 'braftonium-injector',
-                    ),
-                ),
-            ),
-            'menu_order' => 0,
-            'position' => 'normal',
-            'style' => 'default',
-            'label_placement' => 'top',
-            'instruction_placement' => 'label',
-            'hide_on_screen' => '',
-            'active' => 1,
-            'description' => '',
-        ));
-        acf_add_local_field( array (
-            'key'            => 'braftonium_injector_id',
-            'label'          => 'ID',
-            'name'           => 'script_id',
-            'parent'         => 'field_braftonium_injectors',
-            'type'           => 'text',
-            'required'       => 1,
-            'wrapper' => array(
-                'width' => '20',
-                'class' => '',
-                'id' => '',
-            ),
-            'location' => array(
-                array(
-                    array(
-                        'param' => 'options_page',
-                        'operator' => '==',
-                        'value' => 'braftonium-injector',
-                    ),
-                ),
-            ),
-            'menu_order' => 0,
-            'position' => 'normal',
-            'style' => 'default',
-            'label_placement' => 'top',
-            'instruction_placement' => 'label',
-            'hide_on_screen' => '',
-            'active' => 1,
-            'description' => '',
-            'conditional_logic' => array(
-				array(
-					array(
-						'field' => 'field_6306472f9ea20',
-						'operator' => '!=',
-						'value' => 'css',
-					),
-				),
-				array(
-					array(
-						'field' => 'field_6306472f9ea20',
-						'operator' => '!=',
-						'value' => 'js',
-					),
-				),
-			),
-        ));
-        acf_add_local_field( array (
-            'key'            => 'braftonium_injector_text',
-            'label'          => 'Inject this',
-            'name'           => 'html_value',
-            'parent'         => 'field_braftonium_injectors',
-            'type'           => 'textarea',
-            'instructions' => __( 'JS/CSS you want to inject.', 'braftonium' ),
-            'placeholder'    => 'Just write your css/js.',
-            'required'       => 1,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'location' => array(
-                array(
-                    array(
-                        'param' => 'options_page',
-                        'operator' => '==',
-                        'value' => 'braftonium-injector',
-                    ),
-                ),
-            ),
-            'conditional_logic' => array(
-				array(
-					array(
-						'field' => 'braftonium_injector_method',
-						'operator' => '==',
-						'value' => 'css',
-					),
-				),
-                array(
-					array(
-						'field' => 'braftonium_injector_method',
-						'operator' => '==',
-						'value' => 'js',
-					),
-				),
-			),
-            'menu_order' => 0,
-            'position' => 'normal',
-            'style' => 'default',
-            'label_placement' => 'top',
-            'instruction_placement' => 'label',
-            'hide_on_screen' => '',
-            'active' => 1,
-            'description' => '',
-        ));
-        acf_add_local_field( array (
-            'key'            => 'braftonium_injector_url',
-            'label'          => 'Url',
-            'name'           => 'url_value',
-            'parent'         => 'field_braftonium_injectors',
-            'type'           => 'text',
-            'instructions' => __( 'Paste your url here.', 'braftonium' ),
-            'placeholder'    => '',
-            'required'       => 1,
-            'wrapper' => array(
-                'width' => '',
-                'class' => '',
-                'id' => '',
-            ),
-            'location' => array(
-                array(
-                    array(
-                        'param' => 'options_page',
-                        'operator' => '==',
-                        'value' => 'braftonium-injector',
-                    ),
-                ),
-            ),
-            'conditional_logic' => array(
-				array(
-					array(
-						'field' => 'braftonium_injector_method',
-						'operator' => '==',
-						'value' => 'js_script_defer',
-					),
-				),
-                array(
-					array(
-						'field' => 'braftonium_injector_method',
-						'operator' => '==',
-						'value' => 'js_script_async',
-					),
-				),
-                array(
-					array(
-						'field' => 'braftonium_injector_method',
-						'operator' => '==',
-						'value' => 'js_script',
-					),
-				),
-                array(
-					array(
-						'field' => 'braftonium_injector_method',
-						'operator' => '==',
-						'value' => 'stylesheet',
-					),
-				),
-			),            
-            'menu_order' => 0,
-            'position' => 'normal',
-            'style' => 'default',
-            'label_placement' => 'top',
-            'instruction_placement' => 'label',
-            'hide_on_screen' => '',
-            'active' => 1,
-            'description' => '',
-        ));
+/**
+ * Scripts & Styles injector.
+ *
+ * Each rule has ONE method:
+ *   - inline_js   : prints <script>…</script> in the header/footer
+ *   - inline_css  : prints <style>…</style> in the header/footer
+ *   - enqueue     : enqueues an external URL. URLs ending in .css load as a
+ *                   stylesheet; anything else loads as a script with the chosen
+ *                   load strategy (normal | async | defer).
+ */
+
+/* -------------------------------------------------------------------------
+ * Constants / helpers
+ * ---------------------------------------------------------------------- */
+
+function braftonium_injection_methods() {
+    return array( 'inline_js', 'inline_css', 'enqueue' );
+}
+
+function braftonium_injection_load_strategies() {
+    return array( 'normal', 'async', 'defer' );
+}
+
+/**
+ * Normalise a stored rule to the current shape, mapping legacy method names
+ * (css, js, stylesheet, js_script, js_script_async, js_script_defer) onto the
+ * new method + load_strategy pair so old saved rules keep working.
+ */
+function braftonium_normalize_injection_rule( $rule ) {
+    $rule = is_array( $rule ) ? $rule : array();
+
+    $method = isset( $rule['inject_method'] ) ? (string) $rule['inject_method'] : '';
+    $load   = isset( $rule['load_strategy'] ) ? (string) $rule['load_strategy'] : '';
+
+    switch ( $method ) {
+        case 'inline_js':
+        case 'inline_css':
+        case 'enqueue':
+            break;
+        case 'css':
+            $method = 'inline_css';
+            break;
+        case 'js':
+            $method = 'inline_js';
+            break;
+        case 'stylesheet':
+        case 'js_script':
+            $method = 'enqueue';
+            $load   = $load ? $load : 'normal';
+            break;
+        case 'js_script_async':
+            $method = 'enqueue';
+            $load   = $load ? $load : 'async';
+            break;
+        case 'js_script_defer':
+            $method = 'enqueue';
+            $load   = $load ? $load : 'defer';
+            break;
+        default:
+            $method = 'inline_css';
     }
 
-    function injectionsList(){
-        $injections=get_field('field_braftonium_injectors', 'option') ? get_field('field_braftonium_injectors', 'option') : array();
-        global $post;
-        $localInjections=get_field('field_braftonium_injectors', $post->ID);
-        if(get_field('field_braftonium_injectors', 'option')){
-            $injections=array_merge(get_field('field_braftonium_injectors', 'option'),$injections);
-        }
-        return $injections;
+    if ( ! in_array( $load, braftonium_injection_load_strategies(), true ) ) {
+        $load = 'normal';
     }
 
-    function braftonium_enqueuer(){   
-        //Create list of rules
-            foreach(injectionsList() as $rule){
-                if($rule['html_disable']!='disable'){ //skip disabled rules
-                    if($rule['inject_method']=='stylesheet'){
-                        wp_enqueue_style( $rule['script_id'] , $rule['url_value'], NULL, NULL, $rule['location']=='footer');
-                    } elseif($rule['inject_method']=='js_script'){
+    return array(
+        'location'      => ( isset( $rule['location'] ) && 'footer' === $rule['location'] ) ? 'footer' : 'header',
+        'inject_method' => $method,
+        'load_strategy' => $load,
+        'html_disable'  => ( isset( $rule['html_disable'] ) && 'disable' === $rule['html_disable'] ) ? 'disable' : '',
+        'script_id'     => isset( $rule['script_id'] ) ? (string) $rule['script_id'] : '',
+        'html_value'    => isset( $rule['html_value'] ) ? (string) $rule['html_value'] : '',
+        'url_value'     => isset( $rule['url_value'] ) ? (string) $rule['url_value'] : '',
+    );
+}
 
-                        //JS Enqueue
-                        wp_enqueue_script( $rule['script_id'] , $rule['url_value'], NULL, NULL, $rule['location']=='footer');
-                    } elseif($rule['inject_method']=='js_script_defer'){
-                        
-                        //JS Defer
-                        wp_enqueue_script( $rule['script_id'], $rule['url_value'], NULL, NULL, $rule['location']=='footer');
-                        wp_script_add_data( $rule['script_id'] , 'defer', true );
-                    } elseif($rule['inject_method']=='js_script_async'){
-                        
-                        //JS Async
-                        wp_enqueue_script( $rule['script_id'], $rule['url_value'], NULL, NULL, $rule['location']=='footer');
-                        wp_script_add_data( $rule['script_id'] , 'async', true );
-                    }
-                }            
-            }     
+/**
+ * True when a URL points at a stylesheet (path ends in .css, query ignored).
+ */
+function braftonium_url_is_css( $url ) {
+    $path = wp_parse_url( $url, PHP_URL_PATH );
+    return is_string( $path ) && preg_match( '/\.css$/i', $path );
+}
+
+/* -------------------------------------------------------------------------
+ * Admin: Scripts & Styles page (global rules)
+ * ---------------------------------------------------------------------- */
+
+add_action( 'admin_menu', 'braftonium_register_injector_page' );
+function braftonium_register_injector_page() {
+    add_submenu_page(
+        'braftonium-settings',
+        __( 'Scripts & Styles', 'braftonium' ),
+        __( 'Scripts & Styles', 'braftonium' ),
+        'manage_options',
+        'braftonium-injector',
+        'braftonium_render_injector_page'
+    );
+}
+
+add_action( 'admin_post_braftonium_save_injector', 'braftonium_save_injector' );
+function braftonium_save_injector() {
+    if ( ! current_user_can( 'manage_options' ) ) {
+        wp_die( esc_html__( 'You do not have permission to perform this action.', 'braftonium' ) );
     }
-    add_action('wp_enqueue_scripts', 'braftonium_enqueuer');
 
-    //wp footer hook -> headerFooterCheck
-    function braftonium_footer_injections(){
-        headerFooterCheck('footer');
+    check_admin_referer( 'braftonium_injector_save' );
+
+    $rules = braftonium_sanitize_injection_rules_from_post( $_POST );
+
+    // Inline JS/CSS is raw output; only users who can post unfiltered HTML may
+    // persist inline rules.
+    if ( ! current_user_can( 'unfiltered_html' ) ) {
+        $rules = braftonium_strip_inline_injection_rules( $rules );
     }
-    add_action('wp_foot', 'braftonium_footer_injections');
 
-    //wp header hook -> headeFooterCheck
-    function braftonium_header_injections(){
-        headerFooterCheck('header');  
+    update_option( 'braftonium_injector', $rules );
+
+    wp_safe_redirect(
+        add_query_arg(
+            array(
+                'page'    => 'braftonium-injector',
+                'updated' => '1',
+            ),
+            admin_url( 'admin.php' )
+        )
+    );
+    exit;
+}
+
+function braftonium_render_injector_page() {
+    if ( ! current_user_can( 'manage_options' ) ) {
+        return;
     }
-    add_action('wp_head', 'braftonium_header_injections');
 
-    //Check for CSS/JS to inject into footer/header
-    function headerFooterCheck($location){
-        foreach(injectionsList() as $rule){
-            if($rule['html_disable']!='disable' && $rule['location']==$location){ //skip disabled rules
-                if($rule['inject_method']=='css'){
-                    echo '<style id="'.$rule['script_id'].'">'.$rule['html_value'].'</style>';
-                } elseif($rule['inject_method']=='js'){
-                    echo '<script id="'.$rule['script_id'].'">'.$rule['html_value'].'</script>';
-                }
-            }            
-        }  
-    } 
-    
-    
-       
+    $rules = get_option( 'braftonium_injector', array() );
     ?>
+    <div class="wrap">
+        <h1><?php esc_html_e( 'Scripts & Styles', 'braftonium' ); ?></h1>
+        <?php if ( isset( $_GET['updated'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification.Recommended ?>
+            <div class="notice notice-success is-dismissible"><p><?php esc_html_e( 'Settings saved.', 'braftonium' ); ?></p></div>
+        <?php endif; ?>
+
+        <form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+            <input type="hidden" name="action" value="braftonium_save_injector" />
+            <?php wp_nonce_field( 'braftonium_injector_save' ); ?>
+
+            <p><?php esc_html_e( 'Inject inline JS/CSS or enqueue an external script/stylesheet by URL.', 'braftonium' ); ?></p>
+            <?php braftonium_render_injection_table( $rules, 'global' ); ?>
+
+            <p><button type="button" class="button" data-add-injection-row="braftonium-injection-table-global"><?php esc_html_e( 'Add Rule', 'braftonium' ); ?></button></p>
+            <?php submit_button(); ?>
+        </form>
+    </div>
+    <?php
+    braftonium_render_injection_table_script();
+}
+
+/* -------------------------------------------------------------------------
+ * Admin: per-post/page meta box (local rules)
+ * ---------------------------------------------------------------------- */
+
+add_action( 'add_meta_boxes', 'braftonium_register_injector_metabox' );
+function braftonium_register_injector_metabox() {
+    foreach ( array( 'post', 'page' ) as $post_type ) {
+        add_meta_box(
+            'braftonium-local-injector',
+            __( 'Braftonium Scripts & Styles', 'braftonium' ),
+            'braftonium_render_injector_metabox',
+            $post_type,
+            'normal',
+            'default'
+        );
+    }
+}
+
+function braftonium_render_injector_metabox( $post ) {
+    wp_nonce_field( 'braftonium_local_injector_save', 'braftonium_local_injector_nonce' );
+    $rules = get_post_meta( $post->ID, '_braftonium_injector', true );
+    if ( ! is_array( $rules ) ) {
+        $rules = array();
+    }
+
+    echo '<p>' . esc_html__( 'These rules only apply to this post/page.', 'braftonium' ) . '</p>';
+    braftonium_render_injection_table( $rules, 'local' );
+    echo '<p><button type="button" class="button" data-add-injection-row="braftonium-injection-table-local">' . esc_html__( 'Add Rule', 'braftonium' ) . '</button></p>';
+    braftonium_render_injection_table_script();
+}
+
+add_action( 'save_post', 'braftonium_save_local_injector' );
+function braftonium_save_local_injector( $post_id ) {
+    if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+        return;
+    }
+
+    if ( ! isset( $_POST['braftonium_local_injector_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['braftonium_local_injector_nonce'] ) ), 'braftonium_local_injector_save' ) ) {
+        return;
+    }
+
+    if ( ! current_user_can( 'edit_post', $post_id ) ) {
+        return;
+    }
+
+    $rules = braftonium_sanitize_injection_rules_from_post( $_POST, true );
+
+    if ( ! current_user_can( 'unfiltered_html' ) ) {
+        $rules = braftonium_strip_inline_injection_rules( $rules );
+    }
+
+    update_post_meta( $post_id, '_braftonium_injector', $rules );
+}
+
+/**
+ * Drop inline JS/CSS rules so users without unfiltered_html can't persist
+ * unescaped inline markup.
+ */
+function braftonium_strip_inline_injection_rules( $rules ) {
+    if ( ! is_array( $rules ) ) {
+        return array();
+    }
+
+    return array_values( array_filter( $rules, static function ( $rule ) {
+        $method = isset( $rule['inject_method'] ) ? $rule['inject_method'] : '';
+        return 'inline_js' !== $method && 'inline_css' !== $method;
+    } ) );
+}
+
+/* -------------------------------------------------------------------------
+ * Sanitisation
+ * ---------------------------------------------------------------------- */
+
+function braftonium_sanitize_injection_rules_from_post( $source, $is_local = false ) {
+    $prefix = $is_local ? 'local_' : '';
+
+    $locations = isset( $source[ $prefix . 'location' ] ) ? (array) wp_unslash( $source[ $prefix . 'location' ] ) : array();
+    $methods   = isset( $source[ $prefix . 'inject_method' ] ) ? (array) wp_unslash( $source[ $prefix . 'inject_method' ] ) : array();
+    $loads     = isset( $source[ $prefix . 'load_strategy' ] ) ? (array) wp_unslash( $source[ $prefix . 'load_strategy' ] ) : array();
+    $ids       = isset( $source[ $prefix . 'script_id' ] ) ? (array) wp_unslash( $source[ $prefix . 'script_id' ] ) : array();
+    $urls      = isset( $source[ $prefix . 'url_value' ] ) ? (array) wp_unslash( $source[ $prefix . 'url_value' ] ) : array();
+    $html      = isset( $source[ $prefix . 'html_value' ] ) ? (array) wp_unslash( $source[ $prefix . 'html_value' ] ) : array();
+    $disabled  = isset( $source[ $prefix . 'html_disable' ] ) ? (array) wp_unslash( $source[ $prefix . 'html_disable' ] ) : array();
+
+    $allowed_methods   = braftonium_injection_methods();
+    $allowed_loads     = braftonium_injection_load_strategies();
+    $allowed_locations = array( 'header', 'footer' );
+
+    $rules = array();
+    foreach ( $methods as $index => $method ) {
+        $method = sanitize_key( $method );
+        if ( ! in_array( $method, $allowed_methods, true ) ) {
+            continue;
+        }
+
+        $location = isset( $locations[ $index ] ) ? sanitize_key( $locations[ $index ] ) : 'header';
+        if ( ! in_array( $location, $allowed_locations, true ) ) {
+            $location = 'header';
+        }
+
+        $load = isset( $loads[ $index ] ) ? sanitize_key( $loads[ $index ] ) : 'normal';
+        if ( ! in_array( $load, $allowed_loads, true ) ) {
+            $load = 'normal';
+        }
+
+        $id = isset( $ids[ $index ] ) ? sanitize_key( $ids[ $index ] ) : '';
+        if ( '' === $id ) {
+            $id = 'braftonium-rule-' . $index;
+        }
+
+        $url_value  = isset( $urls[ $index ] ) ? esc_url_raw( $urls[ $index ] ) : '';
+        $html_value = isset( $html[ $index ] ) ? (string) $html[ $index ] : '';
+
+        $rules[] = array(
+            'location'      => $location,
+            'inject_method' => $method,
+            'load_strategy' => $load,
+            'html_disable'  => ! empty( $disabled[ $index ] ) ? 'disable' : '',
+            'script_id'     => $id,
+            'html_value'    => $html_value,
+            'url_value'     => $url_value,
+        );
+    }
+
+    return $rules;
+}
+
+/* -------------------------------------------------------------------------
+ * Admin: rule table markup
+ * ---------------------------------------------------------------------- */
+
+function braftonium_render_injection_table( $rules, $scope = 'global' ) {
+    $prefix   = 'local' === $scope ? 'local_' : '';
+    $table_id = 'braftonium-injection-table-' . $scope;
+
+    if ( empty( $rules ) ) {
+        $rules = array(
+            array(
+                'location'      => 'header',
+                'inject_method' => 'inline_css',
+                'load_strategy' => 'normal',
+                'html_disable'  => '',
+                'script_id'     => '',
+                'html_value'    => '',
+                'url_value'     => '',
+            ),
+        );
+    }
+    ?>
+    <table class="widefat striped braftonium-injection-table" id="<?php echo esc_attr( $table_id ); ?>">
+        <thead>
+            <tr>
+                <th style="width:90px;"><?php esc_html_e( 'Location', 'braftonium' ); ?></th>
+                <th style="width:120px;"><?php esc_html_e( 'Method', 'braftonium' ); ?></th>
+                <th style="width:100px;"><?php esc_html_e( 'Load', 'braftonium' ); ?></th>
+                <th style="width:140px;"><?php esc_html_e( 'ID', 'braftonium' ); ?></th>
+                <th><?php esc_html_e( 'URL / Inline JS/CSS', 'braftonium' ); ?></th>
+                <th style="width:60px;"><?php esc_html_e( 'Disable', 'braftonium' ); ?></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            foreach ( $rules as $index => $rule ) {
+                $rule = braftonium_normalize_injection_rule( $rule );
+                braftonium_render_injection_row( $prefix, $index, $rule );
+            }
+            ?>
+        </tbody>
+    </table>
+    <?php
+}
+
+/**
+ * One rule row. Conditional fields (Load, URL, Inline) stay in place but their
+ * inputs hide/show by method via JS so the table columns never shift.
+ */
+function braftonium_render_injection_row( $prefix, $index, $rule ) {
+    $method = $rule['inject_method'];
+    $is_enq = ( 'enqueue' === $method );
+    $is_inl = ( 'inline_js' === $method || 'inline_css' === $method );
+    $hide   = ' style="display:none;"';
+    ?>
+    <tr>
+        <td>
+            <select name="<?php echo esc_attr( $prefix ); ?>location[]">
+                <option value="header" <?php selected( $rule['location'], 'header' ); ?>><?php esc_html_e( 'Header', 'braftonium' ); ?></option>
+                <option value="footer" <?php selected( $rule['location'], 'footer' ); ?>><?php esc_html_e( 'Footer', 'braftonium' ); ?></option>
+            </select>
+        </td>
+        <td>
+            <select name="<?php echo esc_attr( $prefix ); ?>inject_method[]" data-injection-method>
+                <option value="inline_js" <?php selected( $method, 'inline_js' ); ?>><?php esc_html_e( 'Inline JS', 'braftonium' ); ?></option>
+                <option value="inline_css" <?php selected( $method, 'inline_css' ); ?>><?php esc_html_e( 'Inline CSS', 'braftonium' ); ?></option>
+                <option value="enqueue" <?php selected( $method, 'enqueue' ); ?>><?php esc_html_e( 'Enqueue', 'braftonium' ); ?></option>
+            </select>
+        </td>
+        <td>
+            <select name="<?php echo esc_attr( $prefix ); ?>load_strategy[]" data-field="load"<?php echo $is_enq ? '' : $hide; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
+                <option value="normal" <?php selected( $rule['load_strategy'], 'normal' ); ?>><?php esc_html_e( 'Normal', 'braftonium' ); ?></option>
+                <option value="async" <?php selected( $rule['load_strategy'], 'async' ); ?>><?php esc_html_e( 'Async', 'braftonium' ); ?></option>
+                <option value="defer" <?php selected( $rule['load_strategy'], 'defer' ); ?>><?php esc_html_e( 'Defer', 'braftonium' ); ?></option>
+            </select>
+        </td>
+        <td>
+            <input type="text" style="width:130px;" name="<?php echo esc_attr( $prefix ); ?>script_id[]" value="<?php echo esc_attr( $rule['script_id'] ); ?>" placeholder="<?php esc_attr_e( 'optional', 'braftonium' ); ?>" />
+        </td>
+        <td>
+            <input type="url" class="large-text code" name="<?php echo esc_attr( $prefix ); ?>url_value[]" value="<?php echo esc_attr( $rule['url_value'] ); ?>" placeholder="https://example.com/asset.js" data-field="url"<?php echo $is_enq ? '' : $hide; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?> />
+            <textarea rows="2" class="large-text code" name="<?php echo esc_attr( $prefix ); ?>html_value[]" data-field="inline"<?php echo $is_inl ? '' : $hide; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php echo esc_textarea( $rule['html_value'] ); ?></textarea>
+        </td>
+        <td>
+            <input type="checkbox" name="<?php echo esc_attr( $prefix ); ?>html_disable[<?php echo esc_attr( (string) $index ); ?>]" value="1" <?php checked( $rule['html_disable'], 'disable' ); ?> />
+        </td>
+    </tr>
+    <?php
+}
+
+function braftonium_render_injection_table_script() {
+    static $printed = false;
+    if ( $printed ) {
+        return;
+    }
+    $printed = true;
+    ?>
+    <script>
+    (function () {
+        function rowMarkup(prefix, index) {
+            return '<tr>' +
+                '<td><select name="' + prefix + 'location[]"><option value="header">Header</option><option value="footer">Footer</option></select></td>' +
+                '<td><select name="' + prefix + 'inject_method[]" data-injection-method><option value="inline_js">Inline JS</option><option value="inline_css">Inline CSS</option><option value="enqueue">Enqueue</option></select></td>' +
+                '<td><select name="' + prefix + 'load_strategy[]" data-field="load" style="display:none;"><option value="normal">Normal</option><option value="async">Async</option><option value="defer">Defer</option></select></td>' +
+                '<td><input type="text" style="width:130px;" name="' + prefix + 'script_id[]" placeholder="optional" /></td>' +
+                '<td>' +
+                    '<input type="url" class="large-text code" name="' + prefix + 'url_value[]" placeholder="https://example.com/asset.js" data-field="url" style="display:none;" />' +
+                    '<textarea rows="2" class="large-text code" name="' + prefix + 'html_value[]" data-field="inline"></textarea>' +
+                '</td>' +
+                '<td><input type="checkbox" name="' + prefix + 'html_disable[' + index + ']" value="1" /></td>' +
+                '</tr>';
+        }
+
+        // Show only the fields relevant to the selected method.
+        function applyVisibility(row) {
+            var method = row.querySelector('[data-injection-method]');
+            if (!method) return;
+            var value = method.value;
+            var isEnqueue = value === 'enqueue';
+            var isInline = value === 'inline_js' || value === 'inline_css';
+
+            row.querySelectorAll('[data-field="load"]').forEach(function (el) { el.style.display = isEnqueue ? '' : 'none'; });
+            row.querySelectorAll('[data-field="url"]').forEach(function (el) { el.style.display = isEnqueue ? '' : 'none'; });
+            row.querySelectorAll('[data-field="inline"]').forEach(function (el) { el.style.display = isInline ? '' : 'none'; });
+        }
+
+        document.addEventListener('change', function (event) {
+            if (event.target.matches('[data-injection-method]')) {
+                applyVisibility(event.target.closest('tr'));
+            }
+        });
+
+        document.addEventListener('click', function (event) {
+            var btn = event.target.closest('[data-add-injection-row]');
+            if (!btn) return;
+
+            var table = document.getElementById(btn.getAttribute('data-add-injection-row'));
+            if (!table) return;
+
+            var prefix = table.id.indexOf('local') !== -1 ? 'local_' : '';
+            var rowCount = table.querySelectorAll('tbody tr').length;
+            var tmp = document.createElement('tbody');
+            tmp.innerHTML = rowMarkup(prefix, rowCount);
+            var row = tmp.firstChild;
+            table.querySelector('tbody').appendChild(row);
+            applyVisibility(row);
+        });
+
+        // Initial state for server-rendered rows.
+        document.querySelectorAll('.braftonium-injection-table tbody tr').forEach(applyVisibility);
+    })();
+    </script>
+    <?php
+}
+
+/* -------------------------------------------------------------------------
+ * Front end output
+ * ---------------------------------------------------------------------- */
+
+/**
+ * Build the combined (global + local) rule list, normalised.
+ */
+function injectionsList() {
+    $injections = get_option( 'braftonium_injector', array() );
+    if ( ! is_array( $injections ) ) {
+        $injections = array();
+    }
+
+    if ( is_singular() ) {
+        $post_id = get_queried_object_id();
+        if ( $post_id ) {
+            $local_injections = get_post_meta( $post_id, '_braftonium_injector', true );
+            if ( is_array( $local_injections ) && ! empty( $local_injections ) ) {
+                $injections = array_merge( $injections, $local_injections );
+            }
+        }
+    }
+
+    return array_map( 'braftonium_normalize_injection_rule', $injections );
+}
+
+function braftonium_enqueuer() {
+    foreach ( injectionsList() as $rule ) {
+        if ( 'disable' === $rule['html_disable'] || 'enqueue' !== $rule['inject_method'] ) {
+            continue;
+        }
+
+        $id  = $rule['script_id'];
+        $url = $rule['url_value'];
+        if ( '' === $id || '' === $url ) {
+            continue;
+        }
+
+        if ( braftonium_url_is_css( $url ) ) {
+            wp_enqueue_style( $id, $url, array(), null );
+            continue;
+        }
+
+        $in_footer = ( 'footer' === $rule['location'] );
+        wp_enqueue_script( $id, $url, array(), null, $in_footer );
+
+        if ( 'defer' === $rule['load_strategy'] ) {
+            wp_script_add_data( $id, 'defer', true );
+        } elseif ( 'async' === $rule['load_strategy'] ) {
+            wp_script_add_data( $id, 'async', true );
+        }
+    }
+}
+add_action( 'wp_enqueue_scripts', 'braftonium_enqueuer' );
+
+function braftonium_footer_injections() {
+    headerFooterCheck( 'footer' );
+}
+add_action( 'wp_footer', 'braftonium_footer_injections' );
+
+function braftonium_header_injections() {
+    headerFooterCheck( 'header' );
+}
+add_action( 'wp_head', 'braftonium_header_injections' );
+
+function headerFooterCheck( $location ) {
+    foreach ( injectionsList() as $rule ) {
+        if ( 'disable' === $rule['html_disable'] || $rule['location'] !== $location ) {
+            continue;
+        }
+
+        $id      = $rule['script_id'];
+        $method  = $rule['inject_method'];
+        $content = $rule['html_value'];
+
+        if ( 'inline_css' === $method ) {
+            echo '<style id="' . esc_attr( $id ) . '">' . $content . '</style>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        } elseif ( 'inline_js' === $method ) {
+            echo '<script id="' . esc_attr( $id ) . '">' . $content . '</script>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+        }
+    }
+}

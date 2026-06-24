@@ -1,0 +1,39 @@
+// =============================================================================
+// Custom List Item block — braftonium/custom-list-item
+//
+// Source SCSS. Compiles in place to custom-list-item.css via the blocks sass
+// workflow:
+//   cd blocks && npm run sass-watch   (dev)  |  npm run sass-compile  (build)
+// custom-list-item.css is the stylesheet enqueued by block.json
+// ("style": "file:./custom-list-item.css").
+//
+// Markup (see render.php):
+//   .braftonium-custom-list-item
+//     > [ InnerBlocks output: image, heading, paragraph, … ]
+//
+// A single grid cell inside braftonium/custom-list. Sizing/columns live on the
+// parent grid — this just styles the card surface.
+// =============================================================================
+
+.braftonium-custom-list-item {
+    box-sizing: border-box;
+    min-width: 0;             // allow the card to shrink inside the grid track
+    background: #fff;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+
+    img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    // Tidy vertical rhythm for the inner blocks.
+    > * {
+        margin-block: 0 0.75em;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}

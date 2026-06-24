@@ -57,8 +57,8 @@ Follow the steps below to use SCSS on your local machine!
 
 1. Create new-block.scss (sass will compile any file name) file in the block folder (remember to enqueue new-block.css)
 2. Open your terminal to the folder: /wp-content/plugins/braftonium-new/blocks
-3. Run "install npm" (First time)
-4. Run "npm sass-watch" (Everytime)
+3. Run "npm install" (First time)
+4. Run "npm run sass-watch" (Everytime)
 * You do not need to create the CSS file first, the compiler will do it
 
 ### Override Template

@@ -53,10 +53,11 @@ import Select from 'react-select';
 	return settings;
 }
 async function getClassList(setAttributes, blockType){
-	if(typeof debugblock !== 'undefined' && debugblocks == true){
+	if(typeof window.debugblocks !== 'undefined' && window.debugblocks === true){
 		console.log(blockType);
 	}
 	if(blockType == 'gravityforms/form'){
+		setAttributes({availableClasses: [], loading: false});
 		return [];
 	}
 		const data = await apiFetch(
@@ -86,19 +87,12 @@ addFilter(
  * @return {function} BlockEdit Modified block edit component.
  */
  const withAdvancedControls =  (BlockEdit ) => {
-	// withSelect((select, ownProps)=>{
-	// 	console.log('select',select,'props',ownProps);
-		
-	// 	 })
 	return (props)=>{
-		// var classOptions = [{ label: 'Full Width Row', value: 'full-width' }];
 		const {
 			attributes,
 			setAttributes,
-			isSelected,
-			classList
+			isSelected
 		} = props;
-		// console.log(props);
 
 		const {
 			braftoniumClasses,
@@ -107,19 +101,18 @@ addFilter(
 			loading
 		} = attributes;
 
+		// Fetch the available micro-style classes when a block is selected.
+		// Runs as a side effect (never during render) to respect the Rules of Hooks.
+		useEffect(()=>{
 			if(isSelected && !classesFetched){
-				setAttributes({classesFetched: true});
-				setAttributes({loading: true});
-				useSelect((select)=>{
-					getClassList(setAttributes, props.name);
-				})
-				
+				setAttributes({classesFetched: true, loading: true});
+				getClassList(setAttributes, props.name);
 			}
-			if(!isSelected){
-				setAttributes({classesFetched: false});
-				setAttributes({loading: false});
+			if(!isSelected && classesFetched){
+				setAttributes({classesFetched: false, loading: false});
 			}
-		
+		}, [isSelected]);
+
 		function handleClassSelection(newClasses){
 			
 			var ClassValues = Array.from(newClasses, x=>x.value);
@@ -174,8 +167,8 @@ addFilter(
 
 				{ isSelected &&
 					<InspectorAdvancedControls>
-						<div class="special">
-							<lable>Braftonium Microstyles</lable>
+						<div className="special">
+							<label>Braftonium Microstyles</label>
 							<Select 
 									size=""
 									help={__('These are micro styles for your theme. They are distint from block styles in that these will contain a more focused style option. Hold Ctrl and click the classes you wish to add or remove.')}
@@ -200,16 +193,6 @@ addFilter(
 		);
 	}
 }
-const applyWithSelect = withSelect((select, ownProps)=>{
-	console.log('s', select,'p',ownProps);
-	return {
-		classList: getClassList()
-	}
- })(withAdvancedControls);
-// export default compose(
-// 	applyWithSelect
-// )(withAdvancedControls);
-
 addFilter(
 	'editor.BlockEdit',
 	'editorskit/custom-advanced-control',

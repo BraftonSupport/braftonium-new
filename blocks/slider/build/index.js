@@ -1,1 +1,467 @@
-!function(){"use strict";function e(t){return e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e(t)}function t(t,n,r){return(n=function(t){var n=function(t){if("object"!=e(t)||!t)return t;var n=t[Symbol.toPrimitive];if(void 0!==n){var r=n.call(t,"string");if("object"!=e(r))return r;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(t)}(t);return"symbol"==e(n)?n:n+""}(n))in t?Object.defineProperty(t,n,{value:r,enumerable:!0,configurable:!0,writable:!0}):t[n]=r,t}var n=window.wp.blocks,r=window.React,o=window.wp.i18n,i=window.wp.blockEditor,a=window.wp.components;function l(e,t){var n=Object.keys(e);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(e);t&&(r=r.filter(function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable})),n.push.apply(n,r)}return n}var u=JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"braftonium/slider","version":"2.0.0","title":"Slider","category":"braftonium","icon":"slides","description":"Slider using Slick carousel library","keywords":["slider","carousel","slick"],"textdomain":"braftonium","supports":{"anchor":true,"customClassName":true,"align":["wide","full"],"spacing":{"margin":["top","bottom","left","right"],"padding":["top","bottom","left","right"]},"html":false},"attributes":{"preview":{"type":"boolean","default":false},"dotsVisibility":{"type":"string","default":"visible","enum":["visible","hidden"]},"dotsPlacement":{"type":"string","default":"bottom","enum":["top","bottom"]},"arrowsVisibility":{"type":"string","default":"visible","enum":["visible","hidden"]},"arrowsType":{"type":"string","default":"text","enum":["text","image"]},"arrowsLeftImage":{"type":"string","default":""},"arrowsRightImage":{"type":"string","default":""},"arrowsLeftText":{"type":"string","default":"Previous"},"arrowsRightText":{"type":"string","default":"Next"},"playbackAutoplaySpeed":{"type":"number","default":3000},"playbackSlideSpeed":{"type":"number","default":300},"presentationSlidesToShow":{"type":"number","default":1},"presentationSlidesToScroll":{"type":"number","default":1},"presentationInfinite":{"type":"boolean","default":false}},"editorScript":"file:./build/index.js"}');function c(e,t){var n=Object.keys(e);if(Object.getOwnPropertySymbols){var r=Object.getOwnPropertySymbols(e);t&&(r=r.filter(function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable})),n.push.apply(n,r)}return n}function s(e){for(var n=1;n<arguments.length;n++){var r=null!=arguments[n]?arguments[n]:{};n%2?c(Object(r),!0).forEach(function(n){t(e,n,r[n])}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(r)):c(Object(r)).forEach(function(t){Object.defineProperty(e,t,Object.getOwnPropertyDescriptor(r,t))})}return e}(0,n.registerBlockType)(u.name,s(s({},u),{},{edit:function(e){var n=e.attributes,u=e.setAttributes,c=n.preview,s=n.dotsVisibility,m=n.dotsPlacement,p=n.arrowsVisibility,b=n.arrowsType,f=n.arrowsLeftImage,d=n.arrowsRightImage,y=n.arrowsLeftText,g=n.arrowsRightText,w=n.playbackAutoplaySpeed,_=n.playbackSlideSpeed,v=n.presentationSlidesToShow,h=n.presentationSlidesToScroll,S=n.presentationInfinite,E=(0,i.useBlockProps)({className:"braftonium-slider slick-dots-".concat(m," ").concat(c?"preview-mode":"")});return(0,r.createElement)(r.Fragment,null,(0,r.createElement)(i.InspectorControls,null,(0,r.createElement)(a.PanelBody,{title:(0,o.__)("Preview","braftonium"),initialOpen:!1},(0,r.createElement)(a.ToggleControl,{label:(0,o.__)("Preview Slider?","braftonium"),checked:c,onChange:function(e){return u({preview:e})}})),(0,r.createElement)(a.PanelBody,{title:(0,o.__)("Dot Options","braftonium"),initialOpen:!0},(0,r.createElement)(a.RadioControl,{label:(0,o.__)("Visibility","braftonium"),selected:s,options:[{label:(0,o.__)("Visible","braftonium"),value:"visible"},{label:(0,o.__)("Hidden","braftonium"),value:"hidden"}],onChange:function(e){return u({dotsVisibility:e})}}),"visible"===s&&(0,r.createElement)(a.RadioControl,{label:(0,o.__)("Placement","braftonium"),selected:m,options:[{label:(0,o.__)("Top","braftonium"),value:"top"},{label:(0,o.__)("Bottom","braftonium"),value:"bottom"}],onChange:function(e){return u({dotsPlacement:e})}})),(0,r.createElement)(a.PanelBody,{title:(0,o.__)("Arrow Options","braftonium"),initialOpen:!1},(0,r.createElement)(a.RadioControl,{label:(0,o.__)("Visibility","braftonium"),selected:p,options:[{label:(0,o.__)("Visible","braftonium"),value:"visible"},{label:(0,o.__)("Hidden","braftonium"),value:"hidden"}],onChange:function(e){return u({arrowsVisibility:e})}}),"visible"===p&&(0,r.createElement)(r.Fragment,null,(0,r.createElement)(a.RadioControl,{label:(0,o.__)("Type","braftonium"),selected:b,options:[{label:(0,o.__)("Text","braftonium"),value:"text"},{label:(0,o.__)("Image","braftonium"),value:"image"}],onChange:function(e){return u({arrowsType:e})}}),"text"===b&&(0,r.createElement)(r.Fragment,null,(0,r.createElement)(a.TextControl,{label:(0,o.__)("Left Arrow Text","braftonium"),value:y,onChange:function(e){return u({arrowsLeftText:e})}}),(0,r.createElement)(a.TextControl,{label:(0,o.__)("Right Arrow Text","braftonium"),value:g,onChange:function(e){return u({arrowsRightText:e})}})),"image"===b&&(0,r.createElement)(r.Fragment,null,(0,r.createElement)(i.MediaUploadCheck,null,(0,r.createElement)(i.MediaUpload,{onSelect:function(e){return u({arrowsLeftImage:e.url})},allowedTypes:["image"],render:function(e){var t=e.open;return(0,r.createElement)("div",{style:{marginBottom:"16px"}},(0,r.createElement)(a.__experimentalText,null,(0,o.__)("Left Arrow Image","braftonium")),f?(0,r.createElement)(r.Fragment,null,(0,r.createElement)("img",{src:f,style:{width:"100px",display:"block",marginTop:"8px"}}),(0,r.createElement)(a.Button,{onClick:t,variant:"secondary"},(0,o.__)("Change","braftonium"))):(0,r.createElement)(a.Button,{onClick:t,variant:"secondary"},(0,o.__)("Select Image","braftonium")))}})),(0,r.createElement)(i.MediaUploadCheck,null,(0,r.createElement)(i.MediaUpload,{onSelect:function(e){return u({arrowsRightImage:e.url})},allowedTypes:["image"],render:function(e){var t=e.open;return(0,r.createElement)("div",null,(0,r.createElement)(a.__experimentalText,null,(0,o.__)("Right Arrow Image","braftonium")),d?(0,r.createElement)(r.Fragment,null,(0,r.createElement)("img",{src:d,style:{width:"100px",display:"block",marginTop:"8px"}}),(0,r.createElement)(a.Button,{onClick:t,variant:"secondary"},(0,o.__)("Change","braftonium"))):(0,r.createElement)(a.Button,{onClick:t,variant:"secondary"},(0,o.__)("Select Image","braftonium")))}}))))),(0,r.createElement)(a.PanelBody,{title:(0,o.__)("Playback Options","braftonium"),initialOpen:!1},(0,r.createElement)(a.RangeControl,{label:(0,o.__)("Autoplay Speed (ms)","braftonium"),value:w,onChange:function(e){return u({playbackAutoplaySpeed:e})},min:1e3,max:1e4,step:500}),(0,r.createElement)(a.RangeControl,{label:(0,o.__)("Slide Speed (ms)","braftonium"),value:_,onChange:function(e){return u({playbackSlideSpeed:e})},min:100,max:2e3,step:100})),(0,r.createElement)(a.PanelBody,{title:(0,o.__)("Presentation Options","braftonium"),initialOpen:!1},(0,r.createElement)(a.RangeControl,{label:(0,o.__)("Slides to Show","braftonium"),value:v,onChange:function(e){return u({presentationSlidesToShow:e})},min:1,max:6}),(0,r.createElement)(a.RangeControl,{label:(0,o.__)("Slides to Scroll","braftonium"),value:h,onChange:function(e){return u({presentationSlidesToScroll:e})},min:1,max:6}),(0,r.createElement)(a.ToggleControl,{label:(0,o.__)("Infinite Loop","braftonium"),checked:S,onChange:function(e){return u({presentationInfinite:e})}}))),(0,r.createElement)("div",function(e){for(var n=1;n<arguments.length;n++){var r=null!=arguments[n]?arguments[n]:{};n%2?l(Object(r),!0).forEach(function(n){t(e,n,r[n])}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(r)):l(Object(r)).forEach(function(t){Object.defineProperty(e,t,Object.getOwnPropertyDescriptor(r,t))})}return e}({},E),(0,r.createElement)(i.InnerBlocks,{allowedBlocks:["braftonium/slide"],template:[["braftonium/slide",{}],["braftonium/slide",{}]]})))},save:function(){return null}}))}();
+/**
+ * Editor script: braftonium/slider  (Slick carousel)
+ *
+ * - Inner blocks are braftonium/slide; save returns InnerBlocks.Content.
+ * - "Preview" toggle initialises a live Slick carousel in the editor (Slick is
+ *   enqueued for the editor in blocks.php). Toggling off destroys it again.
+ * - Presentation options are per breakpoint: Desktop / Tablet / Cell, each with
+ *   slides-to-show, slides-to-scroll and a screen-width breakpoint.
+ */
+( function () {
+    'use strict';
+
+    var blocks = window.wp.blocks;
+    var React = window.React;
+    var i18n = window.wp.i18n;
+    var blockEditor = window.wp.blockEditor;
+    var components = window.wp.components;
+
+    var __ = i18n.__;
+    var el = React.createElement;
+    var Fragment = React.Fragment;
+    var useRef = React.useRef;
+    var useEffect = React.useEffect;
+
+    var InspectorControls = blockEditor.InspectorControls;
+    var MediaUpload = blockEditor.MediaUpload;
+    var MediaUploadCheck = blockEditor.MediaUploadCheck;
+    var InnerBlocks = blockEditor.InnerBlocks;
+    var useBlockProps = blockEditor.useBlockProps;
+    var useInnerBlocksProps = blockEditor.useInnerBlocksProps;
+
+    var PanelBody = components.PanelBody;
+    var Button = components.Button;
+    var ColorPicker = components.ColorPicker;
+    var RadioControl = components.RadioControl;
+    var RangeControl = components.RangeControl;
+    var TextControl = components.TextControl;
+    var ToggleControl = components.ToggleControl;
+    var Text = components.__experimentalText;
+
+    var RESP_DEFAULTS = {
+        desktop: { breakpoint: 1920, slidesToShow: 3, slidesToScroll: 1 },
+        tablet: { breakpoint: 1024, slidesToShow: 2, slidesToScroll: 1 },
+        cell: { breakpoint: 600, slidesToShow: 1, slidesToScroll: 1 },
+    };
+
+    function toRgba( value ) {
+        if ( value && typeof value === 'object' ) {
+            var o = value.rgb || value;
+            return { r: +o.r || 0, g: +o.g || 0, b: +o.b || 0, a: o.a == null ? 1 : +o.a };
+        }
+        var s = String( value ).trim();
+        var m;
+        if ( ( m = s.match( /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})?$/i ) ) ) {
+            return {
+                r: parseInt( m[ 1 ], 16 ),
+                g: parseInt( m[ 2 ], 16 ),
+                b: parseInt( m[ 3 ], 16 ),
+                a: m[ 4 ] == null ? 1 : +( parseInt( m[ 4 ], 16 ) / 255 ).toFixed( 3 ),
+            };
+        }
+        if ( ( m = s.match( /rgba?\(([^)]+)\)/i ) ) ) {
+            var p = m[ 1 ].split( ',' );
+            return { r: +p[ 0 ] || 0, g: +p[ 1 ] || 0, b: +p[ 2 ] || 0, a: p[ 3 ] == null ? 1 : +p[ 3 ] };
+        }
+        return { r: 0, g: 0, b: 0, a: 1 };
+    }
+
+    function rgbaString( c ) {
+        c = c || {};
+        return 'rgba(' + ( +c.r || 0 ) + ', ' + ( +c.g || 0 ) + ', ' + ( +c.b || 0 ) + ', ' + ( c.a == null ? 1 : c.a ) + ')';
+    }
+
+    function tierSettings( t ) {
+        return {
+            slidesToShow: Math.max( 1, parseInt( t.slidesToShow, 10 ) || 1 ),
+            slidesToScroll: Math.max( 1, parseInt( t.slidesToScroll, 10 ) || 1 ),
+        };
+    }
+
+    // Build the Slick options object — mirrors render.php so preview matches live.
+    function buildSlickConfig( attrs ) {
+        var resp = Object.assign( {}, RESP_DEFAULTS, attrs.responsive || {} );
+        var desktop = Object.assign( {}, RESP_DEFAULTS.desktop, resp.desktop );
+        var tablet = Object.assign( {}, RESP_DEFAULTS.tablet, resp.tablet );
+        var cell = Object.assign( {}, RESP_DEFAULTS.cell, resp.cell );
+
+        var cfg = {
+            dots: ( attrs.dotsVisibility || 'visible' ) === 'visible',
+            arrows: ( attrs.arrowsVisibility || 'visible' ) === 'visible',
+            autoplay: true,
+            autoplaySpeed: attrs.playbackAutoplaySpeed || 3000,
+            speed: attrs.playbackSlideSpeed || 300,
+            infinite: !! attrs.presentationInfinite,
+            slidesToShow: tierSettings( desktop ).slidesToShow,
+            slidesToScroll: tierSettings( desktop ).slidesToScroll,
+            responsive: [
+                { breakpoint: parseInt( desktop.breakpoint, 10 ) || 1920, settings: tierSettings( desktop ) },
+                { breakpoint: parseInt( tablet.breakpoint, 10 ) || 1024, settings: tierSettings( tablet ) },
+                { breakpoint: parseInt( cell.breakpoint, 10 ) || 600, settings: tierSettings( cell ) },
+            ],
+        };
+
+        if ( cfg.arrows ) {
+            if ( attrs.arrowsType === 'image' ) {
+                if ( attrs.arrowsLeftImage ) {
+                    cfg.prevArrow = '<button type="button" class="slick-prev"><img src="' + attrs.arrowsLeftImage + '" alt="" /></button>';
+                }
+                if ( attrs.arrowsRightImage ) {
+                    cfg.nextArrow = '<button type="button" class="slick-next"><img src="' + attrs.arrowsRightImage + '" alt="" /></button>';
+                }
+            } else {
+                cfg.prevArrow = '<button type="button" class="slick-prev">' + ( attrs.arrowsLeftText || 'Previous' ) + '</button>';
+                cfg.nextArrow = '<button type="button" class="slick-next">' + ( attrs.arrowsRightText || 'Next' ) + '</button>';
+            }
+        }
+
+        return cfg;
+    }
+
+    // A set of show / scroll / breakpoint controls for one responsive tier.
+    function tierControls( key, title, responsive, setResponsive ) {
+        var tier = Object.assign( {}, RESP_DEFAULTS[ key ], responsive[ key ] || {} );
+
+        function update( field, value ) {
+            var next = Object.assign( {}, responsive );
+            next[ key ] = Object.assign( {}, tier );
+            next[ key ][ field ] = value;
+            setResponsive( next );
+        }
+
+        return el(
+            'div',
+            { style: { marginBottom: '16px' } },
+            el( Text, { style: { display: 'block', fontWeight: 600, marginBottom: '4px' } }, title ),
+            el( RangeControl, {
+                label: __( 'Slides to Show', 'braftonium' ),
+                value: tier.slidesToShow,
+                onChange: function ( v ) {
+                    update( 'slidesToShow', Math.max( 1, v || 1 ) );
+                },
+                min: 1,
+                max: 6,
+            } ),
+            el( RangeControl, {
+                label: __( 'Slides to Scroll', 'braftonium' ),
+                value: tier.slidesToScroll,
+                onChange: function ( v ) {
+                    update( 'slidesToScroll', Math.max( 1, v || 1 ) );
+                },
+                min: 1,
+                max: 6,
+            } ),
+            el( RangeControl, {
+                label: __( 'Screen width / breakpoint (px)', 'braftonium' ),
+                help: __( 'Applies at this screen width and below.', 'braftonium' ),
+                value: tier.breakpoint,
+                onChange: function ( v ) {
+                    update( 'breakpoint', v == null ? 0 : v );
+                },
+                min: 0,
+                max: 2560,
+                step: 10,
+            } )
+        );
+    }
+
+    blocks.registerBlockType( 'braftonium/slider', {
+        edit: function ( props ) {
+            var attributes = props.attributes;
+            var setAttributes = props.setAttributes;
+
+            var preview = attributes.preview;
+            var dotsVisibility = attributes.dotsVisibility;
+            var dotsPlacement = attributes.dotsPlacement;
+            var arrowsVisibility = attributes.arrowsVisibility;
+            var arrowsType = attributes.arrowsType;
+            var arrowsLeftImage = attributes.arrowsLeftImage;
+            var arrowsRightImage = attributes.arrowsRightImage;
+            var arrowsLeftText = attributes.arrowsLeftText;
+            var arrowsRightText = attributes.arrowsRightText;
+            var playbackAutoplaySpeed = attributes.playbackAutoplaySpeed;
+            var playbackSlideSpeed = attributes.playbackSlideSpeed;
+            var presentationInfinite = attributes.presentationInfinite;
+            var responsive = Object.assign( {}, RESP_DEFAULTS, attributes.responsive || {} );
+            var bgColor = attributes.bgColor || { r: 0, g: 0, b: 0, a: 0 };
+
+            var hasBgColor = ( bgColor.a == null ? 0 : bgColor.a ) > 0;
+            var trackRef = useRef( null );
+
+            var blockProps = useBlockProps( {
+                className: 'braftonium-slider slick-dots-' + dotsPlacement + ( preview ? ' is-previewing' : '' ),
+                style: hasBgColor ? { backgroundColor: rgbaString( bgColor ) } : undefined,
+            } );
+
+            // useInnerBlocksProps -> slides are DIRECT children of the track, so
+            // Slick (which expects direct children) works on the same element.
+            var innerBlocksProps = useInnerBlocksProps(
+                { className: 'braftonium-slider-track', ref: trackRef },
+                {
+                    allowedBlocks: [ 'braftonium/slide' ],
+                    template: [ [ 'braftonium/slide', {} ], [ 'braftonium/slide', {} ] ],
+                    orientation: 'horizontal',
+                }
+            );
+
+            // Init / destroy Slick when preview toggles or the config changes.
+            useEffect(
+                function () {
+                    var $ = window.jQuery;
+                    var node = trackRef.current;
+                    if ( ! $ || ! $.fn || ! $.fn.slick || ! node ) {
+                        return;
+                    }
+                    var $track = $( node );
+
+                    function destroy() {
+                        if ( $track.hasClass( 'slick-initialized' ) ) {
+                            try {
+                                $track.slick( 'unslick' );
+                            } catch ( e ) {}
+                        }
+                    }
+
+                    if ( preview ) {
+                        destroy();
+                        try {
+                            $track.slick( buildSlickConfig( attributes ) );
+                        } catch ( e ) {}
+                    } else {
+                        destroy();
+                    }
+
+                    return destroy;
+                },
+                [
+                    preview,
+                    dotsVisibility,
+                    dotsPlacement,
+                    arrowsVisibility,
+                    arrowsType,
+                    arrowsLeftImage,
+                    arrowsRightImage,
+                    arrowsLeftText,
+                    arrowsRightText,
+                    playbackAutoplaySpeed,
+                    playbackSlideSpeed,
+                    presentationInfinite,
+                    JSON.stringify( responsive ),
+                ]
+            );
+
+            return el(
+                Fragment,
+                null,
+                el(
+                    InspectorControls,
+                    null,
+                    el(
+                        PanelBody,
+                        { title: __( 'Preview', 'braftonium' ), initialOpen: false },
+                        el( ToggleControl, {
+                            label: __( 'Preview Slider?', 'braftonium' ),
+                            help: __( 'Runs the live carousel in the editor. Turn off to edit slides.', 'braftonium' ),
+                            checked: preview,
+                            onChange: function ( v ) {
+                                setAttributes( { preview: v } );
+                            },
+                        } )
+                    ),
+                    el(
+                        PanelBody,
+                        { title: __( 'Dot Options', 'braftonium' ), initialOpen: true },
+                        el( RadioControl, {
+                            label: __( 'Visibility', 'braftonium' ),
+                            selected: dotsVisibility,
+                            options: [
+                                { label: __( 'Visible', 'braftonium' ), value: 'visible' },
+                                { label: __( 'Hidden', 'braftonium' ), value: 'hidden' },
+                            ],
+                            onChange: function ( v ) {
+                                setAttributes( { dotsVisibility: v } );
+                            },
+                        } ),
+                        dotsVisibility === 'visible' &&
+                            el( RadioControl, {
+                                label: __( 'Placement', 'braftonium' ),
+                                selected: dotsPlacement,
+                                options: [
+                                    { label: __( 'Top', 'braftonium' ), value: 'top' },
+                                    { label: __( 'Bottom', 'braftonium' ), value: 'bottom' },
+                                ],
+                                onChange: function ( v ) {
+                                    setAttributes( { dotsPlacement: v } );
+                                },
+                            } )
+                    ),
+                    el(
+                        PanelBody,
+                        { title: __( 'Arrow Options', 'braftonium' ), initialOpen: false },
+                        el( RadioControl, {
+                            label: __( 'Visibility', 'braftonium' ),
+                            selected: arrowsVisibility,
+                            options: [
+                                { label: __( 'Visible', 'braftonium' ), value: 'visible' },
+                                { label: __( 'Hidden', 'braftonium' ), value: 'hidden' },
+                            ],
+                            onChange: function ( v ) {
+                                setAttributes( { arrowsVisibility: v } );
+                            },
+                        } ),
+                        arrowsVisibility === 'visible' &&
+                            el(
+                                Fragment,
+                                null,
+                                el( RadioControl, {
+                                    label: __( 'Type', 'braftonium' ),
+                                    selected: arrowsType,
+                                    options: [
+                                        { label: __( 'Text', 'braftonium' ), value: 'text' },
+                                        { label: __( 'Image', 'braftonium' ), value: 'image' },
+                                    ],
+                                    onChange: function ( v ) {
+                                        setAttributes( { arrowsType: v } );
+                                    },
+                                } ),
+                                arrowsType === 'text' &&
+                                    el(
+                                        Fragment,
+                                        null,
+                                        el( TextControl, {
+                                            label: __( 'Left Arrow Text', 'braftonium' ),
+                                            value: arrowsLeftText,
+                                            onChange: function ( v ) {
+                                                setAttributes( { arrowsLeftText: v } );
+                                            },
+                                        } ),
+                                        el( TextControl, {
+                                            label: __( 'Right Arrow Text', 'braftonium' ),
+                                            value: arrowsRightText,
+                                            onChange: function ( v ) {
+                                                setAttributes( { arrowsRightText: v } );
+                                            },
+                                        } )
+                                    ),
+                                arrowsType === 'image' &&
+                                    el(
+                                        Fragment,
+                                        null,
+                                        el(
+                                            MediaUploadCheck,
+                                            null,
+                                            el( MediaUpload, {
+                                                onSelect: function ( m ) {
+                                                    setAttributes( { arrowsLeftImage: m.url } );
+                                                },
+                                                allowedTypes: [ 'image' ],
+                                                render: function ( o ) {
+                                                    return el(
+                                                        'div',
+                                                        { style: { marginBottom: '16px' } },
+                                                        el( Text, null, __( 'Left Arrow Image', 'braftonium' ) ),
+                                                        arrowsLeftImage
+                                                            ? el(
+                                                                  Fragment,
+                                                                  null,
+                                                                  el( 'img', { src: arrowsLeftImage, style: { width: '100px', display: 'block', marginTop: '8px' } } ),
+                                                                  el( Button, { onClick: o.open, variant: 'secondary' }, __( 'Change', 'braftonium' ) )
+                                                              )
+                                                            : el( Button, { onClick: o.open, variant: 'secondary' }, __( 'Select Image', 'braftonium' ) )
+                                                    );
+                                                },
+                                            } )
+                                        ),
+                                        el(
+                                            MediaUploadCheck,
+                                            null,
+                                            el( MediaUpload, {
+                                                onSelect: function ( m ) {
+                                                    setAttributes( { arrowsRightImage: m.url } );
+                                                },
+                                                allowedTypes: [ 'image' ],
+                                                render: function ( o ) {
+                                                    return el(
+                                                        'div',
+                                                        null,
+                                                        el( Text, null, __( 'Right Arrow Image', 'braftonium' ) ),
+                                                        arrowsRightImage
+                                                            ? el(
+                                                                  Fragment,
+                                                                  null,
+                                                                  el( 'img', { src: arrowsRightImage, style: { width: '100px', display: 'block', marginTop: '8px' } } ),
+                                                                  el( Button, { onClick: o.open, variant: 'secondary' }, __( 'Change', 'braftonium' ) )
+                                                              )
+                                                            : el( Button, { onClick: o.open, variant: 'secondary' }, __( 'Select Image', 'braftonium' ) )
+                                                    );
+                                                },
+                                            } )
+                                        )
+                                    )
+                            )
+                    ),
+                    el(
+                        PanelBody,
+                        { title: __( 'Playback Options', 'braftonium' ), initialOpen: false },
+                        el( RangeControl, {
+                            label: __( 'Autoplay Speed (ms)', 'braftonium' ),
+                            value: playbackAutoplaySpeed,
+                            onChange: function ( v ) {
+                                setAttributes( { playbackAutoplaySpeed: v } );
+                            },
+                            min: 1000,
+                            max: 10000,
+                            step: 500,
+                        } ),
+                        el( RangeControl, {
+                            label: __( 'Slide Speed (ms)', 'braftonium' ),
+                            value: playbackSlideSpeed,
+                            onChange: function ( v ) {
+                                setAttributes( { playbackSlideSpeed: v } );
+                            },
+                            min: 100,
+                            max: 2000,
+                            step: 100,
+                        } )
+                    ),
+                    el(
+                        PanelBody,
+                        { title: __( 'Presentation Options', 'braftonium' ), initialOpen: false },
+                        el( Text, { style: { display: 'block', marginBottom: '12px' } }, __( 'Slides per view, scroll amount and breakpoint per screen size.', 'braftonium' ) ),
+                        tierControls( 'desktop', __( 'Desktop / PC', 'braftonium' ), responsive, function ( r ) {
+                            setAttributes( { responsive: r } );
+                        } ),
+                        tierControls( 'tablet', __( 'Tablet', 'braftonium' ), responsive, function ( r ) {
+                            setAttributes( { responsive: r } );
+                        } ),
+                        tierControls( 'cell', __( 'Cell / Mobile', 'braftonium' ), responsive, function ( r ) {
+                            setAttributes( { responsive: r } );
+                        } ),
+                        el( ToggleControl, {
+                            label: __( 'Infinite Loop', 'braftonium' ),
+                            checked: presentationInfinite,
+                            onChange: function ( v ) {
+                                setAttributes( { presentationInfinite: v } );
+                            },
+                        } )
+                    ),
+                    el(
+                        PanelBody,
+                        { title: __( 'Background Color', 'braftonium' ), initialOpen: false },
+                        el( ColorPicker, {
+                            color: rgbaString( bgColor ),
+                            onChange: function ( value ) {
+                                setAttributes( { bgColor: toRgba( value ) } );
+                            },
+                            enableAlpha: true,
+                        } )
+                    )
+                ),
+                el( 'div', blockProps, el( 'div', innerBlocksProps ) )
+            );
+        },
+        save: function () {
+            return el( InnerBlocks.Content, null );
+        },
+    } );
+} )();

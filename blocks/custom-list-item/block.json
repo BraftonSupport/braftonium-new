@@ -22,6 +22,6 @@
     },
     "attributes": {},
     "editorScript": "file:./build/index.js",
-    "style": "file:./build/index.css",
+    "style": "file:./custom-list-item.css",
     "render": "file:./render.php"
 }

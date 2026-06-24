@@ -1,1 +1,44 @@
-!function(){"use strict";function t(e){return t="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(t){return typeof t}:function(t){return t&&"function"==typeof Symbol&&t.constructor===Symbol&&t!==Symbol.prototype?"symbol":typeof t},t(e)}function e(e,r,o){return(r=function(e){var r=function(e){if("object"!=t(e)||!e)return e;var r=e[Symbol.toPrimitive];if(void 0!==r){var o=r.call(e,"string");if("object"!=t(o))return o;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(e)}(e);return"symbol"==t(r)?r:r+""}(r))in e?Object.defineProperty(e,r,{value:o,enumerable:!0,configurable:!0,writable:!0}):e[r]=o,e}var r=window.wp.blocks,o=window.React,n=window.wp.i18n,i=window.wp.blockEditor;function c(t,e){var r=Object.keys(t);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(t);e&&(o=o.filter(function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable})),r.push.apply(r,o)}return r}var a=JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"braftonium/custom-list-item","version":"2.0.0","title":"Custom List Item","category":"braftonium","icon":"format-aside","description":"Individual item for custom list block","keywords":["list","item"],"parent":["braftonium/custom-list"],"textdomain":"braftonium","supports":{"anchor":true,"customClassName":true,"spacing":{"margin":["top","bottom","left","right"],"padding":["top","bottom","left","right"]},"html":false,"reusable":false},"attributes":{},"editorScript":"file:./build/index.js"}');function u(t,e){var r=Object.keys(t);if(Object.getOwnPropertySymbols){var o=Object.getOwnPropertySymbols(t);e&&(o=o.filter(function(e){return Object.getOwnPropertyDescriptor(t,e).enumerable})),r.push.apply(r,o)}return r}function s(t){for(var r=1;r<arguments.length;r++){var o=null!=arguments[r]?arguments[r]:{};r%2?u(Object(o),!0).forEach(function(r){e(t,r,o[r])}):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(o)):u(Object(o)).forEach(function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(o,e))})}return t}(0,r.registerBlockType)(a.name,s(s({},a),{},{edit:function(){var t=(0,i.useBlockProps)({className:"braftonium-custom-list-item"});return(0,o.createElement)("div",function(t){for(var r=1;r<arguments.length;r++){var o=null!=arguments[r]?arguments[r]:{};r%2?c(Object(o),!0).forEach(function(r){e(t,r,o[r])}):Object.getOwnPropertyDescriptors?Object.defineProperties(t,Object.getOwnPropertyDescriptors(o)):c(Object(o)).forEach(function(e){Object.defineProperty(t,e,Object.getOwnPropertyDescriptor(o,e))})}return t}({},t),(0,o.createElement)(i.InnerBlocks,{template:[["core/image",{}],["core/heading",{level:4,placeholder:(0,n.__)("Heading","braftonium")}],["core/paragraph",{placeholder:(0,n.__)("Lorem ipsum dolor sit amet, consectetur adipiscing elit.","braftonium")}]]}))},save:function(){return null}}))}();
+/**
+ * Editor script: braftonium/custom-list-item
+ *
+ * A single item inside braftonium/custom-list. Holds a free InnerBlocks area
+ * (image + heading + paragraph by default).
+ *
+ * IMPORTANT (inner block saving): `save` returns InnerBlocks.Content so the
+ * item's inner blocks are serialized into post content and reach render.php as
+ * $content. Returning null dropped them — the previous bug.
+ */
+( function () {
+    'use strict';
+
+    var blocks = window.wp.blocks;
+    var React = window.React;
+    var i18n = window.wp.i18n;
+    var blockEditor = window.wp.blockEditor;
+
+    var __ = i18n.__;
+    var el = React.createElement;
+
+    var InnerBlocks = blockEditor.InnerBlocks;
+    var useBlockProps = blockEditor.useBlockProps;
+
+    blocks.registerBlockType( 'braftonium/custom-list-item', {
+        edit: function () {
+            var blockProps = useBlockProps( { className: 'braftonium-custom-list-item' } );
+            return el(
+                'div',
+                blockProps,
+                el( InnerBlocks, {
+                    template: [
+                        [ 'core/image', {} ],
+                        [ 'core/heading', { level: 4, placeholder: __( 'Heading', 'braftonium' ) } ],
+                        [ 'core/paragraph', { placeholder: __( 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 'braftonium' ) } ],
+                    ],
+                } )
+            );
+        },
+        save: function () {
+            return el( InnerBlocks.Content, null );
+        },
+    } );
+} )();

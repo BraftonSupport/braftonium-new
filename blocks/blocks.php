@@ -45,6 +45,32 @@ add_action( 'init', function () {
 } );
 
 /**
+ * Enqueue Slick in the block editor so the Slider block's "Preview" toggle can
+ * initialise a live carousel while authoring.
+ */
+add_action( 'enqueue_block_editor_assets', function () {
+    wp_enqueue_style(
+        'slick-carousel',
+        'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css',
+        array(),
+        '1.8.1'
+    );
+    wp_enqueue_style(
+        'slick-carousel-theme',
+        'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css',
+        array( 'slick-carousel' ),
+        '1.8.1'
+    );
+    wp_enqueue_script(
+        'slick-carousel',
+        'https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js',
+        array( 'jquery' ),
+        '1.8.1',
+        true
+    );
+} );
+
+/**
  * Enqueue Slick (slider) and Swiper assets on the frontend when those
  * blocks are present on the current page.
  */

@@ -3,7 +3,8 @@
 
     //Output to JS console
     function consoleJS($txt='here!'){
-        echo '<script>console.log("'.$txt.'");</script>';
+        // wp_json_encode safely escapes quotes, slashes and </script> sequences.
+        echo '<script>console.log('.wp_json_encode($txt).');</script>';
     }
 
     //Reading time
@@ -24,7 +25,7 @@
 
     //Include a file if user is administrator
     function includeForAdmin($file){
-        if(current_user_can('administrator')){
+        if(current_user_can('manage_options')){
             include $file;
         }
     }

@@ -21,7 +21,39 @@ if ( file_exists( $braftonium_acf_path ) ) {
 
 require_once dirname(__FILE__).'/gutenberg-addon/class-loader.php';
 add_action('enqueue_block_editor_assets', function() {
-	wp_enqueue_script('braftonium-gutenberg-filters', plugin_dir_url(__FILE__) . '/gutenberg-addon/build/index.js', ['wp-edit-post']);
+	$build_path  = __DIR__ . '/gutenberg-addon/build/index.js';
+	$asset_path  = __DIR__ . '/gutenberg-addon/build/index.asset.php';
+
+	if ( ! file_exists( $build_path ) ) {
+		return;
+	}
+
+	// Dependencies the bundle accesses as WordPress globals (wp.*). These
+	// are not detected by wp-scripts because the source reads them off the
+	// global `wp` object rather than importing them.
+	$wp_deps = array(
+		'wp-hooks',
+		'wp-element',
+		'wp-blocks',
+		'wp-block-editor',
+		'wp-components',
+		'wp-compose',
+		'wp-data',
+		'wp-i18n',
+		'wp-api-fetch',
+	);
+
+	$asset   = file_exists( $asset_path ) ? require $asset_path : array( 'dependencies' => array(), 'version' => '1.0' );
+	$deps    = array_values( array_unique( array_merge( $wp_deps, (array) ( $asset['dependencies'] ?? array() ) ) ) );
+	$version = $asset['version'] ?? '1.0';
+
+	wp_enqueue_script(
+		'braftonium-gutenberg-filters',
+		plugin_dir_url(__FILE__) . 'gutenberg-addon/build/index.js',
+		$deps,
+		$version,
+		true
+	);
 });
 
 // Register all native Braftonium blocks (no ACF required).
@@ -33,16 +65,5 @@ include __DIR__ . '/general-settings/useful-functions.php';
 // Include patterns.
 include __DIR__ . '/patterns/include-patterns.php';
 
-// ACF-dependent settings only load when ACF is available.
-if ( function_exists( 'acf_add_local_field_group' ) ) {
-    include __DIR__ . '/general-settings/settings.php';
-} else {
-    add_action( 'admin_notices', function () {
-        if ( ! current_user_can( 'activate_plugins' ) ) {
-            return;
-        }
-        echo '<div class="notice notice-info"><p>'
-            . esc_html__( 'Braftonium: ACF Pro is not installed. Native blocks are active; legacy ACF settings pages are disabled.', 'braftonium' )
-            . '</p></div>';
-    } );
-}
+// Native settings pages (no ACF requirement).
+include __DIR__ . '/general-settings/settings.php';

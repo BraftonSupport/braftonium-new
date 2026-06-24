@@ -1,1 +1,299 @@
-!function(){"use strict";function e(t){return e="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e},e(t)}function t(t,r,n){return(r=function(t){var r=function(t){if("object"!=e(t)||!t)return t;var r=t[Symbol.toPrimitive];if(void 0!==r){var n=r.call(t,"string");if("object"!=e(n))return n;throw new TypeError("@@toPrimitive must return a primitive value.")}return String(t)}(t);return"symbol"==e(r)?r:r+""}(r))in t?Object.defineProperty(t,r,{value:n,enumerable:!0,configurable:!0,writable:!0}):t[r]=n,t}var r=window.wp.blocks,n=window.React,o=window.wp.i18n,a=window.wp.blockEditor,i=window.wp.components;function c(e,t){var r=Object.keys(e);if(Object.getOwnPropertySymbols){var n=Object.getOwnPropertySymbols(e);t&&(n=n.filter(function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable})),r.push.apply(r,n)}return r}function l(e){for(var r=1;r<arguments.length;r++){var n=null!=arguments[r]?arguments[r]:{};r%2?c(Object(n),!0).forEach(function(r){t(e,r,n[r])}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(n)):c(Object(n)).forEach(function(t){Object.defineProperty(e,t,Object.getOwnPropertyDescriptor(n,t))})}return e}var u=JSON.parse('{"$schema":"https://schemas.wp.org/trunk/block.json","apiVersion":3,"name":"braftonium/custom-list","version":"2.0.0","title":"Custom List","category":"braftonium","icon":"list-view","description":"Custom list container with background image support","keywords":["list","container","layout"],"textdomain":"braftonium","supports":{"anchor":true,"customClassName":true,"align":["wide","full"],"spacing":{"margin":["top","bottom","left","right"],"padding":["top","bottom","left","right"]},"color":{"background":true},"html":false},"attributes":{"backgroundImage":{"type":"number","default":0},"backgroundImageUrl":{"type":"string","default":""},"backgroundImageAlt":{"type":"string","default":""},"backgroundPosition":{"type":"object","default":{"top":0,"left":0,"right":0,"bottom":0}}},"editorScript":"file:./build/index.js"}');function m(e,t){var r=Object.keys(e);if(Object.getOwnPropertySymbols){var n=Object.getOwnPropertySymbols(e);t&&(n=n.filter(function(t){return Object.getOwnPropertyDescriptor(e,t).enumerable})),r.push.apply(r,n)}return r}function s(e){for(var r=1;r<arguments.length;r++){var n=null!=arguments[r]?arguments[r]:{};r%2?m(Object(n),!0).forEach(function(r){t(e,r,n[r])}):Object.getOwnPropertyDescriptors?Object.defineProperties(e,Object.getOwnPropertyDescriptors(n)):m(Object(n)).forEach(function(t){Object.defineProperty(e,t,Object.getOwnPropertyDescriptor(n,t))})}return e}(0,r.registerBlockType)(u.name,s(s({},u),{},{edit:function(e){var r=e.attributes,c=e.setAttributes,u=r.backgroundImage,m=r.backgroundImageUrl,s=r.backgroundImageAlt,b=r.backgroundPosition,p=(0,a.useBlockProps)({className:"braftonium-custom-list"}),g=function(){c({backgroundImage:0,backgroundImageUrl:"",backgroundImageAlt:""})},f=function(e,r){c({backgroundPosition:l(l({},b),{},t({},e,r))})};return(0,n.createElement)(n.Fragment,null,(0,n.createElement)(a.InspectorControls,null,(0,n.createElement)(i.PanelBody,{title:(0,o.__)("Background Settings","braftonium"),initialOpen:!0},(0,n.createElement)(a.MediaUploadCheck,null,(0,n.createElement)(a.MediaUpload,{onSelect:function(e){c({backgroundImage:e.id,backgroundImageUrl:e.url,backgroundImageAlt:e.alt||""})},allowedTypes:["image"],value:u,render:function(e){var t=e.open;return(0,n.createElement)("div",{style:{marginBottom:"16px"}},(0,n.createElement)(i.__experimentalHStack,null,(0,n.createElement)(i.__experimentalText,null,(0,o.__)("Background Image","braftonium"))),m?(0,n.createElement)(n.Fragment,null,(0,n.createElement)("img",{src:m,alt:s,style:{width:"100%",height:"auto",marginTop:"8px"}}),(0,n.createElement)(i.__experimentalHStack,{style:{marginTop:"8px"}},(0,n.createElement)(i.Button,{onClick:t,variant:"secondary"},(0,o.__)("Replace Image","braftonium")),(0,n.createElement)(i.Button,{onClick:g,variant:"link",isDestructive:!0},(0,o.__)("Remove","braftonium")))):(0,n.createElement)(i.Button,{onClick:t,variant:"secondary"},(0,o.__)("Select Image","braftonium")))}})),m&&(0,n.createElement)(n.Fragment,null,(0,n.createElement)(i.RangeControl,{label:(0,o.__)("Top Position","braftonium"),value:b.top,onChange:function(e){return f("top",e)},min:-500,max:500}),(0,n.createElement)(i.RangeControl,{label:(0,o.__)("Left Position","braftonium"),value:b.left,onChange:function(e){return f("left",e)},min:-500,max:500})))),(0,n.createElement)("div",l({},p),m&&(0,n.createElement)("img",{src:m,alt:s,className:"background-image"}),(0,n.createElement)("div",{className:"custom-list-content"},(0,n.createElement)(a.InnerBlocks,{allowedBlocks:["braftonium/custom-list-item"],template:[["braftonium/custom-list-item",{}],["braftonium/custom-list-item",{}],["braftonium/custom-list-item",{}]]}))))},save:function(){return null}}))}();
+/**
+ * Editor script: braftonium/custom-list
+ *
+ * Container for braftonium/custom-list-item children, laid out as a responsive
+ * grid. Per-breakpoint (Desktop / Tablet / Mobile) controls for container
+ * width, columns per row and gap, plus a background image and background color.
+ *
+ * IMPORTANT (inner block saving): `save` returns InnerBlocks.Content so the
+ * child items are serialized into post content and reach render.php as $content.
+ */
+( function () {
+    'use strict';
+
+    var blocks = window.wp.blocks;
+    var React = window.React;
+    var i18n = window.wp.i18n;
+    var blockEditor = window.wp.blockEditor;
+    var components = window.wp.components;
+
+    var __ = i18n.__;
+    var el = React.createElement;
+    var Fragment = React.Fragment;
+
+    var InspectorControls = blockEditor.InspectorControls;
+    var MediaUpload = blockEditor.MediaUpload;
+    var MediaUploadCheck = blockEditor.MediaUploadCheck;
+    var InnerBlocks = blockEditor.InnerBlocks;
+    var useBlockProps = blockEditor.useBlockProps;
+    var useInnerBlocksProps = blockEditor.useInnerBlocksProps;
+
+    var PanelBody = components.PanelBody;
+    var Button = components.Button;
+    var ColorPicker = components.ColorPicker;
+    var RangeControl = components.RangeControl;
+    var HStack = components.__experimentalHStack;
+    var Text = components.__experimentalText;
+
+    var LAYOUT_DEFAULTS = {
+        desktop: { width: 1200, columns: 3, gap: 24 },
+        tablet: { width: 0, columns: 2, gap: 20 },
+        mobile: { width: 0, columns: 1, gap: 16 },
+    };
+
+    var metadata = {
+        name: 'braftonium/custom-list',
+        title: __( 'Custom List', 'braftonium' ),
+        category: 'braftonium',
+        icon: 'list-view',
+    };
+
+    function toRgba( value ) {
+        if ( value && typeof value === 'object' ) {
+            var o = value.rgb || value;
+            return { r: +o.r || 0, g: +o.g || 0, b: +o.b || 0, a: o.a == null ? 1 : +o.a };
+        }
+        var s = String( value ).trim();
+        var m;
+        if ( ( m = s.match( /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})?$/i ) ) ) {
+            return {
+                r: parseInt( m[ 1 ], 16 ),
+                g: parseInt( m[ 2 ], 16 ),
+                b: parseInt( m[ 3 ], 16 ),
+                a: m[ 4 ] == null ? 1 : +( parseInt( m[ 4 ], 16 ) / 255 ).toFixed( 3 ),
+            };
+        }
+        if ( ( m = s.match( /^#?([0-9a-f])([0-9a-f])([0-9a-f])$/i ) ) ) {
+            return {
+                r: parseInt( m[ 1 ] + m[ 1 ], 16 ),
+                g: parseInt( m[ 2 ] + m[ 2 ], 16 ),
+                b: parseInt( m[ 3 ] + m[ 3 ], 16 ),
+                a: 1,
+            };
+        }
+        if ( ( m = s.match( /rgba?\(([^)]+)\)/i ) ) ) {
+            var p = m[ 1 ].split( ',' );
+            return { r: +p[ 0 ] || 0, g: +p[ 1 ] || 0, b: +p[ 2 ] || 0, a: p[ 3 ] == null ? 1 : +p[ 3 ] };
+        }
+        return { r: 0, g: 0, b: 0, a: 1 };
+    }
+
+    function rgbaString( c ) {
+        c = c || {};
+        return 'rgba(' + ( +c.r || 0 ) + ', ' + ( +c.g || 0 ) + ', ' + ( +c.b || 0 ) + ', ' + ( c.a == null ? 1 : c.a ) + ')';
+    }
+
+    // A PanelBody with width / columns / gap controls for one breakpoint.
+    function layoutPanel( key, title, layout, setLayout ) {
+        var bp = layout[ key ] || LAYOUT_DEFAULTS[ key ];
+
+        function update( field, value ) {
+            var next = {};
+            next[ key ] = Object.assign( {}, bp );
+            next[ key ][ field ] = value;
+            setLayout( Object.assign( {}, layout, next ) );
+        }
+
+        return el(
+            PanelBody,
+            { title: title, initialOpen: false },
+            el( RangeControl, {
+                label: __( 'Container width (px, 0 = full width)', 'braftonium' ),
+                value: bp.width,
+                onChange: function ( v ) {
+                    update( 'width', v == null ? 0 : v );
+                },
+                min: 0,
+                max: 1920,
+                step: 10,
+            } ),
+            el( RangeControl, {
+                label: __( 'Columns per row', 'braftonium' ),
+                value: bp.columns,
+                onChange: function ( v ) {
+                    update( 'columns', Math.max( 1, v || 1 ) );
+                },
+                min: 1,
+                max: 6,
+            } ),
+            el( RangeControl, {
+                label: __( 'Gap (px)', 'braftonium' ),
+                value: bp.gap,
+                onChange: function ( v ) {
+                    update( 'gap', v == null ? 0 : v );
+                },
+                min: 0,
+                max: 100,
+            } )
+        );
+    }
+
+    blocks.registerBlockType( metadata.name, {
+        edit: function ( props ) {
+            var attributes = props.attributes;
+            var setAttributes = props.setAttributes;
+
+            var backgroundImage = attributes.backgroundImage;
+            var backgroundImageUrl = attributes.backgroundImageUrl;
+            var backgroundImageAlt = attributes.backgroundImageAlt;
+            var backgroundPosition = attributes.backgroundPosition || {};
+            var bgColor = attributes.bgColor || { r: 0, g: 0, b: 0, a: 0 };
+            var layout = Object.assign( {}, LAYOUT_DEFAULTS, attributes.layout || {} );
+
+            var hasBgColor = ( bgColor.a == null ? 0 : bgColor.a ) > 0;
+
+            var blockProps = useBlockProps( {
+                className: 'braftonium-custom-list',
+                style: hasBgColor ? { backgroundColor: rgbaString( bgColor ) } : undefined,
+            } );
+
+            function removeImage() {
+                setAttributes( { backgroundImage: 0, backgroundImageUrl: '', backgroundImageAlt: '' } );
+            }
+
+            function setPosition( field, value ) {
+                var next = Object.assign( {}, backgroundPosition );
+                next[ field ] = value;
+                setAttributes( { backgroundPosition: next } );
+            }
+
+            function setLayout( next ) {
+                setAttributes( { layout: next } );
+            }
+
+            // Editor preview uses the Desktop grid (media queries are applied on
+            // the front end via render.php's scoped <style>). Width constraint
+            // matches the banner/cta rule: target width capped at 90vw.
+            var desktop = layout.desktop || LAYOUT_DEFAULTS.desktop;
+            var contentStyle = {
+                display: 'grid',
+                gridTemplateColumns: 'repeat(' + Math.max( 1, desktop.columns || 1 ) + ', minmax(0, 1fr))',
+                gap: ( desktop.gap || 0 ) + 'px',
+                width: desktop.width > 0 ? desktop.width + 'px' : '100%',
+                maxWidth: desktop.width > 0 ? '90vw' : 'none',
+                marginInline: desktop.width > 0 ? 'auto' : '0',
+            };
+
+            // useInnerBlocksProps makes the items DIRECT children of the grid
+            // container so columns render correctly in the editor (plain
+            // InnerBlocks inserts a wrapper, which collapsed the grid to 1 col).
+            var innerBlocksProps = useInnerBlocksProps(
+                { className: 'custom-list-content', style: contentStyle },
+                {
+                    allowedBlocks: [ 'braftonium/custom-list-item' ],
+                    template: [
+                        [ 'braftonium/custom-list-item', {} ],
+                        [ 'braftonium/custom-list-item', {} ],
+                        [ 'braftonium/custom-list-item', {} ],
+                    ],
+                }
+            );
+
+            return el(
+                Fragment,
+                null,
+                el(
+                    InspectorControls,
+                    null,
+                    el(
+                        PanelBody,
+                        { title: __( 'Background Settings', 'braftonium' ), initialOpen: true },
+                        el(
+                            MediaUploadCheck,
+                            null,
+                            el( MediaUpload, {
+                                onSelect: function ( media ) {
+                                    setAttributes( {
+                                        backgroundImage: media.id,
+                                        backgroundImageUrl: media.url,
+                                        backgroundImageAlt: media.alt || '',
+                                    } );
+                                },
+                                allowedTypes: [ 'image' ],
+                                value: backgroundImage,
+                                render: function ( obj ) {
+                                    var open = obj.open;
+                                    return el(
+                                        'div',
+                                        { style: { marginBottom: '16px' } },
+                                        el( HStack, null, el( Text, null, __( 'Background Image', 'braftonium' ) ) ),
+                                        backgroundImageUrl
+                                            ? el(
+                                                  Fragment,
+                                                  null,
+                                                  el( 'img', {
+                                                      src: backgroundImageUrl,
+                                                      alt: backgroundImageAlt,
+                                                      style: { width: '100%', height: 'auto', marginTop: '8px' },
+                                                  } ),
+                                                  el(
+                                                      HStack,
+                                                      { style: { marginTop: '8px' } },
+                                                      el( Button, { onClick: open, variant: 'secondary' }, __( 'Replace Image', 'braftonium' ) ),
+                                                      el( Button, { onClick: removeImage, variant: 'link', isDestructive: true }, __( 'Remove', 'braftonium' ) )
+                                                  )
+                                              )
+                                            : el( Button, { onClick: open, variant: 'secondary' }, __( 'Select Image', 'braftonium' ) )
+                                    );
+                                },
+                            } )
+                        ),
+                        backgroundImageUrl &&
+                            el(
+                                Fragment,
+                                null,
+                                el( RangeControl, {
+                                    label: __( 'Top Position', 'braftonium' ),
+                                    value: backgroundPosition.top,
+                                    onChange: function ( v ) {
+                                        setPosition( 'top', v );
+                                    },
+                                    min: -500,
+                                    max: 500,
+                                } ),
+                                el( RangeControl, {
+                                    label: __( 'Left Position', 'braftonium' ),
+                                    value: backgroundPosition.left,
+                                    onChange: function ( v ) {
+                                        setPosition( 'left', v );
+                                    },
+                                    min: -500,
+                                    max: 500,
+                                } )
+                            ),
+                        el( 'div', { style: { marginBottom: '8px', marginTop: '8px' } }, el( Text, null, __( 'Background Color', 'braftonium' ) ) ),
+                        el( ColorPicker, {
+                            color: rgbaString( bgColor ),
+                            onChange: function ( value ) {
+                                setAttributes( { bgColor: toRgba( value ) } );
+                            },
+                            enableAlpha: true,
+                        } )
+                    ),
+                    el(
+                        PanelBody,
+                        { title: __( 'Layout', 'braftonium' ), initialOpen: true },
+                        el( Text, { style: { display: 'block', marginBottom: '8px' } }, __( 'Set columns, gap and container width per screen size.', 'braftonium' ) ),
+                        layoutPanel( 'desktop', __( 'Desktop (≥1024px)', 'braftonium' ), layout, setLayout ),
+                        layoutPanel( 'tablet', __( 'Tablet (≥768px)', 'braftonium' ), layout, setLayout ),
+                        layoutPanel( 'mobile', __( 'Mobile (<768px)', 'braftonium' ), layout, setLayout )
+                    )
+                ),
+                el(
+                    'div',
+                    blockProps,
+                    backgroundImageUrl &&
+                        el( 'img', {
+                            src: backgroundImageUrl,
+                            alt: backgroundImageAlt,
+                            className: 'background-image',
+                        } ),
+                    el( 'div', innerBlocksProps )
+                )
+            );
+        },
+        save: function () {
+            return el( InnerBlocks.Content, null );
+        },
+    } );
+} )();

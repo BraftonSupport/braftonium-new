@@ -2,7 +2,7 @@
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
     "name": "braftonium/slider",
-    "version": "2.0.0",
+    "version": "2.1.2",
     "title": "Slider",
     "category": "braftonium",
     "icon": "slides",
@@ -31,11 +31,22 @@
         "arrowsRightText": { "type": "string", "default": "Next" },
         "playbackAutoplaySpeed": { "type": "number", "default": 3000 },
         "playbackSlideSpeed": { "type": "number", "default": 300 },
-        "presentationSlidesToShow": { "type": "number", "default": 1 },
-        "presentationSlidesToScroll": { "type": "number", "default": 1 },
-        "presentationInfinite": { "type": "boolean", "default": false }
+        "presentationInfinite": { "type": "boolean", "default": false },
+        "responsive": {
+            "type": "object",
+            "default": {
+                "desktop": { "breakpoint": 1920, "slidesToShow": 3, "slidesToScroll": 1 },
+                "tablet":  { "breakpoint": 1024, "slidesToShow": 2, "slidesToScroll": 1 },
+                "cell":    { "breakpoint": 600,  "slidesToShow": 1, "slidesToScroll": 1 }
+            }
+        },
+        "bgColor": {
+            "type": "object",
+            "default": { "r": 0, "g": 0, "b": 0, "a": 0 }
+        }
     },
     "editorScript": "file:./build/index.js",
-    "style": "file:./build/index.css",
+    "style": "file:./slider.css",
+    "editorStyle": "file:./slider-editor.css",
     "render": "file:./render.php"
 }
