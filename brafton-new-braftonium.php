@@ -56,14 +56,22 @@ add_action('enqueue_block_editor_assets', function() {
 	);
 });
 
+// Feature flags (must load before the gated includes below).
+include __DIR__ . '/general-settings/features.php';
+
 // Register all native Braftonium blocks (no ACF required).
-include __DIR__ . '/blocks/blocks.php';
+if ( braftonium_feature_enabled( 'blocks' ) ) {
+    include __DIR__ . '/blocks/blocks.php';
+}
 
 // Include useful functions (safe without ACF).
 include __DIR__ . '/general-settings/useful-functions.php';
 
 // Include patterns.
-include __DIR__ . '/patterns/include-patterns.php';
+if ( braftonium_feature_enabled( 'patterns' ) ) {
+    include __DIR__ . '/patterns/include-patterns.php';
+}
 
-// Native settings pages (no ACF requirement).
+// Native settings pages (no ACF requirement). Always loaded — this is where the
+// feature toggles themselves live.
 include __DIR__ . '/general-settings/settings.php';

@@ -27,6 +27,26 @@ function braftonium_injection_load_strategies() {
 }
 
 /**
+ * Injection locations -> hooks:
+ *   header     -> wp_head
+ *   body_start -> wp_body_open
+ *   body_end   -> wp_footer
+ *   footer     -> wp_footer (legacy alias of body_end)
+ */
+function braftonium_injection_locations() {
+    return array( 'header', 'body_start', 'body_end', 'footer' );
+}
+
+function braftonium_injection_location_labels() {
+    return array(
+        'header'     => __( 'Header', 'braftonium' ),
+        'body_start' => __( 'Body (start)', 'braftonium' ),
+        'body_end'   => __( 'Body (end)', 'braftonium' ),
+        'footer'     => __( 'Footer', 'braftonium' ),
+    );
+}
+
+/**
  * Normalise a stored rule to the current shape, mapping legacy method names
  * (css, js, stylesheet, js_script, js_script_async, js_script_defer) onto the
  * new method + load_strategy pair so old saved rules keep working.
@@ -69,8 +89,13 @@ function braftonium_normalize_injection_rule( $rule ) {
         $load = 'normal';
     }
 
+    $location = isset( $rule['location'] ) ? (string) $rule['location'] : 'header';
+    if ( ! in_array( $location, braftonium_injection_locations(), true ) ) {
+        $location = 'header';
+    }
+
     return array(
-        'location'      => ( isset( $rule['location'] ) && 'footer' === $rule['location'] ) ? 'footer' : 'header',
+        'location'      => $location,
         'inject_method' => $method,
         'load_strategy' => $load,
         'html_disable'  => ( isset( $rule['html_disable'] ) && 'disable' === $rule['html_disable'] ) ? 'disable' : '',
@@ -248,7 +273,7 @@ function braftonium_sanitize_injection_rules_from_post( $source, $is_local = fal
 
     $allowed_methods   = braftonium_injection_methods();
     $allowed_loads     = braftonium_injection_load_strategies();
-    $allowed_locations = array( 'header', 'footer' );
+    $allowed_locations = braftonium_injection_locations();
 
     $rules = array();
     foreach ( $methods as $index => $method ) {
@@ -347,8 +372,9 @@ function braftonium_render_injection_row( $prefix, $index, $rule ) {
     <tr>
         <td>
             <select name="<?php echo esc_attr( $prefix ); ?>location[]">
-                <option value="header" <?php selected( $rule['location'], 'header' ); ?>><?php esc_html_e( 'Header', 'braftonium' ); ?></option>
-                <option value="footer" <?php selected( $rule['location'], 'footer' ); ?>><?php esc_html_e( 'Footer', 'braftonium' ); ?></option>
+                <?php foreach ( braftonium_injection_location_labels() as $loc_value => $loc_label ) : ?>
+                    <option value="<?php echo esc_attr( $loc_value ); ?>" <?php selected( $rule['location'], $loc_value ); ?>><?php echo esc_html( $loc_label ); ?></option>
+                <?php endforeach; ?>
             </select>
         </td>
         <td>
@@ -364,6 +390,7 @@ function braftonium_render_injection_row( $prefix, $index, $rule ) {
                 <option value="async" <?php selected( $rule['load_strategy'], 'async' ); ?>><?php esc_html_e( 'Async', 'braftonium' ); ?></option>
                 <option value="defer" <?php selected( $rule['load_strategy'], 'defer' ); ?>><?php esc_html_e( 'Defer', 'braftonium' ); ?></option>
             </select>
+            <span class="description" data-field="load-na"<?php echo $is_enq ? $hide : ''; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>><?php esc_html_e( 'N/A', 'braftonium' ); ?></span>
         </td>
         <td>
             <input type="text" style="width:130px;" name="<?php echo esc_attr( $prefix ); ?>script_id[]" value="<?php echo esc_attr( $rule['script_id'] ); ?>" placeholder="<?php esc_attr_e( 'optional', 'braftonium' ); ?>" />
@@ -390,9 +417,9 @@ function braftonium_render_injection_table_script() {
     (function () {
         function rowMarkup(prefix, index) {
             return '<tr>' +
-                '<td><select name="' + prefix + 'location[]"><option value="header">Header</option><option value="footer">Footer</option></select></td>' +
+                '<td><select name="' + prefix + 'location[]"><option value="header">Header</option><option value="body_start">Body (start)</option><option value="body_end">Body (end)</option><option value="footer">Footer</option></select></td>' +
                 '<td><select name="' + prefix + 'inject_method[]" data-injection-method><option value="inline_js">Inline JS</option><option value="inline_css">Inline CSS</option><option value="enqueue">Enqueue</option></select></td>' +
-                '<td><select name="' + prefix + 'load_strategy[]" data-field="load" style="display:none;"><option value="normal">Normal</option><option value="async">Async</option><option value="defer">Defer</option></select></td>' +
+                '<td><select name="' + prefix + 'load_strategy[]" data-field="load" style="display:none;"><option value="normal">Normal</option><option value="async">Async</option><option value="defer">Defer</option></select><span class="description" data-field="load-na">N/A</span></td>' +
                 '<td><input type="text" style="width:130px;" name="' + prefix + 'script_id[]" placeholder="optional" /></td>' +
                 '<td>' +
                     '<input type="url" class="large-text code" name="' + prefix + 'url_value[]" placeholder="https://example.com/asset.js" data-field="url" style="display:none;" />' +
@@ -411,6 +438,7 @@ function braftonium_render_injection_table_script() {
             var isInline = value === 'inline_js' || value === 'inline_css';
 
             row.querySelectorAll('[data-field="load"]').forEach(function (el) { el.style.display = isEnqueue ? '' : 'none'; });
+            row.querySelectorAll('[data-field="load-na"]').forEach(function (el) { el.style.display = isEnqueue ? 'none' : ''; });
             row.querySelectorAll('[data-field="url"]').forEach(function (el) { el.style.display = isEnqueue ? '' : 'none'; });
             row.querySelectorAll('[data-field="inline"]').forEach(function (el) { el.style.display = isInline ? '' : 'none'; });
         }
@@ -487,7 +515,7 @@ function braftonium_enqueuer() {
             continue;
         }
 
-        $in_footer = ( 'footer' === $rule['location'] );
+        $in_footer = in_array( $rule['location'], array( 'footer', 'body_end' ), true );
         wp_enqueue_script( $id, $url, array(), null, $in_footer );
 
         if ( 'defer' === $rule['load_strategy'] ) {
@@ -499,19 +527,28 @@ function braftonium_enqueuer() {
 }
 add_action( 'wp_enqueue_scripts', 'braftonium_enqueuer' );
 
-function braftonium_footer_injections() {
-    headerFooterCheck( 'footer' );
-}
-add_action( 'wp_footer', 'braftonium_footer_injections' );
-
-function braftonium_header_injections() {
-    headerFooterCheck( 'header' );
-}
 add_action( 'wp_head', 'braftonium_header_injections' );
+function braftonium_header_injections() {
+    braftonium_output_inline_injections( array( 'header' ) );
+}
 
-function headerFooterCheck( $location ) {
+add_action( 'wp_body_open', 'braftonium_body_start_injections' );
+function braftonium_body_start_injections() {
+    braftonium_output_inline_injections( array( 'body_start' ) );
+}
+
+add_action( 'wp_footer', 'braftonium_footer_injections' );
+function braftonium_footer_injections() {
+    // "Footer" is the legacy alias of "Body (end)" — both fire just before </body>.
+    braftonium_output_inline_injections( array( 'body_end', 'footer' ) );
+}
+
+/**
+ * Echo inline JS/CSS rules whose location is in $locations.
+ */
+function braftonium_output_inline_injections( $locations ) {
     foreach ( injectionsList() as $rule ) {
-        if ( 'disable' === $rule['html_disable'] || $rule['location'] !== $location ) {
+        if ( 'disable' === $rule['html_disable'] || ! in_array( $rule['location'], $locations, true ) ) {
             continue;
         }
 
