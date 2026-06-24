@@ -1,0 +1,27 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "braftonium/custom-list-item",
+    "version": "2.0.0",
+    "title": "Custom List Item",
+    "category": "braftonium",
+    "icon": "format-aside",
+    "description": "Individual item for custom list block",
+    "keywords": ["list", "item"],
+    "parent": ["braftonium/custom-list"],
+    "textdomain": "braftonium",
+    "supports": {
+        "anchor": true,
+        "customClassName": true,
+        "spacing": {
+            "margin": ["top", "bottom", "left", "right"],
+            "padding": ["top", "bottom", "left", "right"]
+        },
+        "html": false,
+        "reusable": false
+    },
+    "attributes": {},
+    "editorScript": "file:./build/index.js",
+    "style": "file:./custom-list-item.css",
+    "render": "file:./render.php"
+}

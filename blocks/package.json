@@ -1,22 +1,14 @@
 {
-  "name": "bones",
-  "version": "1.0.0",
-  "description": "A Lightweight Wordpress Development Theme",
-  "main": "gulpfile.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "sass-watch": "sass --watch --update --style=expanded ./",
-    "sass-compile": "sass --style=expanded ./",
-    "sass-compile-prd": "sass --no-source-map --style=compressed ./"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "postcss": "^8.3.5",
-    "sass": "^1.69.0"
-  },
-  "browserslist": [
-    "last 2 versions",
-    "IE 11"
-  ]
+	"name": "braftonium-blocks",
+	"version": "1.0.0",
+	"description": "SCSS compilation for Braftonium blocks. Each block keeps its .scss alongside its files (e.g. blocks/banner/banner.scss) and compiles in place to a same-name .css (blocks/banner/banner.css).",
+	"private": true,
+	"license": "GPL-2.0-or-later",
+	"scripts": {
+		"sass-watch": "sass --watch . --no-source-map",
+		"sass-compile": "sass . --no-source-map"
+	},
+	"devDependencies": {
+		"sass": "~1.77.8"
+	}
 }

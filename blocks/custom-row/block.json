@@ -1,0 +1,39 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "braftonium/custom-row",
+    "version": "2.0.0",
+    "title": "Custom Row",
+    "category": "braftonium",
+    "icon": "layout",
+    "description": "Custom row container with background image support",
+    "keywords": ["row", "container", "layout"],
+    "textdomain": "braftonium",
+    "supports": {
+        "anchor": true,
+        "customClassName": true,
+        "align": ["wide", "full"],
+        "spacing": {
+            "margin": ["top", "bottom", "left", "right"],
+            "padding": ["top", "bottom", "left", "right"]
+        },
+        "html": false
+    },
+    "attributes": {
+        "backgroundImage": { "type": "number", "default": 0 },
+        "backgroundImageUrl": { "type": "string", "default": "" },
+        "backgroundImageAlt": { "type": "string", "default": "" },
+        "backgroundPosition": {
+            "type": "object",
+            "default": { "top": 0, "left": 0, "right": 0, "bottom": 0 }
+        },
+        "bgColor": {
+            "type": "object",
+            "default": { "r": 0, "g": 0, "b": 0, "a": 0 }
+        }
+    },
+    "editorScript": "file:./build/index.js",
+    "style": "file:./custom-row.css",
+    "editorStyle": "file:./custom-row-editor.css",
+    "render": "file:./render.php"
+}

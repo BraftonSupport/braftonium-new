@@ -1,0 +1,46 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "braftonium/custom-list",
+    "version": "2.0.0",
+    "title": "Custom List",
+    "category": "braftonium",
+    "icon": "list-view",
+    "description": "Custom list container with responsive grid, background image and background color",
+    "keywords": ["list", "container", "layout", "grid"],
+    "textdomain": "braftonium",
+    "supports": {
+        "anchor": true,
+        "customClassName": true,
+        "align": ["wide", "full"],
+        "spacing": {
+            "margin": ["top", "bottom", "left", "right"],
+            "padding": ["top", "bottom", "left", "right"]
+        },
+        "html": false
+    },
+    "attributes": {
+        "backgroundImage": { "type": "number", "default": 0 },
+        "backgroundImageUrl": { "type": "string", "default": "" },
+        "backgroundImageAlt": { "type": "string", "default": "" },
+        "backgroundPosition": {
+            "type": "object",
+            "default": { "top": 0, "left": 0, "right": 0, "bottom": 0 }
+        },
+        "bgColor": {
+            "type": "object",
+            "default": { "r": 0, "g": 0, "b": 0, "a": 0 }
+        },
+        "layout": {
+            "type": "object",
+            "default": {
+                "desktop": { "width": 1200, "columns": 3, "gap": 24 },
+                "tablet":  { "width": 0,    "columns": 2, "gap": 20 },
+                "mobile":  { "width": 0,    "columns": 1, "gap": 16 }
+            }
+        }
+    },
+    "editorScript": "file:./build/index.js",
+    "style": "file:./custom-list.css",
+    "render": "file:./render.php"
+}

@@ -1,0 +1,39 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "braftonium/banner",
+    "version": "2.0.0",
+    "title": "Banner",
+    "category": "braftonium",
+    "icon": "cover-image",
+    "description": "Banner block with background image and content overlay",
+    "keywords": ["banner", "hero", "image"],
+    "textdomain": "braftonium",
+    "supports": {
+        "anchor": true,
+        "customClassName": true,
+        "align": ["wide", "full"],
+        "spacing": {
+            "margin": ["top", "bottom", "left", "right"],
+            "padding": ["top", "bottom", "left", "right"]
+        },
+        "html": false
+    },
+    "attributes": {
+        "backgroundImage": { "type": "number", "default": 0 },
+        "backgroundImageUrl": { "type": "string", "default": "" },
+        "backgroundImageAlt": { "type": "string", "default": "" },
+        "overlayColor": {
+            "type": "object",
+            "default": { "r": 0, "g": 0, "b": 0, "a": 0.5 }
+        },
+        "alignContent": {
+            "type": "string",
+            "enum": ["left", "center", "right"],
+            "default": "left"
+        }
+    },
+    "editorScript": "file:./build/index.js",
+    "style": "file:./banner.css",
+    "render": "file:./render.php"
+}

@@ -1,32 +1,48 @@
-.acf-block-preview .braftonium-slide {
+// =============================================================================
+// Slide block — braftonium/slide  (a card inside braftonium/slider)
+//
+// Source SCSS. Compiles in place to slide.css via the blocks sass workflow:
+//   cd blocks && npm run sass-watch   (dev)  |  npm run sass-compile  (build)
+// slide.css is the stylesheet enqueued by block.json ("style": "file:./slide.css").
+//
+// Markup (see render.php):
+//   .braftonium-slide              ← the slick cell; carries the gap
+//     > .braftonium-slide__inner   ← the visible card (border / background)
+//         > [ InnerBlocks output ]
+//
+// The card background is set via the block's "Background Color" option (applied
+// inline in render.php); the value below is the fallback when none is chosen.
+// =============================================================================
 
-    min-height: 150px;
-    padding: 12px;
-    border: 1px solid rgba(200, 200, 200, 0.25);
+$slide-gap: 16px;   // visual space between cards
 
-    &::after {
-        content: 'SINGLE SLIDE';
-        position: absolute;
-        top: 0;
-        right: 0;
-        padding: 2px 4px;
-        background-color: #aaa;
-        font-size: 8px;
-        line-height: 1;
-        color: white;
-        opacity: 0.25;
-        pointer-events: none;
+.braftonium-slide {
+    box-sizing: border-box;
+    height: 100%;
+
+    // The gap lives on the cell so the card insets and adjacent cards don't
+    // touch. border-box keeps the cell at the width slick assigns it (no overflow).
+    padding-inline: ($slide-gap * 0.5);
+}
+
+.braftonium-slide__inner {
+    box-sizing: border-box;
+    height: 100%;
+    background: #f9f9f9;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    padding: 20px;
+
+    img {
+        max-width: 100%;
+        height: auto;
     }
 
-    &:hover {
-        border: 1px solid #aaa;
-        &:after {
-            opacity: 1;
+    > * {
+        margin-block: 0 0.75em;
+
+        &:last-child {
+            margin-bottom: 0;
         }
-    }
-
-    .wrap,
-    .wp-block-image {
-        margin: 0;
     }
 }

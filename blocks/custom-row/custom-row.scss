@@ -1,27 +1,57 @@
-.braftonium-custom-row{
-    background-repeat: no-repeat;
-    background-size:cover;
-    // padding:1rem 0;
+// =============================================================================
+// Custom Row block — braftonium/custom-row
+//
+// Source SCSS. Compiles in place to custom-row.css via the blocks sass
+// workflow:
+//   cd blocks && npm run sass-watch   (dev)  |  npm run sass-compile  (build)
+// custom-row.css is the stylesheet enqueued by block.json
+// ("style": "file:./custom-row.css").
+//
+// Markup (see render.php):
+//   .braftonium-custom-row
+//     > img.background-image      ← optional, positionable background
+//     > .custom-row-content       ← horizontal row of inner blocks
+//         > [ InnerBlocks output ]
+// =============================================================================
+
+// --- Tunables (content width matches Banner + CTA) -------------------------
+$content-width: 1200px;  // target content width — same as banner/cta
+$content-max:   90vw;    // never wider than this — same as banner/cta
+$row-gap:       24px;
+
+.braftonium-custom-row {
     position: relative;
-    &.full-width{
-        width:100vw;
-        max-width:100vw;
-        margin-left:calc(50% - 50vw) !important;
-    }
-    .wrap{
-        max-width:1200px;
-        margin-inline: auto;
-        z-index:1;
-        position: relative;
-        padding:0 1em;
-    }
-    .background-image{
+    padding: 40px 20px;
+
+    // Optional background image: covers the block, position-adjustable.
+    .background-image {
         position: absolute;
-        object-position: center;
-        width:100%;
-        height:100%;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
         object-fit: cover;
-        top:0;
-        left:0;
+        z-index: 0;
+    }
+
+    // Row content, constrained to the banner/cta content width and centered.
+    .custom-row-content {
+        position: relative;
+        z-index: 1;
+        box-sizing: border-box;
+        width: $content-width;
+        max-width: $content-max;
+        margin-inline: auto;
+        display: flex;
+        flex-wrap: wrap;
+        gap: $row-gap;
+        align-items: flex-start;
+
+        // Children share the row evenly by default; restyle to taste.
+        > * {
+            flex: 1 1 0;
+            min-width: 0;
+            margin: 0;
+        }
     }
 }
