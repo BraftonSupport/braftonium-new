@@ -61,8 +61,12 @@ $grid_rules = function ( array $cfg ) {
 
     $rules = sprintf( 'grid-template-columns:repeat(%d,minmax(0,1fr));gap:%dpx;', $cols, $gap );
 
-    if ( $width > 0 ) {
-        // Same constraint as banner/cta: width capped at 90vw, centered.
+    if ( 1200 === $width ) {
+        // Default content width: use the theme's layout preset (fallback 1200px),
+        // matching banner/cta/row/slider. Capped at 90vw, centered.
+        $rules .= 'width:var(--wp--style--global--content-size, 1200px);max-width:90vw;margin-inline:auto;';
+    } elseif ( $width > 0 ) {
+        // Explicit pixel width. Capped at 90vw, centered.
         $rules .= sprintf( 'width:%dpx;max-width:90vw;margin-inline:auto;', $width );
     } else {
         // 0 = full width of the block.

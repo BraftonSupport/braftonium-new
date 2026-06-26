@@ -1,162 +1,186 @@
-# Brafonium Plugin
+# Braftonium Plugin
 
-This is a plugin we have wanted to make for a while, to make our(and clients') lives easier and we thought we had to share it with everyone! (If you love ACF PRO that is). This plugin will only work if you have ACF PRO Plugin.
+Braftonium is now a native-first WordPress plugin. The current root plugin uses native WordPress admin fields and native Gutenberg blocks as the core experience. ACF Pro is no longer required for the main plugin features.
 
-## General User Options
+Legacy ACF blocks and ACF option data are still supported through the `/legacy` compatibility layer. This means existing pages that already use old `acf/*` Braftonium blocks should continue to render, while new work should use the native `braftonium/*` blocks and the native Braftonium settings screens.
 
-1. Blocks - We have created blocks which will work with Gutenberg, just like any other block. They will all be in the category braftonium.
-2. Widget Areas - You can easily create multiple widgets with optional settings like (class, id, description). They will appear in the general Wordpress Widgets page.
-3. Custom Posts & Taxonomies - Create re-usable taxonomies and multiple custom posts without any coding.
-4. Debug - Debug mode will only turn on debug for administrators, so the public doesn't see funny stuff.
-5. Inject custom CSS/CSS stylesheet/JS/JS file with async/defer into the header or footer.
-6. Change the Wordpress Administrator without requiring an email confirmation.
+## Current Architecture
 
-## Developer Options
+1. Native blocks live in `/blocks` and register from each block's `block.json`.
+2. Native settings live in `/general-settings` and store values in WordPress options/meta.
+3. Legacy ACF code lives in `/legacy`.
+4. `/legacy/legacy.php` is loaded by the main plugin and safely enables compatibility when ACF is available.
+5. Old ACF settings pages are not loaded, because they use the same admin slugs and some of the same function names as the native settings.
+6. Legacy option values are read through `/legacy/compat-settings.php` when native values are empty, and native saves mirror key values back into ACF when ACF is installed.
 
-1. Blocks - You can override our blocks templates in your child theme (See Readme in /blocks)
-2. Custom Posts & Taxonomies - Create re-usable taxonomies and multiple custom posts without any coding. You will need to create your own templates, as usual.
-3. Debug - Debug mode will only turn on debug for administrators, so the public doesn't see funny stuff.
-4. Inject custom CSS/CSS stylesheet/JS/JS file with async/defer into the header or footer for specific pages/posts or on the entire site.
-5. Swop a template for a specific audience so you can work on a template while the public see the old template, helping you avoid live problems. This is like a mini staging area.
-6. Change the Wordpress Administrator without requiring an email confirmation.
-7. Patterns - You can create and save patterns in your child theme.
+## Blocks
 
-## Brafonium Blocks
+### Native Blocks
 
-### Overview
+Native blocks are the blocks to use for all new content. They appear in the `Braftonium` block category and use the `braftonium/*` namespace.
 
-It can be a tedious task creating blocks.. You need to rewrite/remember ALOT of code. We have developed a system which speeds things up(ALOT).. and requires minimal code, while keeping the dev in full control. We have included a SCSS compiler and given you the ability to override templates in your child theme. We also enabled JSON field import so you can just export it using ACF in Wordpress itself.
+Current native blocks include:
 
-### Example
+1. `braftonium/banner`
+2. `braftonium/cta`
+3. `braftonium/custom-row`
+4. `braftonium/custom-list`
+5. `braftonium/custom-list-item`
+6. `braftonium/slider`
+7. `braftonium/slide`
 
-There is an example block in folder /example. Use this, and it's comments to guide you. This guide will be based on the New Block.
+Native blocks are registered automatically from `/blocks/<block-name>/block.json`. Dynamic output is handled by the block's `render.php` file when present.
 
-### Creating a block
+### Legacy ACF Blocks
 
-1. Create a new folder in /blocks/new-block
-2. Copy the example.acf.php file to new-block and rename it new-block.html.php & delete example features you won't be using
-3. Edit All block fields like: title, description, assets, render_callback (must match braftonium_blocks_new_block_template)
-4. Rename braftonium_blocks_example_template function to braftonium_blocks_new_block_template (and update as callback in)
-5. Create all your asset files/libraries & enqueue them.
-6. Create new-block.html.php file to output the block.
-7. On Wordpress backend in ACF, create your field group, click tools and export it to a file with the name new-block-fields.json
+Legacy ACF blocks are loaded only when ACF is available. Their saved block names are preserved so existing content keeps working.
 
-### Create & Export Fields
+Legacy blocks keep their original `acf/*` IDs, including:
 
-1. Go to the Wordpress admin panel -> Custom Fields -> Add New
-2. Create your field group(make sure to set the Location to your new block) and click publish
-3. Click Tools (next to field groups on the top of the page)
-4. Select your new field group and click Export File
-5. Copy the new JSON file to your new folder and rename it fields.json
+1. `acf/banner`
+2. `acf/cta`
+3. `acf/custom-row`
+4. `acf/custom-list`
+5. `acf/custom-list-item`
+6. `acf/slider`
+7. `acf/slide`
+8. `acf/swiper`
+9. `acf/swiper-slide`
+10. `acf/google-map`
+11. `acf/contentlist`
 
-### SASS
+In the editor, these blocks are listed under `Braftonium - Legacy`, and their titles include `(legacy - don't use)`. This is intentional: old content remains editable, but new pages should use native blocks.
 
-We have added a sass compiler to our blocks. You can work with SCSS and your CSS file will be created/updated. CSS will NOT be commited to Github, but will be compiled using a Github Workflow (.github/workflows/compile-scss.yml). 
+## Settings
 
-Follow the steps below to use SCSS on your local machine!
+The native Braftonium settings pages are the source of truth for current installs.
 
-1. Create new-block.scss (sass will compile any file name) file in the block folder (remember to enqueue new-block.css)
-2. Open your terminal to the folder: /wp-content/plugins/braftonium-new/blocks
-3. Run "npm install" (First time)
-4. Run "npm run sass-watch" (Everytime)
-* You do not need to create the CSS file first, the compiler will do it
+Main settings include:
 
-### Override Template
+1. Admin Override
+2. Google API Key, used by legacy Google Map blocks
+3. Revisions toggle
+4. Feature toggles
 
-You/someone else may want to override the default template (/wp-content/plugins/braftonium-new/blocks/new-block.html.php). If the template new-block.html.php is found in /themes/current-theme/braftonium/blocks/ it will be used instead of the default template.
+Feature pages include:
+
+1. Custom Posts & Taxonomies
+2. Scripts & Styles
+3. Debug
+
+### Legacy Settings Compatibility
+
+If a native setting has not been saved yet, Braftonium can fall back to legacy ACF option values.
+
+Current compatibility coverage includes:
+
+1. `admin-override` to native `admin_override`
+2. `google-api-key` to native `google_api_key`
+3. `debug-on` to native debug settings
+4. `custom_post_types_taxonomies` to native custom taxonomy settings
+5. `custom_post_types_new` to native custom post type settings
+6. `braftonium_injector` to native global and local script/style injection rules
+
+When native settings are saved and ACF is installed, key values are mirrored back to the old ACF option fields so legacy templates that call `get_field( ..., 'option' )` can still work.
 
 ## Custom Posts & Taxonomies
 
-No dev work should be needed here. 
+Use `Braftonium > Posts/Taxonomies` to create custom taxonomies and custom post types without code.
 
-There is a repeater which let's you create multiple post types and add multiple taxonomies. You will have to create your own templates. (https://wphierarchy.com/).
+The native settings store:
 
-1. There is a filter for the taxonomy arguments which is: braftonium_taxonomy_filter
-2. There is a filter for Post type arguments which is: braftonium_modify_custom_post_type
+1. Taxonomies in `braftonium_custom_post_types_taxonomies`
+2. Custom post types in `braftonium_custom_post_types_new`
 
-You can use these filters to edit/further customize the post types and taxonomies however you may need.
+Existing legacy ACF settings are used as fallbacks if the native options are empty.
 
-## Add Scripts or Styles
+Developer filters:
 
-This will give you a few different ways to inject/enqueue JS, Scripts, CSS or Stylesheets. Add global rules for all pages or you can add rules for specific posts/pages. Options include:
-1. Location: Header/Footer
-2. Method Files: CSS stylesheet/JS Async/JS Defer
-3. Method Inline: Type actual JS/CSS
-4. Give each rule a unique id
-3. Disable: Disable any rule, without having to delete it.
-4. Content: This will either be your JS/CSS/URL
+```php
+apply_filters( 'braftonium_taxonomy_filter', $args );
+apply_filters( 'braftonium_modify_custom_post_type', $args, $custom_post_type );
+```
+
+## Scripts & Styles
+
+Use `Braftonium > Scripts & Styles` to add global injection rules, or use the post/page metabox for local rules.
+
+Supported rule types:
+
+1. Inline JS
+2. Inline CSS
+3. Enqueued JS/CSS URL
+
+Supported locations:
+
+1. Header
+2. Body start
+3. Body end
+4. Footer, kept as a legacy alias of body end
+
+Legacy ACF injector rules are normalized into the native rule shape at runtime.
 
 ## Debug
 
-You can enable/disable the debug mode. Debug can only be enabled for the administrators, making sure the public don't see weird stuff.
-
-## Widget Areas
-
-No dev work should be needed here. All you need to do is go into the Braftonium settings and enter your widget name and it will appear in the general Wordpress Widgets page. Optional settings include:
-1. Name (required)
-2. Class
-3. ID
-4. Description
+Use `Braftonium > Debug` to enable debug output for administrators and inspect the WordPress debug log. If the native debug option has not been saved, the old ACF `debug-on` value is used as a fallback.
 
 ## Patterns
 
-A pattern is a block/blocks which you copy so you can re-use them without having to keep recreating them. For the steps below to make a pattern in your child theme.
-1. Navigate to the plugin folder /patterns and copy example-pattern.php
-2. In your child theme make sure you have the following folder structure: childe-theme/braftonium/patterns and paste the example-pattern.php file there.
-3. Rename your file appropriately using the following schematic: new-example-pattern.php. All patter must end "-pattern.php".
-4. Edit your pattern name & description.
-5. Create a block/collection of blocks in your Wordpress backend and copy them/the block.
-6. Delete the example "content" value and paste your new pattern.
+Patterns live in `/patterns` and are loaded when the Block Patterns feature is enabled.
 
-Your new pattern should now be with all the other patterns :)
+To add a theme pattern:
 
-## Template Swopper
+1. Create `braftonium/patterns` inside the active theme.
+2. Add a file ending in `-pattern.php`.
+3. Register the pattern in that file using WordPress block pattern APIs.
 
-Often we need to work on a template which is live OR create a duplicate page and template so we do affect the live site. The solution to this is to be able to create a new template which will swop with the intended(general/public) template. You can make the template swop by selecting the following options:
-1. Target Template - This can be a template file name, a post/page name or a full url.
-2. Audience - Who should it swop for? Choose between everyone, just you or a few other users.
-3. New Template - This can be anywhere in /wp-content. We recommend you use a child theme or custom plugin.
+## MicroStyles
 
-A swopped template will have the class "dev-template" added to the page. (This will help with custom styling while you work).
+MicroStyles add focused class options to blocks from the block editor's Advanced panel.
 
-### Steps:
-1. Input template name (eg. page.php - .php is not needed but won't break it) or full url (eg. https://www.yoursite.com/contact-us)
-2. Relative path to new template which will be added onto /wp-content. You can pick a template in /themes or /plugins
-3. Set audience - This can either be set to all or a single username or multiple usernames (no spaces eg. user_1,user_2)
+Admins can manage MicroStyles from `Braftonium > General Settings`.
 
-You can disable a swop without deleting the rule.
+Each managed MicroStyle has:
 
-## Admin Email
+1. Label, shown in the editor control
+2. Class, added to the selected block
+3. Block Types, either `All` or one or more registered block types
+4. CSS Declarations, optional CSS for the class
+5. Enabled toggle
 
-Change the admin email address without needing an email confirmation. Saving confirmation and email not sending issues.
+Choose `All` to make the MicroStyle available on every block. CSS Declarations should be declarations only, without a selector or braces.
+
+Developers can still register custom MicroStyles with:
+
+```php
+function modify_classes( $class_list, $block_type ) {
+    $class_list[] = array(
+        'label' => 'Readable name',
+        'value' => 'your-classname',
+    );
+
+    return $class_list;
+}
+add_filter( 'braftonium_class_list', 'modify_classes', 10, 2 );
+```
+
+Built-in MicroStyles are available for Banner, CTA, Custom Row, Custom List and Slider:
+
+1. `braftonium-bg-full` makes the block background span the viewport while content stays wrapped.
+2. `braftonium-bg-wrap` constrains the background to the content width.
 
 ## Useful Functions
 
-Some functions which we either need often or would just help minimize code:
-1. consoleJS - Output to Inspector console
-2. readingTime - Optional values: choose between min/minute and append text
-3. includeForAdmin - Only include a php file if the user is admin, avoid public errors
+The plugin includes helper functions in `/general-settings/useful-functions.php`, including:
 
-## MicroStyles
-What is a microstyle. Microstyles are minor tweaks that are used in combination with block styles or other microstyles to achieve minor changes to an element. With micros styles we can apply numberous changes with a class (which block styles don't allow), while providing the user with options to select that apply a class name rather than remember a class name and what it does.
-No code updates are required in the plugin. You can register micro style classes in your theme or another plugin with the following filter.
-```php
-/**
- * @var classList Array of current classess applied to this block
- * @var blockType the block type currently in use
- */
-apply_filters('braftonium_class_list',$classList, $blockType);
-```
+1. `consoleJS`
+2. `readingTime`
+3. `includeForAdmin`
 
-```php
-function modify_classes($classList, $blockType){
-    /**
-     * $classList[] = array('label' => 'your readable name', 'value' => 'your classname');
-     */
-    return $classList;
-}
-add_filter('braftonium_class_list', 'modify_classes', 10,2);
-```
-By checking the current block type you can add classes only for specific blocks.
+## Development Notes
 
-## More Coming soon!
+1. New blocks should be native Gutenberg blocks in `/blocks`.
+2. Do not create new ACF blocks unless maintaining legacy content.
+3. Do not load old files from `/legacy/general-settings` in the main plugin; they are kept for reference and backward compatibility context only.
+4. Legacy block template overrides still use the old theme path: `/themes/current-theme/braftonium/blocks/<block-name>.html.php`.
+5. The native plugin should keep working without ACF installed. ACF is only needed for editing/rendering legacy ACF blocks and reading/mirroring legacy ACF option data.

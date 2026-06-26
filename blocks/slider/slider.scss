@@ -18,7 +18,7 @@
 // =============================================================================
 
 // --- Tunables (content width matches banner / cta) -------------------------
-$content-width: 1200px;
+$content-width: var(--wp--style--global--content-size, 1200px);  // theme preset content width (fallback 1200px)
 $content-max:   90vw;
 
 .braftonium-slider {
@@ -27,6 +27,35 @@ $content-max:   90vw;
     width: $content-width;              // same width as banner / cta / list / row
     max-width: $content-max;
     margin-inline: auto;
+
+    // -- Microstyles: background width --------------------------------------
+    // Full Width: colour wings inherit the slider's (inline) background colour
+    // and fill out to each viewport edge while the slides stay at the content
+    // width. isolation:isolate keeps the wings' negative z-index behind the
+    // slides but in front of the parent background.
+    &.braftonium-bg-full {
+        isolation: isolate;
+
+        &::before,
+        &::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: calc(50vw - 50%);
+            background-color: inherit;
+            z-index: -1;
+        }
+        &::before { right: 100%; } // left wing
+        &::after  { left: 100%; }  // right wing
+    }
+
+    // Wrapper: keep the slider at the content width (the default).
+    &.braftonium-bg-wrap {
+        width: $content-width;
+        max-width: $content-max;
+        margin-inline: auto;
+    }
 
     // The slick-initialised element. Static so the arrows anchor to the slider;
     // flex column so dots can sit above or below the slides in flow.

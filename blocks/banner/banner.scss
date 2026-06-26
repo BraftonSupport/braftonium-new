@@ -15,7 +15,7 @@
 
 // --- Tunables --------------------------------------------------------------
 $banner-min-height:    480px;   // height of the hero area
-$banner-content-width: 1200px;  // target content width
+$banner-content-width: var(--wp--style--global--content-size, 1200px);  // theme preset content width (fallback 1200px)
 $banner-content-max:   90vw;    // never wider than this
 $banner-padding:       clamp(24px, 5vw, 64px);
 $banner-text-color:    #fff;    // skeleton default — readable over the dark overlay
@@ -101,6 +101,25 @@ $banner-text-color:    #fff;    // skeleton default — readable over the dark o
 
         .wrap {
             color: inherit; // dark text on the light placeholder
+        }
+    }
+
+    // -- Microstyles: background width (content stays at content width) -----
+    // Full Width: background + overlay span the full viewport (the default,
+    // made explicit so it can be toggled back on).
+    &.braftonium-bg-full {
+        .background-image,
+        .overlay {
+            width: 100vw;
+        }
+    }
+
+    // Wrapper: background + overlay are constrained to the content width.
+    &.braftonium-bg-wrap {
+        .background-image,
+        .overlay {
+            width: $banner-content-width;
+            max-width: $banner-content-max;
         }
     }
 }

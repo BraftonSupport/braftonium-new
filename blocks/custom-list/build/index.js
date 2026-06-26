@@ -170,7 +170,7 @@
                 gridTemplateColumns: 'repeat(' + Math.max( 1, desktop.columns || 1 ) + ', minmax(0, 1fr))',
                 gap: ( desktop.gap || 0 ) + 'px',
                 width: desktop.width > 0 ? desktop.width + 'px' : '100%',
-                maxWidth: desktop.width > 0 ? '90vw' : 'none',
+                maxWidth: desktop.width > 0 ? '100%' : 'none',
                 marginInline: desktop.width > 0 ? 'auto' : '0',
             };
 

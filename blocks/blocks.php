@@ -29,6 +29,48 @@ add_filter( 'block_categories_all', function ( $categories ) {
 } );
 
 /**
+ * Microstyles shipped with the plugin.
+ *
+ * Exposes two background-width microstyles in the Braftonium Microstyles
+ * control (block editor → Advanced panel) for the container blocks. The inner
+ * content always stays at the content width; the microstyle only changes how
+ * wide the block's background is:
+ *   - Full Width (braftonium-bg-full): background spans the full viewport width.
+ *   - Wrapper    (braftonium-bg-wrap): background is constrained to the content width.
+ *
+ * Registered through the documented braftonium_class_list filter, so themes can
+ * still add their own microstyles alongside these.
+ */
+add_filter( 'braftonium_class_list', function ( $class_list, $block_type ) {
+    $supported = array(
+        'braftonium/banner',
+        'braftonium/cta',
+        'braftonium/custom-row',
+        'braftonium/custom-list',
+        'braftonium/slider',
+    );
+
+    if ( ! in_array( $block_type, $supported, true ) ) {
+        return $class_list;
+    }
+
+    if ( ! is_array( $class_list ) ) {
+        $class_list = array();
+    }
+
+    $class_list[] = array(
+        'label' => __( 'Full Width', 'braftonium' ),
+        'value' => 'braftonium-bg-full',
+    );
+    $class_list[] = array(
+        'label' => __( 'Wrapper', 'braftonium' ),
+        'value' => 'braftonium-bg-wrap',
+    );
+
+    return $class_list;
+}, 10, 2 );
+
+/**
  * Register every block whose folder contains a block.json file.
  */
 add_action( 'init', function () {

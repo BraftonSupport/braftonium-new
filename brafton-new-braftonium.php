@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: New Brafton Plugin
- * Description: Custom Plugin for blocks, custom posts, taxonomies, helper functions, widget areas, debug, inject scripts/stylesheets/JS/CSS & swop templates for specific users.
+ * Description: Custom Plugin for blocks, custom posts, taxonomies, helper functions, debug & inject scripts/stylesheets/JS/CSS.
  * Version: 1.0
  * Developers: Jonathan Kowensky, Deryk King, James Allan, Fritz Bester
  * Website: https://www.brafton.com
@@ -56,14 +56,25 @@ add_action('enqueue_block_editor_assets', function() {
 	);
 });
 
+// Feature flags (must load before the gated includes below).
+include __DIR__ . '/general-settings/features.php';
+
+// Legacy compatibility (ACF blocks/settings fallbacks). Safe when ACF is absent.
+include __DIR__ . '/legacy/legacy.php';
+
 // Register all native Braftonium blocks (no ACF required).
-include __DIR__ . '/blocks/blocks.php';
+if ( braftonium_feature_enabled( 'blocks' ) ) {
+    include __DIR__ . '/blocks/blocks.php';
+}
 
 // Include useful functions (safe without ACF).
 include __DIR__ . '/general-settings/useful-functions.php';
 
 // Include patterns.
-include __DIR__ . '/patterns/include-patterns.php';
+if ( braftonium_feature_enabled( 'patterns' ) ) {
+    include __DIR__ . '/patterns/include-patterns.php';
+}
 
-// Native settings pages (no ACF requirement).
+// Native settings pages (no ACF requirement). Always loaded — this is where the
+// feature toggles themselves live.
 include __DIR__ . '/general-settings/settings.php';

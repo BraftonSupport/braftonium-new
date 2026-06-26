@@ -1,0 +1,84 @@
+
+.wp-block .braftonium-swiper,
+.acf-block-preview .braftonium-swiper {
+
+    position: relative;
+    overflow: hidden;
+    min-height: 100%;
+    padding: 24px 16px;
+    border: 1px solid rgba(200, 200, 200, 0.25);
+
+    .swiper-wrapper.vertical {
+        flex-flow: column;
+    }
+
+    &::after {
+        content: 'SLIDER';
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 2px 4px;
+        background-color: #aaa;
+        font-size: 8px;
+        line-height: 1;
+        color: white;
+        opacity: 0.25;
+        pointer-events:none;
+    }
+
+    &:hover {
+        border: 1px solid #aaa;
+        &:after {
+            opacity: 1;
+        }
+    }
+
+    .wp-block-image {
+        margin: 0;
+    }
+}
+
+.braftonium-swiper {
+
+    position: relative;
+    overflow: hidden;
+    min-height: 100%;
+    padding-top: 3em;
+    padding-bottom: 3em;
+
+    .swiper-image-prev,
+    .swiper-image-next,
+    .swiper-text-prev,
+    .swiper-text-next {
+        position: absolute;
+        z-index: 1;
+        user-select: none;
+        padding: 8px;
+    }
+
+    .swiper-image-prev,
+    .swiper-text-prev {
+        top: 50%;
+        left: 0;
+        right: initial;
+    }
+
+    .swiper-image-next,
+    .swiper-text-next {
+        top: 50%;
+        left: initial;
+        right: 0;
+    }
+
+    .swiper-text-next,
+    .swiper-text-prev,
+    .swiper-button-next,
+    .swiper-button-prev {
+        color: var(--swiper-navigation-color);
+    }
+
+    .swiper-image-next,
+    .swiper-image-prev {
+        transform: translateY(-50%);
+    }
+}

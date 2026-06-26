@@ -10,8 +10,8 @@ add_action( 'admin_menu', 'braftonium_register_custom_posts_page' );
 function braftonium_register_custom_posts_page() {
     add_submenu_page(
         'braftonium-settings',
-        __( 'Custom Posts & Taxonomies', 'braftonium' ),
-        __( 'Custom Posts & Taxonomies', 'braftonium' ),
+        __( 'Posts/Taxonomies', 'braftonium' ),
+        __( 'Posts/Taxonomies', 'braftonium' ),
         'manage_options',
         'custom-posts',
         'braftonium_render_custom_posts_page'
@@ -138,6 +138,8 @@ function braftonium_save_custom_posts() {
 
     update_option( 'braftonium_custom_post_types_taxonomies', $custom_taxonomies );
     update_option( 'braftonium_custom_post_types_new', $custom_post_types );
+    braftonium_legacy_acf_update_option( 'custom_post_types_taxonomies', wp_list_pluck( $custom_taxonomies, 'slug' ) );
+    braftonium_legacy_acf_update_option( 'custom_post_types_new', $custom_post_types );
 
     // Flush only when configuration changed.
     update_option( 'braftonium_custom_posts_needs_flush', 1 );
@@ -159,8 +161,8 @@ function braftonium_render_custom_posts_page() {
         return;
     }
 
-    $custom_taxonomies = braftonium_normalize_taxonomies( get_option( 'braftonium_custom_post_types_taxonomies', array() ) );
-    $custom_post_types = get_option( 'braftonium_custom_post_types_new', array() );
+    $custom_taxonomies = braftonium_normalize_taxonomies( braftonium_get_custom_taxonomies_option() );
+    $custom_post_types = braftonium_get_custom_post_types_option();
     if ( ! is_array( $custom_post_types ) ) {
         $custom_post_types = array();
     }
@@ -437,7 +439,7 @@ function braftonium_render_custom_posts_page() {
  */
 add_action( 'init', 'create_custom_post_types' );
 function create_custom_post_types() {
-    $custom_post_types = get_option( 'braftonium_custom_post_types_new', array() );
+    $custom_post_types = braftonium_get_custom_post_types_option();
 
     if ( ! is_array( $custom_post_types ) || empty( $custom_post_types ) ) {
         return;
@@ -445,7 +447,7 @@ function create_custom_post_types() {
 
     // Map taxonomy slug => display name from the saved taxonomy definitions.
     $taxonomy_names = array();
-    foreach ( braftonium_normalize_taxonomies( get_option( 'braftonium_custom_post_types_taxonomies', array() ) ) as $tax ) {
+    foreach ( braftonium_normalize_taxonomies( braftonium_get_custom_taxonomies_option() ) as $tax ) {
         $taxonomy_names[ $tax['slug'] ] = $tax['name'];
     }
 
