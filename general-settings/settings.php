@@ -33,8 +33,10 @@ function braftonium_save_general_settings() {
     check_admin_referer( 'braftonium_general_settings_save' );
 
     $settings = array(
+        'debug_on'          => ! empty( $_POST['debug_on'] ),
         'admin_override'    => isset( $_POST['admin_override'] ) ? sanitize_email( wp_unslash( $_POST['admin_override'] ) ) : '',
         'google_api_key'    => isset( $_POST['google_api_key'] ) ? sanitize_text_field( wp_unslash( $_POST['google_api_key'] ) ) : '',
+        'fallback_image_id' => isset( $_POST['fallback_image_id'] ) ? absint( $_POST['fallback_image_id'] ) : 0,
         'revisions_enabled' => ! empty( $_POST['revisions_enabled'] ),
     );
 
@@ -223,10 +225,13 @@ function braftonium_render_general_settings_page() {
         return;
     }
 
-    $settings          = braftonium_get_general_settings();
-    $admin_override    = isset( $settings['admin_override'] ) ? $settings['admin_override'] : '';
-    $google_api_key    = isset( $settings['google_api_key'] ) ? $settings['google_api_key'] : '';
-    $microstyles       = braftonium_get_microstyles();
+    $settings           = braftonium_get_general_settings();
+    $debug_on           = ! empty( $settings['debug_on'] );
+    $admin_override     = isset( $settings['admin_override'] ) ? $settings['admin_override'] : '';
+    $google_api_key     = isset( $settings['google_api_key'] ) ? $settings['google_api_key'] : '';
+    $fallback_image_id  = isset( $settings['fallback_image_id'] ) ? absint( $settings['fallback_image_id'] ) : 0;
+    $fallback_image_url = $fallback_image_id ? wp_get_attachment_image_url( $fallback_image_id, 'medium' ) : '';
+    $microstyles        = braftonium_get_microstyles();
     // Default ON when never saved.
     $revisions_enabled = ! array_key_exists( 'revisions_enabled', $settings ) || ! empty( $settings['revisions_enabled'] );
     ?>
@@ -242,6 +247,15 @@ function braftonium_render_general_settings_page() {
 
             <table class="form-table" role="presentation">
                 <tbody>
+                    <tr>
+                        <th scope="row"><?php esc_html_e( 'Debug', 'braftonium' ); ?></th>
+                        <td>
+                            <label>
+                                <input type="checkbox" name="debug_on" value="1" <?php checked( $debug_on ); ?> />
+                                <?php esc_html_e( 'Enable debug for administrators only.', 'braftonium' ); ?>
+                            </label>
+                        </td>
+                    </tr>
                     <tr>
                         <th scope="row"><label for="braftonium-admin-override"><?php esc_html_e( 'Admin Override', 'braftonium' ); ?></label></th>
                         <td>
@@ -266,6 +280,20 @@ function braftonium_render_general_settings_page() {
                                 value="<?php echo esc_attr( $google_api_key ); ?>"
                             />
                             <p class="description"><?php esc_html_e( 'Used by legacy ACF Google Map blocks.', 'braftonium' ); ?></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row"><?php esc_html_e( 'Default Featured Image', 'braftonium' ); ?></th>
+                        <td>
+                            <input type="hidden" id="braftonium-fallback-image-id" name="fallback_image_id" value="<?php echo esc_attr( (string) $fallback_image_id ); ?>" />
+                            <div id="braftonium-fallback-image-preview" style="margin-bottom:8px;">
+                                <?php if ( $fallback_image_url ) : ?>
+                                    <img src="<?php echo esc_url( $fallback_image_url ); ?>" alt="" style="max-width:200px;height:auto;display:block;border:1px solid #ddd;" />
+                                <?php endif; ?>
+                            </div>
+                            <button type="button" class="button" id="braftonium-fallback-image-select"><?php esc_html_e( 'Select Image', 'braftonium' ); ?></button>
+                            <button type="button" class="button" id="braftonium-fallback-image-remove" style="<?php echo $fallback_image_id ? '' : 'display:none;'; ?>"><?php esc_html_e( 'Remove', 'braftonium' ); ?></button>
+                            <p class="description"><?php esc_html_e( 'Used for posts with no featured image, on listings and single posts.', 'braftonium' ); ?></p>
                         </td>
                     </tr>
                     <tr>
@@ -415,6 +443,37 @@ function braftonium_render_general_settings_page() {
         });
     })();
     </script>
+    <script>
+    (function () {
+        var frame;
+        var idField = document.getElementById('braftonium-fallback-image-id');
+        var preview = document.getElementById('braftonium-fallback-image-preview');
+        var selectBtn = document.getElementById('braftonium-fallback-image-select');
+        var removeBtn = document.getElementById('braftonium-fallback-image-remove');
+        if (!selectBtn) return;
+
+        selectBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (frame) { frame.open(); return; }
+            frame = wp.media({ title: '<?php echo esc_js( __( 'Select Default Featured Image', 'braftonium' ) ); ?>', multiple: false, library: { type: 'image' } });
+            frame.on('select', function () {
+                var attachment = frame.state().get('selection').first().toJSON();
+                idField.value = attachment.id;
+                var url = (attachment.sizes && attachment.sizes.medium) ? attachment.sizes.medium.url : attachment.url;
+                preview.innerHTML = '<img src="' + url + '" alt="" style="max-width:200px;height:auto;display:block;border:1px solid #ddd;" />';
+                removeBtn.style.display = '';
+            });
+            frame.open();
+        });
+
+        removeBtn.addEventListener('click', function (e) {
+            e.preventDefault();
+            idField.value = '';
+            preview.innerHTML = '';
+            removeBtn.style.display = 'none';
+        });
+    })();
+    </script>
     <?php
 }
 
@@ -424,6 +483,11 @@ function braftonium_render_general_settings_page() {
 add_action( 'init', 'braftonium_apply_runtime_general_settings', 1 );
 function braftonium_apply_runtime_general_settings() {
     $settings = braftonium_get_general_settings();
+
+    if ( ! empty( $settings['debug_on'] ) && current_user_can( 'manage_options' ) ) {
+        error_reporting( E_ALL );
+        ini_set( 'display_errors', 1 );
+    }
 
     if ( ! empty( $settings['admin_override'] ) && is_email( $settings['admin_override'] ) ) {
         $current_admin_email = get_option( 'admin_email' );
@@ -459,6 +523,60 @@ function braftonium_apply_revisions_support() {
             continue;
         }
         add_post_type_support( $post_type, 'revisions' );
+    }
+}
+
+/**
+ * Default featured image fallback.
+ *
+ * When a post has no real featured image, return the configured fallback
+ * attachment ID for the _thumbnail_id meta. Because this populates
+ * _thumbnail_id, has_post_thumbnail() / the_post_thumbnail() work everywhere
+ * (archives, the blog, single posts, related-post loops, blocks) without theme
+ * changes. Front-end only — never alters the editor / REST / AJAX so authors
+ * still see a truly empty featured image when none is set.
+ */
+add_filter( 'get_post_metadata', 'braftonium_fallback_featured_image', 10, 4 );
+function braftonium_fallback_featured_image( $value, $object_id, $meta_key, $single ) {
+    static $running = false;
+
+    if ( '_thumbnail_id' !== $meta_key || $running ) {
+        return $value;
+    }
+
+    if ( is_admin() || wp_doing_ajax() || ( defined( 'REST_REQUEST' ) && REST_REQUEST ) ) {
+        return $value;
+    }
+
+    $settings = braftonium_get_general_settings();
+    $fallback = isset( $settings['fallback_image_id'] ) ? absint( $settings['fallback_image_id'] ) : 0;
+    if ( ! $fallback ) {
+        return $value;
+    }
+
+    if ( 'post' !== get_post_type( $object_id ) ) {
+        return $value;
+    }
+
+    // metadata_exists() re-enters this same filter — guard against recursion.
+    $running  = true;
+    $has_real = metadata_exists( 'post', $object_id, '_thumbnail_id' );
+    $running  = false;
+
+    if ( $has_real ) {
+        return $value;
+    }
+
+    return $single ? (string) $fallback : array( $fallback );
+}
+
+/**
+ * Load the media library on the settings page (for the fallback image picker).
+ */
+add_action( 'admin_enqueue_scripts', 'braftonium_general_settings_enqueue' );
+function braftonium_general_settings_enqueue( $hook ) {
+    if ( 'toplevel_page_braftonium-settings' === $hook ) {
+        wp_enqueue_media();
     }
 }
 
