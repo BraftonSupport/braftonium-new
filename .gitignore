@@ -2,3 +2,6 @@ node_modules
 maps
 *.css
 *.map
+
+# Hand-authored (not a build artifact) — standard microstyles stylesheet.
+!general-settings/standard-microstyles.css

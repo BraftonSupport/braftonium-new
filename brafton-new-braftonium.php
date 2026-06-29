@@ -70,9 +70,14 @@ if ( braftonium_feature_enabled( 'blocks' ) ) {
 // Include useful functions (safe without ACF).
 include __DIR__ . '/general-settings/useful-functions.php';
 
-// Include patterns.
+// Standard MicroStyles — registers the generic braftonium-* utility classes in the
+// editor control + enqueues their stylesheet (front end + editor canvas).
+include __DIR__ . '/general-settings/standard-microstyles.php';
+
+// Include patterns. The loader auto-registers any header-annotated pattern file
+// in /patterns (and a theme's /braftonium/patterns) — drop a file in, no code.
 if ( braftonium_feature_enabled( 'patterns' ) ) {
-    include __DIR__ . '/patterns/include-patterns.php';
+    include __DIR__ . '/general-settings/block-patterns.php';
 }
 
 // Native settings pages (no ACF requirement). Always loaded — this is where the

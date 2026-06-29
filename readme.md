@@ -218,13 +218,43 @@ Use `Braftonium > Debug` to enable debug output for administrators and inspect t
 
 ## Patterns
 
-Patterns live in `/patterns` and are loaded when the Block Patterns feature is enabled.
+Patterns are registered **programmatically, like a block theme** — you don't call
+`register_block_pattern()` yourself. The loader (`general-settings/block-patterns.php`)
+scans `/patterns/*.php`, reads each file's header docblock, and registers it on
+`init`. Loading is gated on the **Block Patterns** feature.
 
-To add a theme pattern:
+To add a pattern, drop a file into `/patterns` (copy `patterns/_template.php`):
 
-1. Create `braftonium/patterns` inside the active theme.
-2. Add a file ending in `-pattern.php`.
-3. Register the pattern in that file using WordPress block pattern APIs.
+```php
+<?php
+/**
+ * Title:          Two Column (Text + Image)
+ * Slug:           braftonium/two-column
+ * Categories:     braftonium, braftonium-sections
+ * Keywords:       two column, split, image
+ * Viewport Width: 1200
+ * Description:    A basic two-column layout.
+ *
+ * (An optional AI / REUSE FRONTAGE docblock can follow — its @-tag lines are
+ *  ignored by WordPress, so they live safely beside the headers.)
+ */
+?>
+<!-- wp:columns -->…<!-- /wp:columns -->
+```
+
+- **Title + Slug are required**; a file lacking either is skipped (so the loader,
+  READMEs and partials are ignored). Files whose name starts with `_` (e.g.
+  `_template.php`) are also skipped.
+- Recognised headers mirror WordPress core theme patterns: `Title`, `Slug`,
+  `Description`, `Viewport Width`, `Inserter`, `Categories`, `Keywords`,
+  `Block Types`, `Post Types`, `Template Types`.
+- Base categories: `braftonium`, `braftonium-sections`, `braftonium-containers`,
+  `braftonium-components`. Any other category named in a file is auto-registered.
+- The file's **output** is the pattern content, so PHP in the file runs first
+  (e.g. `content_url()` for image paths) — exactly like core theme patterns.
+
+The loader also scans a theme's `braftonium/patterns/*.php` (same header format),
+so a theme can ship Braftonium patterns the same drop-in way.
 
 ## MicroStyles
 

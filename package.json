@@ -5,8 +5,8 @@
     "private": true,
     "license": "GPL-2.0-or-later",
     "scripts": {
-        "install:blocks": "npm install --prefix blocks",
-        "install:addon": "npm install --prefix gutenberg-addon",
+        "install:blocks": "npm install --no-save --prefix blocks",
+        "install:addon": "npm install --no-save --prefix gutenberg-addon",
         "install:all": "npm run install:blocks && npm run install:addon",
         "build:css": "npm run sass-compile --prefix blocks",
         "build:addon": "npm run build --prefix gutenberg-addon",

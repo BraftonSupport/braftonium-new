@@ -1,0 +1,95 @@
+/**
+ * Braftonium STANDARD MicroStyles.
+ *
+ * Small, combinable utility classes shipped as plugin standards (available on
+ * every Braftonium site). Registered in the "Braftonium MicroStyles" editor
+ * control by general-settings/standard-microstyles.php and enqueued on
+ * `enqueue_block_assets` (front end + editor canvas iframe).
+ *
+ * Canonical name: `braftonium-*`. The `ms-*` selector on each rule is a LEGACY
+ * ALIAS kept for back-compat with content/patterns authored before these moved
+ * into the plugin — new work should use the `braftonium-*` names.
+ *
+ * Project-agnostic: values are either generic or derived from theme.json tokens
+ * via CSS custom properties (e.g. the content-size boundary, the section-padding
+ * half), so a site can retune them without editing this file.
+ *
+ * NOTE: hand-authored CSS (not a build artifact) — see the `.gitignore` exception.
+ */
+
+/* ── Spacing ──────────────────────────────────────────────── */
+.braftonium-mt-0, .ms-mt-0 { margin-top: 0 !important; }
+.braftonium-mb-0, .ms-mb-0 { margin-bottom: 0 !important; }
+
+/* Halve a section's top/bottom padding where it butts against another section in
+   the SAME background-colour group, so contiguous same-colour sections don't
+   stack DOUBLE padding at the seam (the group's OUTER edges keep full padding).
+   Generalised: the half-value comes from `--braftonium-section-padding-half`,
+   which a theme can set to exactly half its own `.section` padding; the fallback
+   matches a clamp(3rem,6vw,6.25rem) section scale. Apply: first section in a
+   group → -pb-half; middle → both; last → -pt-half. */
+.braftonium-pt-half, .ms-pt-half {
+	padding-top: var(--braftonium-section-padding-half, clamp(1.5rem, 3vw, 3.125rem)) !important;
+}
+.braftonium-pb-half, .ms-pb-half {
+	padding-bottom: var(--braftonium-section-padding-half, clamp(1.5rem, 3vw, 3.125rem)) !important;
+}
+
+/* Break a block out to the full viewport width (use sparingly) — apply on a
+   container (a constrained `.section` band, etc.) to make it span edge to edge.
+   `!important` is REQUIRED: it must beat core's root-padding rule
+   `.has-global-padding > .alignfull { margin: 0 }` (0,2,0). Pair with `align:full`
+   so the constrained inner content still centres at the content width. */
+.braftonium-full-bleed, .ms-full-bleed {
+	width: 100vw !important;
+	max-width: 100vw !important;
+	margin-left: calc(50% - 50vw) !important;
+	margin-right: calc(50% - 50vw) !important;
+	/* Inner gutter derived from the theme's content-size token (no hardcoded
+	   breakpoint): 1rem while the viewport is within content-size + 2rem, ramping
+	   to 0 above it (where the constrained inner content centres with its own
+	   margin). The `* 9999` makes the clamp behave as a step at that boundary. */
+	padding-inline: clamp(
+		0px,
+		(var(--wp--style--global--content-size, 1201px) + 2rem - 100vw) * 9999,
+		1rem
+	) !important;
+}
+
+/* Dark scrim over a container's background image so light text stays legible.
+   Use on a container whose content is positioned above the overlay. */
+.braftonium-overlay-dark, .ms-overlay-dark { position: relative; }
+.braftonium-overlay-dark::after, .ms-overlay-dark::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.7);
+	pointer-events: none;
+}
+
+/* Span N columns inside a grid-layout container (e.g. a CTA card filling the
+   remaining 2 of 3 grid columns). Collapses to a single column on mobile. */
+.braftonium-col-span-2, .ms-col-span-2 { grid-column: span 2; }
+.braftonium-col-span-3 { grid-column: span 3; }
+.braftonium-col-span-4 { grid-column: span 4; }
+@media only screen and (max-width: 781px) {
+	.braftonium-col-span-2, .ms-col-span-2,
+	.braftonium-col-span-3,
+	.braftonium-col-span-4 { grid-column: auto; }
+}
+
+/* ── Typography ───────────────────────────────────────────── */
+.braftonium-uppercase, .ms-uppercase           { text-transform: uppercase; }
+.braftonium-tracking-tight, .ms-tracking-tight  { letter-spacing: -0.01em; }
+.braftonium-tracking-wide, .ms-tracking-wide    { letter-spacing: 0.08em; }
+
+/* Constrain a block of text to a comfortable reading measure. */
+.braftonium-measure, .ms-measure { max-width: 60ch; }
+
+/* Eyebrow: the small uppercase label above a heading. Size/colour stay on the
+   block; this just applies the eyebrow treatment. */
+.braftonium-eyebrow, .ms-eyebrow {
+	text-transform: uppercase;
+	letter-spacing: 0.08em;
+	font-weight: 700;
+}

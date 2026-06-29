@@ -1,12 +1,12 @@
 {
 	"name": "braftonium-blocks",
 	"version": "1.0.0",
-	"description": "SCSS compilation for Braftonium blocks. Each block keeps its .scss alongside its files (e.g. blocks/banner/banner.scss) and compiles in place to a same-name .css (blocks/banner/banner.css).",
+	"description": "SCSS compilation for Braftonium blocks. Each block keeps its .scss alongside its files (e.g. blocks/banner/banner.scss) and compiles in place to a same-name .css (blocks/banner/banner.css). Compiles the explicit block source dirs (NOT '.') so it never descends into node_modules — npm auto-creates a recursive braftonium symlink there that would otherwise make sass loop forever. Add new block dirs to both scripts below.",
 	"private": true,
 	"license": "GPL-2.0-or-later",
 	"scripts": {
-		"sass-watch": "sass --watch . --no-source-map",
-		"sass-compile": "sass . --no-source-map"
+		"sass-watch": "sass --watch banner:banner cta:cta custom-list:custom-list custom-list-item:custom-list-item custom-row:custom-row slide:slide slider:slider --no-source-map",
+		"sass-compile": "sass banner:banner cta:cta custom-list:custom-list custom-list-item:custom-list-item custom-row:custom-row slide:slide slider:slider --no-source-map"
 	},
 	"devDependencies": {
 		"sass": "~1.77.8"
