@@ -1,216 +1,182 @@
 const { __ } = wp.i18n;
 const { addFilter } = wp.hooks;
-const { Fragment }	= wp.element;
-const { InspectorAdvancedControls }	= wp.blockEditor;
-const { createHigherOrderComponent } = wp.compose;
-const { SelectControl } = wp.components;
-const  apiFetch  = wp.apiFetch;
-const {compose } = wp.compose;
-const useSelect  = wp.data.useSelect;
-const withSelect = wp.data.withSelect;
-const { Component } = wp.element;
-const {useEffect} = wp.element;
+const { Fragment } = wp.element;
+const { InspectorAdvancedControls } = wp.blockEditor;
+const { useState, useEffect } = wp.element;
+const apiFetch = wp.apiFetch;
 import Select from 'react-select';
+
 /**
- * Add custom attribute for mobile visibility.
+ * Add the persisted Braftonium attribute to (almost) every block.
+ *
+ * Only `braftoniumClasses` (the chosen microstyles) is persisted. The available
+ * options + loading state are transient editor UI and live in component state —
+ * persisting them used to leak `classesFetched`/`loading` into saved post content.
  *
  * @param {Object} settings Settings for the block.
- *
- * @return {Object} settings Modified settings.
+ * @return {Object} Modified settings.
  */
- function addAttributes( settings ) {
-	
-	//check if object exists for old Gutenberg version compatibility
-	if( typeof settings.attributes !== 'undefined' && settings.name !== 'gravityforms/form' ){
-	
+function addAttributes( settings ) {
+	// Guard for old-Gutenberg compatibility; skip Gravity Forms blocks.
+	if ( typeof settings.attributes !== 'undefined' && settings.name !== 'gravityforms/form' ) {
 		settings.attributes = Object.assign( settings.attributes, {
-			braftoniumClasses:{ 
+			braftoniumClasses: {
 				type: 'array',
 				default: [],
-			}
-		});
-		settings.attributes = Object.assign( settings.attributes, {
-			availableClasses:{ 
-				type: 'array',
-				default: [],
-			}
-		});
-		settings.attributes = Object.assign( settings.attributes, {
-			classesFetched:{ 
-				type: 'boolean',
-				default: false,
-			}
-		});
-		settings.attributes = Object.assign( settings.attributes, {
-			loading:{ 
-				type: 'boolean',
-				default: false,
-			}
-		});
-    
+			},
+		} );
 	}
-
 	return settings;
 }
-async function getClassList(setAttributes, blockType){
-	if(typeof window.debugblocks !== 'undefined' && window.debugblocks === true){
-		console.log(blockType);
-	}
-	if(blockType == 'gravityforms/form'){
-		setAttributes({availableClasses: [], loading: false});
-		return [];
-	}
-		const data = await apiFetch(
-			{
-				method: 'post',
-				path: '/braftonium/v1/braftonium-class-list',
-				data: {
-					blockType
-				}
-			}
-		);
-		// console.log(data);
-		setAttributes({availableClasses: data});
-		setAttributes({loading: false});
-		return data;
-}
+
 addFilter(
 	'blocks.registerBlockType',
 	'editorskit/custom-attributes',
 	addAttributes
 );
+
 /**
- * Add mobile visibility controls on Advanced Block Panel.
+ * Fetch the microstyle class list for a block type. Returns the data (no side
+ * effects) so the caller owns state.
  *
- * @param {function} BlockEdit Block edit component.
- *
- * @return {function} BlockEdit Modified block edit component.
+ * @param {string} blockType Block name.
+ * @return {Promise<Array>} The class options.
  */
- const withAdvancedControls =  (BlockEdit ) => {
-	return (props)=>{
-		const {
-			attributes,
-			setAttributes,
-			isSelected
-		} = props;
+async function getClassList( blockType ) {
+	if ( ! blockType || blockType === 'gravityforms/form' ) {
+		return [];
+	}
+	const data = await apiFetch( {
+		method: 'post',
+		path: '/braftonium/v1/braftonium-class-list',
+		data: { blockType },
+	} );
+	return Array.isArray( data ) ? data : [];
+}
 
-		const {
-			braftoniumClasses,
-			availableClasses,
-			classesFetched,
-			loading
-		} = attributes;
+/**
+ * Add the "Braftonium MicroStyles" control to the Advanced panel of every block.
+ *
+ * @param {Function} BlockEdit Block edit component.
+ * @return {Function} Wrapped component.
+ */
+const withAdvancedControls = ( BlockEdit ) => {
+	return ( props ) => {
+		const { attributes, setAttributes, isSelected, name } = props;
+		const { braftoniumClasses = [] } = attributes;
 
-		// Fetch the available micro-style classes when a block is selected.
-		// Runs as a side effect (never during render) to respect the Rules of Hooks.
-		useEffect(()=>{
-			if(isSelected && !classesFetched){
-				setAttributes({classesFetched: true, loading: true});
-				getClassList(setAttributes, props.name);
+		// Transient UI state — NOT persisted block attributes.
+		const [ availableClasses, setAvailableClasses ] = useState( [] );
+		const [ loading, setLoading ] = useState( false );
+		const [ fetched, setFetched ] = useState( false );
+
+		// Side effect belongs in useEffect (unconditional hook). Fetch the class
+		// list once the block is selected; reset when deselected.
+		useEffect( () => {
+			let cancelled = false;
+
+			if ( isSelected && ! fetched ) {
+				setLoading( true );
+				getClassList( name )
+					.then( ( data ) => {
+						if ( cancelled ) {
+							return;
+						}
+						setAvailableClasses( data );
+						setLoading( false );
+						setFetched( true );
+					} )
+					.catch( () => {
+						if ( cancelled ) {
+							return;
+						}
+						setLoading( false );
+						setFetched( true );
+					} );
 			}
-			if(!isSelected && classesFetched){
-				setAttributes({classesFetched: false, loading: false});
-			}
-		}, [isSelected]);
 
-		function handleClassSelection(newClasses){
-			
-			var ClassValues = Array.from(newClasses, x=>x.value);
-			
-			// console.log(newSize, attributes);
-			var classes = attributes.className? attributes.className : "";
-			var classes = classes.split(" ");
-			var classOptionValues = availableClasses.map(function(item){
-				return item.value;
-			})
-			var nonOptions = classes.filter(item=>{
-				if(classOptionValues.includes(item)){
-					return false;
-				}
-				return true;
-			})
-			setAttributes( {braftoniumClasses: newClasses});
-			setAttributes( {  className:  nonOptions.join(" ")+" "+ClassValues.join(" ") } )
+			if ( ! isSelected && fetched ) {
+				setFetched( false );
+			}
+
+			return () => {
+				cancelled = true;
+			};
+		}, [ isSelected, name, fetched ] );
+
+		function handleClassSelection( newClasses ) {
+			const classValues = Array.from( newClasses || [], ( item ) => item.value );
+			const existing = ( attributes.className ? attributes.className : '' ).split( ' ' );
+			const optionValues = availableClasses.map( ( item ) => item.value );
+			// Keep any classes that aren't Braftonium options (manually added).
+			const nonOptions = existing.filter( ( item ) => item && ! optionValues.includes( item ) );
+
+			setAttributes( { braftoniumClasses: newClasses || [] } );
+			setAttributes( { className: [ ...nonOptions, ...classValues ].join( ' ' ).trim() } );
 		}
-		// console.log('attribute classes',availableClasses);
-		// classOptions = availableClasses;
-		// console.log('my data',classOptions);
-		// useEffect(async ()=>{
-		// 	if(isSelected){
-		// 		console.log('help');
-		// 	}
-		// });
-		if(isSelected && loading){
+
+		if ( ! isSelected ) {
+			return <BlockEdit { ...props } />;
+		}
+
+		if ( loading ) {
 			return (
 				<Fragment>
-					<BlockEdit {...props} />
+					<BlockEdit { ...props } />
 					<InspectorAdvancedControls>
-						<div>Currently Loading MicroStyles....</div>
+						<div>{ __( 'Currently loading MicroStyles…' ) }</div>
 					</InspectorAdvancedControls>
 				</Fragment>
-			)
+			);
 		}
-		if(isSelected && !loading && classesFetched && availableClasses.length == 0){
+
+		if ( fetched && availableClasses.length === 0 ) {
 			return (
 				<Fragment>
-					<BlockEdit {...props} />
+					<BlockEdit { ...props } />
 					<InspectorAdvancedControls>
-						<div>There are no MicroStyles for this block.</div>
+						<div>{ __( 'There are no MicroStyles for this block.' ) }</div>
 					</InspectorAdvancedControls>
 				</Fragment>
-			)
+			);
 		}
+
 		return (
-
 			<Fragment>
-				<BlockEdit {...props} />
-
-				{ isSelected &&
-					<InspectorAdvancedControls>
-						<div className="special">
-							<label>Braftonium Microstyles</label>
-							<Select 
-									size=""
-									help={__('These are micro styles for your theme. They are distint from block styles in that these will contain a more focused style option. Hold Ctrl and click the classes you wish to add or remove.')}
-									isMulti={true}
-									label="Braftonium MicroStyles"
-									value={ braftoniumClasses }
-									options={availableClasses}
-									onChange={handleClassSelection}
-								/>
-								<span>These are micro styles for your theme. They are distint from block styles in that these will contain a more focused style option. Hold Ctrl and click the classes you wish to add or remove.</span>
-								</div>
-						{/* <ToggleControl
-							label={ __( 'Mobile Devices Visibity' ) }
-							checked={ !! visibleOnMobile }
-							onChange={ () => setAttributes( {  visibleOnMobile: ! visibleOnMobile } ) }
-							help={ !! visibleOnMobile ? __( 'Showing on mobile devices.' ) : __( 'Hidden on mobile devices.' ) }
-						/> */}
-					</InspectorAdvancedControls>
-				}
-
+				<BlockEdit { ...props } />
+				<InspectorAdvancedControls>
+					<div className="braftonium-microstyles">
+						<label>{ __( 'Braftonium MicroStyles' ) }</label>
+						<Select
+							isMulti={ true }
+							label={ __( 'Braftonium MicroStyles' ) }
+							value={ braftoniumClasses }
+							options={ availableClasses }
+							onChange={ handleClassSelection }
+						/>
+						<span>
+							{ __(
+								'These are micro styles for your theme. They are distinct from block styles in that they contain a more focused style option. Hold Ctrl and click the classes you wish to add or remove.'
+							) }
+						</span>
+					</div>
+				</InspectorAdvancedControls>
 			</Fragment>
 		);
-	}
-}
+	};
+};
+
 addFilter(
 	'editor.BlockEdit',
 	'editorskit/custom-advanced-control',
 	withAdvancedControls
 );
-function applyExtraClass( extraProps, blockType, attributes ) {
 
-	const { braftoniumClasses } = attributes;
-	// console.log("try to apply");
-	//check if attribute exists for old Gutenberg version compatibility
-	//add class only when visibleOnMobile = false
-	//add allowedBlocks restriction
-	
-	// if ( typeof braftoniumClasses !== 'undefined' && braftoniumClasses.length > 0) {
-		
-	// 	extraProps.className = braftoniumClasses.join(" ");
-	// }
-
+/**
+ * Reserved: apply extra classes at save time (currently a no-op — classes are
+ * written to `className` directly in handleClassSelection).
+ */
+function applyExtraClass( extraProps ) {
 	return extraProps;
 }
 
