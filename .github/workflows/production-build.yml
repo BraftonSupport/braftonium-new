@@ -2,7 +2,7 @@ name: Production Build
 
 on:
   release:
-    types: [published]  
+    types: [published]
 
 jobs:
   calculate-version:
@@ -13,11 +13,12 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.release.tag_name }}
           fetch-depth: 0
 
-      - uses: benjlevesque/short-sha@v1.2
+      - uses: benjlevesque/short-sha@v3.0
         id: short-sha
         with:
           length: 7
@@ -34,62 +35,41 @@ jobs:
         run: |
           echo '### Build Version - ${{ steps.version.outputs.version }}' >> $GITHUB_STEP_SUMMARY
           echo '```${{ steps.version.outputs.version }} ```' >> $GITHUB_STEP_SUMMARY
+
   build-package:
-    name: Build Plugin Package 
+    name: Build Plugin Package
     runs-on: ubuntu-latest
     needs: [calculate-version]
+    permissions:
+      contents: write
     steps:
       - name: Checkout repo and submodules
-        uses: actions/checkout@v1
+        uses: actions/checkout@v4
         with:
+          ref: ${{ github.event.release.tag_name }}
           submodules: recursive
+          fetch-depth: 0
+
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: '15.x'
+          node-version: '20.x'
+
       - name: Compile Sass
         run: cd ./blocks && npm install && npm run sass-compile
+
       - name: Build React Addon
         run: cd ./gutenberg-addon && npm install && npm run build
-      # Artifacts
-      - name: Store Artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: braftonium
-          path: |
-            ./
-            !node_modules
-            !blocks/node_modules
-            !gutenberg-addon/node_modules
-            !.git
-            !.github
-          # zip the bundle
-      - name: Download Artifacts
-        uses: actions/download-artifact@v3
-        with: 
-          name: braftonium
-          path: ./dist
-      - name: zip bundle
-        uses: vimtor/action-zip@v1
-        with:
-          files: ./dist
-          dest: braftonium.zip
-      # Get latest release notes, so we can attach assets and pull text
-      - name: Fetch Latest Release
-        id: fetch-latest-release
-        uses: thebritican/fetch-latest-release@v2.0.0
-        with:
-          github_token: ${{ github.token }}
-      - run: echo "Latest Release - ${{ steps.fetch-latest-release.outputs.name }}"
 
-      # upload the bundle zip
-      - name: Upload Release Bundle Asset
-        uses: actions/upload-release-asset@v1.0.2
+      - name: Stamp version + name and assemble plugin zip
+        run: bash bin/package-plugin.sh "${{ needs.calculate-version.outputs.version }}"
+
+      # Attach the official, versioned package to the GitHub Release. This is
+      # the asset Composer pulls (see "Install via Composer" in readme.md).
+      - name: Attach package to release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.event.release.tag_name }}
+          files: braftonium.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.fetch-latest-release.outputs.upload_url }}
-          asset_path: ./braftonium.zip
-          asset_name: braftonium.zip
-          asset_content_type: application/zip
-          # send staging release email notification

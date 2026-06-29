@@ -1,14 +1,11 @@
-name: Staging Build
+name: Dev Build
 
 on:
   push:
-    # Sequence of patterns matched against refs/heads
     branches:
-      # Push events to branches matching refs/heads/mona/octocat
       - 'develop'
-    # Sequence of patterns matched against refs/tags
     tags-ignore:
-      - v*.*    
+      - v*.*
 
 jobs:
   calculate-version:
@@ -19,11 +16,11 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v2.4.0
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - uses: benjlevesque/short-sha@v1.2
+      - uses: benjlevesque/short-sha@v3.0
         id: short-sha
         with:
           length: 7
@@ -40,20 +37,36 @@ jobs:
         run: |
           echo '### Build Version - ${{ steps.version.outputs.version }}' >> $GITHUB_STEP_SUMMARY
           echo '```${{ steps.version.outputs.version }} ```' >> $GITHUB_STEP_SUMMARY
+
   build-package:
-    name: Build Plugin Package 
+    name: Build Plugin Package
     runs-on: ubuntu-latest
     needs: [calculate-version]
     steps:
       - name: Checkout repo and submodules
-        uses: actions/checkout@v1
+        uses: actions/checkout@v4
         with:
           submodules: recursive
+          fetch-depth: 0
+
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: '15.x'
+          node-version: '20.x'
+
       - name: Compile Sass
         run: cd ./blocks && npm install && npm run sass-compile
+
       - name: Build React Addon
         run: cd ./gutenberg-addon && npm install && npm run build
+
+      - name: Stamp version + name and assemble plugin zip
+        run: bash bin/package-plugin.sh "${{ needs.calculate-version.outputs.version }}"
+
+      # Installable zip for manual "Upload Plugin" installs (WordPress admin).
+      - name: Upload installable plugin artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: braftonium-${{ needs.calculate-version.outputs.version }}
+          path: braftonium.zip
+          if-no-files-found: error

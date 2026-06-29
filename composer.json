@@ -1,0 +1,17 @@
+{
+    "name": "braftonsupport/braftonium",
+    "description": "Braftonium — native-first WordPress plugin: Gutenberg blocks, custom posts/taxonomies, settings and legacy ACF compatibility.",
+    "type": "wordpress-plugin",
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://www.brafton.com",
+    "authors": [
+        { "name": "Jonathan Kowensky" },
+        { "name": "Deryk King" },
+        { "name": "James Allan" },
+        { "name": "Fritz Bester" }
+    ],
+    "require": {
+        "php": ">=7.4",
+        "composer/installers": "^1.0 || ^2.0"
+    }
+}
