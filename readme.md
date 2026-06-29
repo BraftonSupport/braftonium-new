@@ -66,6 +66,36 @@ Notes:
 - If this repository is **private**, Composer needs a GitHub token to download the release asset. Provide one with `composer config --global github-oauth.github.com <TOKEN>` (a token with `repo` scope).
 - The `extra.installer-paths` block is only required if your WordPress lives somewhere other than the Composer project root; adjust the path to match your install.
 
+## Building & Development
+
+All assets are compiled from the repo root with a single command. The root `package.json` orchestrates each buildable component (it shells into the sub-projects with `npm --prefix`, so it works the same on Windows and on the Linux CI runners).
+
+Requires Node.js 20+.
+
+```bash
+npm run build      # install all sub-project deps, then compile everything (CSS + addon JS)
+npm run compile    # recompile without reinstalling (fast local iteration)
+npm run watch      # watch + recompile block SCSS while developing
+```
+
+`npm run build` is what the GitHub Actions workflows run before packaging. It currently covers:
+
+- **Block styles** — compiles every `blocks/**/*.scss` in place to a same-name `.css` (the `blocks` sub-project). Compiled CSS is git-ignored.
+- **Gutenberg addon** — `wp-scripts build` for the microstyles editor script (the `gutenberg-addon` sub-project).
+
+### Adding a new buildable component
+
+The build script needs updating only when you add a component that has its **own build step**:
+
+- **A new block with just SCSS** — nothing to do. The block `sass-compile` step globs the whole `blocks/` tree, so a new `blocks/<name>/<name>.scss` is picked up automatically.
+- **A new component with its own `package.json` build** (e.g. another JS bundle) — add it to the root `package.json` scripts:
+  1. `"install:<name>": "npm install --prefix <dir>"` and append it to `install:all`.
+  2. `"build:<name>": "npm run build --prefix <dir>"` and append it to `compile`.
+
+  That keeps `npm run build` (and therefore both workflows) building the new component with no workflow edits.
+
+The packaging itself (version stamping, renaming, zipping) lives in `bin/package-plugin.sh` and runs after the build — see the workflows in `.github/workflows/`.
+
 ## Current Architecture
 
 1. Native blocks live in `/blocks` and register from each block's `block.json`.

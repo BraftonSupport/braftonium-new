@@ -20,7 +20,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - uses: benjlevesque/short-sha@v3.0
+      - uses: benjlevesque/short-sha@v1.2
         id: short-sha
         with:
           length: 7
@@ -54,11 +54,8 @@ jobs:
         with:
           node-version: '20.x'
 
-      - name: Compile Sass
-        run: cd ./blocks && npm install && npm run sass-compile
-
-      - name: Build React Addon
-        run: cd ./gutenberg-addon && npm install && npm run build
+      - name: Build all assets
+        run: npm run build
 
       - name: Stamp version + name and assemble plugin zip
         run: bash bin/package-plugin.sh "${{ needs.calculate-version.outputs.version }}"

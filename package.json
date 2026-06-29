@@ -1,0 +1,17 @@
+{
+    "name": "braftonium",
+    "version": "1.0.0",
+    "description": "Root build orchestrator for the Braftonium plugin. Compiles every buildable component (block SCSS + gutenberg-addon JS) with one command.",
+    "private": true,
+    "license": "GPL-2.0-or-later",
+    "scripts": {
+        "install:blocks": "npm install --prefix blocks",
+        "install:addon": "npm install --prefix gutenberg-addon",
+        "install:all": "npm run install:blocks && npm run install:addon",
+        "build:css": "npm run sass-compile --prefix blocks",
+        "build:addon": "npm run build --prefix gutenberg-addon",
+        "compile": "npm run build:css && npm run build:addon",
+        "build": "npm run install:all && npm run compile",
+        "watch": "npm run sass-watch --prefix blocks"
+    }
+}
