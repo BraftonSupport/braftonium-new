@@ -1,0 +1,32 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "braftonium/nav-dropdown",
+	"version": "1.0.0",
+	"title": "Nav Dropdown",
+	"category": "braftonium",
+	"icon": "menu",
+	"description": "A top-level navigation item with an editable dropdown panel (heading + any content). Layout: dropdown, fixed width, grid, or full-width mega menu.",
+	"keywords": [ "navigation", "menu", "dropdown", "mega" ],
+	"parent": [ "core/navigation" ],
+	"textdomain": "braftonium",
+	"attributes": {
+		"label": { "type": "string", "default": "" },
+		"url": { "type": "string", "default": "" },
+		"linkTarget": { "type": "string", "default": "" },
+		"layout": { "type": "string", "default": "dropdown" },
+		"panelWidth": { "type": "number", "default": 400 },
+		"columns": { "type": "number", "default": 3 },
+		"rows": { "type": "number", "default": 0 }
+	},
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"customClassName": true,
+		"reusable": false
+	},
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php"
+}

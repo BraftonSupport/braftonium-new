@@ -8,6 +8,18 @@
  * Structure: the outer .braftonium-slide is the slick cell; .braftonium-slide__inner
  * is the visible card. The cell carries the horizontal gap (see slide.scss) so
  * adjacent cards don't touch, while the card holds the border / background.
+ *
+ * ───────────────────────────────────────────────────────────────────────────
+ * AI / REUSE FRONTAGE — block usage metadata, NOT parsed by WordPress.
+ * @intent       One slide/card inside a slider carousel.
+ * @options      bgColor RGBA (card background, rendered only when a>0). Only option.
+ * @parent       braftonium/slider ONLY. reusable: false.
+ * @innerblocks  Template = core/paragraph; then any blocks.
+ * @render       div.braftonium-slide (the Slick cell, carries the horizontal gap) ›
+ *               div.braftonium-slide__inner (the visible card, inline bg if a>0) › InnerBlocks.
+ * @classes      .braftonium-slide .braftonium-slide__inner
+ * @usewhen      Always, as the repeated unit inside slider.
+ * ───────────────────────────────────────────────────────────────────────────
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 

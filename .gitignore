@@ -5,3 +5,5 @@ maps
 
 # Hand-authored (not a build artifact) — standard microstyles stylesheet.
 !general-settings/standard-microstyles.css
+
+blocks/build

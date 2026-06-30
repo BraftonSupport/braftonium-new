@@ -1,0 +1,125 @@
+/**
+ * Front-end styling for braftonium/nav-dropdown — SELF-CONTAINED and generic.
+ *
+ * No theme coupling: neutral defaults, with optional `--wp--preset--*` token
+ * overrides (and `--bnd-*` knobs) so any theme can retune it without editing the
+ * block. Desktop (≥782px) shows the panel as an absolute hover/focus dropdown;
+ * below that the panel sits in flow (visible) so touch users can reach it.
+ */
+
+.braftonium-nav-dropdown {
+	position: relative;
+	list-style: none;
+
+	// The trigger link is the positioning context for the hover bridge.
+	> .wp-block-navigation-item__content {
+		position: relative;
+	}
+
+	&__panel {
+		margin: 0;
+		padding: var(--bnd-panel-padding, 1.5rem);
+		background: var(--bnd-panel-bg, var(--wp--preset--color--white, #fff));
+		color: var(--bnd-panel-color, var(--wp--preset--color--contrast, #1a1a1a));
+		box-shadow: var(--bnd-panel-shadow, 0 8px 24px rgba(0, 0, 0, 0.12));
+
+		> .wp-block-heading {
+			margin: 0 0 1rem;
+			font-weight: 700;
+		}
+
+		.wp-block-list {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+
+			li { margin: 0; }
+
+			a {
+				display: inline-block;
+				padding: 0.4rem 0;
+				color: inherit;
+				text-decoration: none;
+				white-space: nowrap;
+
+				&:hover { color: var(--wp--preset--color--primary, currentColor); }
+			}
+		}
+	}
+
+	// ── Desktop: absolute, hover/focus-revealed dropdown ──────────────────────
+	@media (min-width: 782px) {
+		&__panel {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			z-index: 100;
+			margin-top: var(--bnd-panel-gap, 0.5rem);
+			min-width: 240px;
+			opacity: 0;
+			visibility: hidden;
+			transition: opacity 0.15s ease-in-out;
+		}
+
+		// Hover bridge across the gap so the panel doesn't close mid-travel.
+		&:hover > .wp-block-navigation-item__content::before,
+		&:focus-within > .wp-block-navigation-item__content::before {
+			content: "";
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 100%;
+			height: var(--bnd-panel-gap, 0.5rem);
+		}
+
+		&:hover > &__panel,
+		&:focus-within > &__panel {
+			opacity: 1;
+			visibility: visible;
+		}
+
+		// Layout variants (the block's "Dropdown layout" option).
+		&__panel--dropdown {
+			width: max-content;
+			max-width: 90vw;
+		}
+
+		&__panel--fixed {
+			width: var(--panel-width, 400px);
+			min-width: 0;
+		}
+
+		&__panel--grid {
+			display: grid;
+			grid-template-columns: repeat(var(--panel-cols, 3), minmax(0, 1fr));
+			gap: 1.25rem 2.5rem;
+			width: max-content;
+			max-width: 92vw;
+
+			> .wp-block-heading { grid-column: 1 / -1; }
+
+			// Optional explicit rows → fill column-major (heading no longer spans).
+			&.has-rows {
+				grid-template-rows: repeat(var(--panel-rows, 2), auto);
+				grid-auto-flow: column;
+				width: auto;
+
+				> .wp-block-heading { grid-column: auto; }
+			}
+		}
+
+		// Full-width mega: a wide left-aligned panel with a grid inside. Generic
+		// (no fixed positioning / header-height dependency) — a theme can widen it
+		// to true full-bleed via the block's classes if desired.
+		&__panel--full {
+			left: 0;
+			width: min(96vw, 1100px);
+			display: grid;
+			grid-template-columns: repeat(var(--panel-cols, 3), minmax(0, 1fr));
+			gap: 1.5rem 2.5rem;
+			padding-block: 2rem;
+
+			> .wp-block-heading { grid-column: 1 / -1; }
+		}
+	}
+}

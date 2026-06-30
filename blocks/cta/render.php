@@ -5,6 +5,22 @@
  * @var array  $attributes
  * @var string $content
  * @var WP_Block $block
+ *
+ * ───────────────────────────────────────────────────────────────────────────
+ * AI / REUSE FRONTAGE — block usage metadata, NOT parsed by WordPress.
+ * @intent       Call-to-action / promo band: like banner but the starter content
+ *               includes a buttons row for CTAs.
+ * @options      backgroundImage (id) + backgroundImageUrl/Alt (MediaUpload);
+ *               overlayColor RGBA (default TRANSPARENT); alignContent left|center|right.
+ *               supports.color.background (block-level background).
+ * @innerblocks  Free InnerBlocks; template = core/heading (h2) + core/paragraph + core/buttons.
+ * @render       div.braftonium-cta › img.background-image + div.overlay (inline rgba)
+ *               + div.cta-content.align-wrap-{left|center|right} › InnerBlocks.
+ * @classes      .braftonium-cta .background-image .overlay .cta-content .align-wrap-*
+ * @microstyles  braftonium-bg-full / braftonium-bg-wrap (background width) apply.
+ * @usewhen      A CTA/conversion band (image + headline + buttons).
+ * @avoidwhen    No CTA buttons (use banner); plain content row (use custom-row).
+ * ───────────────────────────────────────────────────────────────────────────
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 

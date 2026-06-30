@@ -5,6 +5,23 @@
  * @var array  $attributes
  * @var string $content
  * @var WP_Block $block
+ *
+ * ───────────────────────────────────────────────────────────────────────────
+ * AI / REUSE FRONTAGE — block usage metadata, NOT parsed by WordPress.
+ * @intent       Full-width hero band: a background image with a colour overlay and
+ *               overlaid content (heading + paragraph), horizontally positionable.
+ * @options      backgroundImage (id) + backgroundImageUrl/Alt (MediaUpload);
+ *               overlayColor RGBA {r,g,b,a} (default 50% black); alignContent
+ *               left|center|right (RadioControl).
+ * @innerblocks  Free InnerBlocks; starter template = core/heading (h2) + core/paragraph.
+ * @render       div.braftonium-banner › img.background-image + div.overlay (inline rgba)
+ *               + div.wrap.align-wrap-{left|center|right} › InnerBlocks.
+ * @classes      .braftonium-banner .background-image .overlay .wrap .align-wrap-*
+ * @microstyles  braftonium-bg-full / braftonium-bg-wrap (background width) apply.
+ * @supports     align wide/full, spacing (margin+padding), anchor, customClassName.
+ * @usewhen      A hero/intro band needs an image with a darkening scrim + overlaid copy.
+ * @avoidwhen    No background image (use core/group or custom-row); need a buttons row (use cta).
+ * ───────────────────────────────────────────────────────────────────────────
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 

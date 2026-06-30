@@ -4,6 +4,24 @@
  *
  * @var array  $attributes
  * @var string $content
+ *
+ * ───────────────────────────────────────────────────────────────────────────
+ * AI / REUSE FRONTAGE — block usage metadata, NOT parsed by WordPress.
+ * @intent       A responsive CSS-grid of uniform items (cards/features), with per-breakpoint
+ *               column count, gap and container width, plus optional background image/colour.
+ * @options      media + backgroundPosition (same ±500px offsets) + bgColor RGBA; PLUS a `layout`
+ *               object with desktop/tablet/mobile tiers, each {width px (0=full, 0–1920),
+ *               columns (1–6), gap px (0–100)}. Defaults: desktop{1200,3,24} tablet{0,2,20}
+ *               mobile{0,1,16}.
+ * @innerblocks  allowedBlocks: braftonium/custom-list-item ONLY; template = 3 items; wrapper
+ *               .custom-list-content. Render emits a scoped <style> (mobile-first + @768 + @1024).
+ * @render       div.braftonium-custom-list.{uid} (inline bg-color) + scoped <style> +
+ *               img.background-image + div.custom-list-content (CSS grid) › custom-list-items.
+ * @classes      .braftonium-custom-list .custom-list-content .background-image
+ * @microstyles  braftonium-bg-full / braftonium-bg-wrap.
+ * @usewhen      A uniform grid of repeated items with explicit columns/gap per breakpoint.
+ * @avoidwhen    A core columns/grid already does it; items aren't uniform; need a carousel (slider).
+ * ───────────────────────────────────────────────────────────────────────────
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 

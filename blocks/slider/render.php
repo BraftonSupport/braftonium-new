@@ -4,6 +4,28 @@
  *
  * @var array  $attributes
  * @var string $content
+ *
+ * ───────────────────────────────────────────────────────────────────────────
+ * AI / REUSE FRONTAGE — block usage metadata, NOT parsed by WordPress.
+ * @intent       A configurable content carousel (Slick v1.8.1): dots, arrows (text or image),
+ *               autoplay/transition speed, infinite loop, per-tier slides-to-show/scroll.
+ * @options      preview (editor live-carousel toggle); dotsVisibility visible|hidden;
+ *               dotsPlacement top|bottom (if dots); arrowsVisibility visible|hidden; arrowsType
+ *               text|image (if arrows); arrowsLeftText/RightText ("Previous"/"Next");
+ *               arrowsLeftImage/RightImage; playbackAutoplaySpeed 1000–10000 (3000);
+ *               playbackSlideSpeed 100–2000 (300); presentationInfinite; responsive
+ *               desktop/tablet/cell {breakpoint, slidesToShow 1–6, slidesToScroll 1–6}
+ *               (bp 1920/1024/600, show 3/2/1); bgColor RGBA.
+ * @innerblocks  allowedBlocks: braftonium/slide ONLY; template = 2 slides; orientation horizontal.
+ * @render       div.braftonium-slider.slick-dots-{top|bottom} with data-slick-config JSON; a jQuery
+ *               init wraps slides in .braftonium-slider-track and boots Slick (enqueued when
+ *               has_block('braftonium/slider')).
+ * @classes      .braftonium-slider .braftonium-slider-track .slick-dots-{top|bottom}
+ * @microstyles  braftonium-bg-full / braftonium-bg-wrap.
+ * @usewhen      A content carousel/slider with configurable responsive behaviour.
+ * @avoidwhen    A static row/grid (custom-row/custom-list); only one item.
+ * @editor-note  Leave `preview` OFF while authoring slides; flip ON to sanity-check the carousel.
+ * ───────────────────────────────────────────────────────────────────────────
  */
 if ( ! defined( 'ABSPATH' ) ) { exit; }
 

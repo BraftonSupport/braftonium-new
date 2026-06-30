@@ -1,0 +1,44 @@
+/**
+ * Editor-only behaviour for braftonium/nav-dropdown.
+ *
+ * On the front end the panel is hidden until hover/focus. In the editor we must
+ * NOT force panels open in the flow (that would shove them into the nav row and
+ * shift the bar). Instead panels stay OUT OF FLOW (absolute, as on the front end)
+ * and a panel is revealed only when its block — or a child — is SELECTED, so one
+ * shows at a time for editing without moving anything.
+ *
+ * NOTE: a block's editorStyle (this file → index.css) loads in the POST editor but
+ * NOT in the Site Editor canvas iframe. If this block is used inside a template
+ * PART (e.g. a header), mirror these rules in the active theme's editor-style.scss
+ * (which DOES load in the canvas) so it's editable there too.
+ */
+.editor-styles-wrapper {
+
+	// Reveal the SELECTED dropdown's panel for editing (front-end hover/focus
+	// reveal still works too). Absolute, so the bar never shifts.
+	.braftonium-nav-dropdown.is-selected > .braftonium-nav-dropdown__panel,
+	.braftonium-nav-dropdown.has-child-selected > .braftonium-nav-dropdown__panel {
+		opacity: 1 !important;
+		visibility: visible !important;
+	}
+
+	// No hover bridge while editing (it would add an invisible hover strip).
+	.braftonium-nav-dropdown .wp-block-navigation-item__content::before {
+		content: none !important;
+	}
+
+	// Pin the full-width (mega) panel as a wide overlay below the bar so its
+	// columns are viewable + editable.
+	.braftonium-nav-dropdown .braftonium-nav-dropdown__panel--full {
+		position: absolute !important;
+		top: 100% !important;
+		left: 0 !important;
+		margin-top: 0.75rem !important;
+		width: min(72vw, 780px) !important;
+		max-width: none !important;
+	}
+
+	.braftonium-nav-dropdown.is-editing .wp-block-navigation-item__label {
+		font-weight: 600;
+	}
+}

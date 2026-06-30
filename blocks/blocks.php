@@ -72,19 +72,43 @@ add_filter( 'braftonium_class_list', function ( $class_list, $block_type ) {
 
 /**
  * Register every block whose folder contains a block.json file.
+ *
+ * Two sources:
+ *   1. Legacy pre-bundled blocks in /blocks/<slug>/ (banner, cta, custom-row, …).
+ *   2. Modern React blocks compiled by wp-scripts into /blocks/build/<slug>/ from
+ *      the /blocks/src tree. To add one: drop a folder in /blocks/src/<slug>/, run
+ *      `npm run build`, and it's picked up here with no PHP change.
  */
 add_action( 'init', function () {
-    $blocks_dir = __DIR__;
-    $entries    = glob( $blocks_dir . '/*/block.json' );
+    $dirs = array(
+        __DIR__,             // /blocks        (legacy pre-bundled blocks)
+        __DIR__ . '/build',  // /blocks/build  (wp-scripts-compiled React blocks)
+    );
 
-    if ( empty( $entries ) ) {
-        return;
-    }
-
-    foreach ( $entries as $block_json ) {
-        register_block_type( dirname( $block_json ) );
+    foreach ( $dirs as $dir ) {
+        $entries = glob( $dir . '/*/block.json' );
+        if ( empty( $entries ) ) {
+            continue;
+        }
+        foreach ( $entries as $block_json ) {
+            register_block_type( dirname( $block_json ) );
+        }
     }
 } );
+
+/**
+ * Allow braftonium/nav-dropdown inside core/navigation. The navigation block has
+ * a fixed allowed-blocks list, so declaring `parent` on our block isn't enough —
+ * append it server-side (propagates to the editor's inserter).
+ */
+add_filter( 'register_block_type_args', function ( $args, $name ) {
+    if ( 'core/navigation' === $name && ! empty( $args['allowed_blocks'] ) && is_array( $args['allowed_blocks'] ) ) {
+        if ( ! in_array( 'braftonium/nav-dropdown', $args['allowed_blocks'], true ) ) {
+            $args['allowed_blocks'][] = 'braftonium/nav-dropdown';
+        }
+    }
+    return $args;
+}, 10, 2 );
 
 /**
  * Enqueue Slick in the block editor so the Slider block's "Preview" toggle can
