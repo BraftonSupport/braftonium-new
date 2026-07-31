@@ -16,6 +16,7 @@ if ( ! defined( 'ABSPATH' ) )  exit;
 // get acf, see if plugin exists
 require_once ABSPATH . 'wp-content/plugins/advanced-custom-fields-pro/acf.php';
 require_once dirname(__FILE__).'/gutenberg-addon/class-loader.php';
+require_once dirname(__FILE__).'/gutenberg-addon/core-block-editor-hotfix.php';
 add_action('enqueue_block_editor_assets', function() {
 	$asset_file = dirname(__FILE__) . '/gutenberg-addon/build/index.asset.php';
 	$asset = file_exists($asset_file) ? include $asset_file : array();
