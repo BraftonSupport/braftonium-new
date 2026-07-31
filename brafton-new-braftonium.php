@@ -17,7 +17,9 @@ if ( ! defined( 'ABSPATH' ) )  exit;
 require_once ABSPATH . 'wp-content/plugins/advanced-custom-fields-pro/acf.php';
 require_once dirname(__FILE__).'/gutenberg-addon/class-loader.php';
 add_action('enqueue_block_editor_assets', function() {
-	wp_enqueue_script('braftonium-gutenberg-filters', plugin_dir_url(__FILE__) . '/gutenberg-addon/build/index.js', ['wp-edit-post']);
+	$asset_file = dirname(__FILE__) . '/gutenberg-addon/build/index.asset.php';
+	$asset = file_exists($asset_file) ? include $asset_file : array();
+	wp_enqueue_script('braftonium-gutenberg-filters', plugin_dir_url(__FILE__) . '/gutenberg-addon/build/index.js', ['wp-edit-post'], $asset['version'] ?? false);
 });
 // make acf options
 if(!function_exists("acf_add_local_field_group")){
