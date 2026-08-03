@@ -159,4 +159,68 @@ add_filter('braftonium_class_list', 'modify_classes', 10,2);
 ```
 By checking the current block type you can add classes only for specific blocks.
 
+## Core Hotfixes
+
+### `gutenberg-addon/core-block-editor-hotfix.php`
+
+**Status: likely redundant as of WordPress 7.0. Verify before removing.**
+
+This file serves a patched copy of `wp-includes/js/dist/block-editor.min.js`
+from uploads, adding a missing null guard in `useBlockToolbarPopoverProps()`:
+
+```js
+const blockView = selectedBlockElement?.ownerDocument?.defaultView;
+if ( blockView.ResizeObserver ) { ... }        // blockView can be null
+```
+
+`defaultView` is null once the document that held the block element is gone — a
+torn down editor or pattern preview iframe — so the layout effect threw
+`Cannot read properties of null (reading 'ResizeObserver')` and the editor's
+error boundary replaced the screen. It showed up when copying and inserting
+patterns.
+
+Everything is keyed off the core file's mtime and size, so a core update
+regenerates the patch, and once core ships the guard the pattern stops matching
+and core is served untouched. `BRAFTONIUM_BLOCK_EDITOR_DEBUG` (falling back to
+`WP_DEBUG`) makes the guard log the offending element before skipping the
+observer.
+
+#### Why it is probably no longer needed
+
+WordPress 7.0 added the guard itself — `block-editor.min.js` now reads
+`ownerDocument?.defaultView, s = i === null ? void 0 : i`. The hotfix's regex is
+broad enough that it may still match an unrelated occurrence and keep serving a
+patched bundle for a bug core has already fixed. Before deleting it, confirm on
+the target core version:
+
+```
+grep -o "ownerDocument?\.defaultView.\{0,60\}" wp-includes/js/dist/block-editor.min.js
+ls wp-content/uploads/braftonium-core-patches/     # zero bytes = no patch applied
+```
+
+#### The same root condition now surfaces elsewhere
+
+Fixing the `defaultView` read did not remove the underlying condition, only one
+symptom of it. A popover anchored into a torn-down document still fails, and on
+WordPress 7.0.2 it fails one layer deeper, inside the floating-ui copy bundled
+into `components.min.js`:
+
+```
+TypeError: parameter 1 is not of type 'Element'
+```
+
+`getNearestOverflowAncestor()` returns `ownerDocument.body`, which is `null` for
+a dead document. `getOverflowAncestors()` then compares that `null` against the
+same `null` body, mistakes "no ancestor found" for "reached the root", and calls
+`isOverflowElement(null)` → `getComputedStyle(null)`.
+
+That guard lives in **brafton-blocks**, not here:
+`brafton-blocks/shared/core-components-hotfix.php`, which uses the same
+serve-a-patched-bundle-from-uploads approach as this file. See that plugin's
+readme for the full analysis, including why an ACF block's `MutationObserver`
+driven re-render is what puts a block node into a dead document in the first
+place.
+
+If you remove this file, that one still needs to stay.
+
 ## More Coming soon!
