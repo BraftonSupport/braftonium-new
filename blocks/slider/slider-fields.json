@@ -405,6 +405,27 @@
                 "step": 1
             },
             {
+                "key": "field_6319b1db6011bmobile",
+                "label": "Slides to Show Mobile",
+                "name": "presentation_slides_to_show_mobile",
+                "type": "number",
+                "instructions": "The number of slides to show at a time on Mobile",
+                "required": 0,
+                "conditional_logic": 0,
+                "wrapper": {
+                    "width": "",
+                    "class": "",
+                    "id": ""
+                },
+                "default_value": 1,
+                "placeholder": "",
+                "prepend": "",
+                "append": "",
+                "min": 1,
+                "max": "",
+                "step": 1
+            },
+            {
                 "key": "field_6319bd546a366",
                 "label": "Slides to Scroll",
                 "name": "presentation_slides_to_scroll",
