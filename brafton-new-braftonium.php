@@ -16,11 +16,15 @@ if ( ! defined( 'ABSPATH' ) )  exit;
 // get acf, see if plugin exists
 require_once ABSPATH . 'wp-content/plugins/advanced-custom-fields-pro/acf.php';
 require_once dirname(__FILE__).'/gutenberg-addon/class-loader.php';
-require_once dirname(__FILE__).'/gutenberg-addon/core-block-editor-hotfix.php';
 add_action('enqueue_block_editor_assets', function() {
-	$asset_file = dirname(__FILE__) . '/gutenberg-addon/build/index.asset.php';
-	$asset = file_exists($asset_file) ? include $asset_file : array();
-	wp_enqueue_script('braftonium-gutenberg-filters', plugin_dir_url(__FILE__) . '/gutenberg-addon/build/index.js', ['wp-edit-post'], $asset['version'] ?? false);
+	$script_path  = plugin_dir_path(__FILE__) . 'gutenberg-addon/build/index.js';
+	$asset_path   = plugin_dir_path(__FILE__) . 'gutenberg-addon/build/index.asset.php';
+	// Use the build's generated dependencies (react, react-dom, wp-element, …)
+	// plus wp-edit-post so the wp.* editor globals the script reads are loaded first.
+	$asset        = file_exists($asset_path) ? include $asset_path : array('dependencies' => array(), 'version' => false);
+	$dependencies = array_unique(array_merge($asset['dependencies'], array('wp-edit-post')));
+	$version      = $asset['version'] ? $asset['version'] : (file_exists($script_path) ? filemtime($script_path) : false);
+	wp_enqueue_script('braftonium-gutenberg-filters', plugin_dir_url(__FILE__) . 'gutenberg-addon/build/index.js', $dependencies, $version, true);
 });
 // make acf options
 if(!function_exists("acf_add_local_field_group")){
